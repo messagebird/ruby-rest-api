@@ -20,8 +20,8 @@ module MessageBird
   class Client
     attr_reader :access_key
 
-    def initialize(access_key)
-      @access_key = access_key
+    def initialize(access_key = nil)
+      @access_key = access_key || ENV['MESSAGE_BIRD_ACCES_KEY']
     end
 
     def request(method, path, params={})

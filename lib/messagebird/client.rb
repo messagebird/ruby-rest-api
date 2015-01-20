@@ -21,7 +21,7 @@ module MessageBird
     attr_reader :access_key
 
     def initialize(access_key = nil)
-      @access_key = access_key || ENV['MESSAGE_BIRD_ACCESS_KEY']
+      @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
     end
 
     def request(method, path, params={})

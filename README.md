@@ -32,7 +32,7 @@ require 'messagebird'
 client = MessageBird::Client.new(YOUR_ACCESS_KEY)
 ```
 
-That's easy enough. Now we can query the server for information. 
+That's easy enough. Now we can query the server for information.
 
 ##### Balance
 Lets start with out with an overview of our balance.
@@ -109,6 +109,30 @@ Similar to the **message_create** and **message** methods, the **hlr_create** me
 
 ```ruby
 client.hlr('4933bed0453ba7455031712h16830892')
+```
+
+##### OTP (One-Time Password)
+You can send and verify One-Time Passwords through the MessageBird API using the **otp_generate** and **otp_verify** methods.
+
+```ruby
+# otp_generate requires a recipient as a required parameter, and other optional paramaters
+client.otp_generate(31612345678, {:reference => "YourReference"})
+
+#<MessageBird::OTP:0x007fb3c18c8148
+ @id="080b7f804555213678f14f6o24607735",
+ @recipient="31612345678",
+ @reference="YourReference",
+ @status="sent",
+ @href={"message"=>"https://rest.messagebird.com/messages/67d42f004555213679416f0b13254392"},
+ @createdDatetime=2015-05-12 16:51:19 +0200,
+ @validUntilDatetime=2015-05-12 16:51:49 +0200>
+```
+
+This sends a token to the recipient, which can be verified with the **otp_verify** method.
+
+```ruby
+# otp_verify requires a recipient, a token as required parameters, and other optional paramaters
+client.otp_verify(31612345678, 123456, {:reference => "YourReference"})
 ```
 
 ##### Voice Message

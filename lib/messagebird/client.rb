@@ -5,6 +5,7 @@ require 'uri'
 require 'messagebird/balance'
 require 'messagebird/error'
 require 'messagebird/hlr'
+require 'messagebird/otp'
 require 'messagebird/message'
 require 'messagebird/voicemessage'
 
@@ -77,6 +78,29 @@ module MessageBird
         'hlr',
         :msisdn    => msisdn,
         :reference => reference))
+    end
+
+    # Generate a new One-Time-Password message
+    def otp_generate(recipient, params={})
+        OTP.new(request(
+            :post,
+            'otp/generate',
+            params.merge({
+                :recipient => recipient
+            })
+        ))
+    end
+
+    # Verify the One-Time-Password
+    def otp_verify(recipient, token, params={})
+        # Set the path to include all the parameters
+        # Blame Sam Wierema for not adhering to REST principles...
+        path = 'otp/verify?' + URI.encode_www_form(params.merge({
+            :recipient => recipient,
+            :token => token
+        }))
+
+        OTP.new(request(:get, path))
     end
 
     # Retrieve the information of specific message.

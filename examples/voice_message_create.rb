@@ -18,6 +18,7 @@ begin
   puts
   puts "  id                : #{vmsg.id}"
   puts "  href              : #{vmsg.href}"
+  puts "  originator        : #{vmsg.originator}"
   puts "  body              : #{vmsg.body}"
   puts "  reference         : #{vmsg.reference}"
   puts "  language          : #{vmsg.language}"

@@ -10,7 +10,7 @@ require 'messagebird/message'
 require 'messagebird/voicemessage'
 
 module MessageBird
-  class ErrorException < Exception
+  class ErrorException < StandardError
     attr_reader :errors
 
     def initialize(errors)

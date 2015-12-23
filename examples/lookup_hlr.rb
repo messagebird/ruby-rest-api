@@ -4,7 +4,7 @@ $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
-# PHONE_NUMBER = '+31624977352'
+# PHONE_NUMBER = '+31612345678'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'

@@ -4,9 +4,15 @@ $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
+# PHONE_NUMBER = '+31612345678'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
+  exit 1
+end
+
+unless defined?(PHONE_NUMBER)
+  puts 'You need to set an PHONE_NUMBER constant in this file'
   exit 1
 end
 
@@ -15,7 +21,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a new HLR object.
-  hlr = client.lookup_hlr_create('31624971134', :reference => 'MyReference767')
+  hlr = client.lookup_hlr_create(PHONE_NUMBER, :reference => 'Reference')
 
   # Print the object information.
   puts

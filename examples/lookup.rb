@@ -4,7 +4,7 @@ $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
-# PHONE_NUMBER = '+31624977352'
+# PHONE_NUMBER = '+31612345678'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
@@ -33,9 +33,9 @@ begin
   puts "  type            : #{lookup.type}"
 
   puts "  formats         :"
-  puts "    e164          : #{lookup.formats.e164}" 
+  puts "    e164          : #{lookup.formats.e164}"
   puts "    international : #{lookup.formats.international}"
-  puts "    national      : #{lookup.formats.national}" 
+  puts "    national      : #{lookup.formats.national}"
   puts "    rfc3966       : #{lookup.formats.rfc3966}"
 
   unless lookup.hlr.nil?
@@ -46,7 +46,7 @@ begin
     puts "    reference       : #{lookup.hlr.reference}"
     puts "    status          : #{lookup.hlr.status}"
     puts "    createdDatetime : #{lookup.hlr.createdDatetime}"
-    puts "    statusDatetime  : #{lookup.hlr.statusDatetime}" 
+    puts "    statusDatetime  : #{lookup.hlr.statusDatetime}"
   end
 
 rescue MessageBird::ErrorException => ex

@@ -8,6 +8,7 @@ require 'messagebird/hlr'
 require 'messagebird/otp'
 require 'messagebird/message'
 require 'messagebird/voicemessage'
+require 'messagebird/lookup'
 
 module MessageBird
   class ErrorException < StandardError
@@ -137,5 +138,18 @@ module MessageBird
         'voicemessages',
         params.merge({ :recipients => recipients, :body => body.to_s })))
     end
+
+    def lookup(phoneNumber, params={})
+      Lookup.new(request(:get, "lookup/#{phoneNumber}", params))
+    end 
+
+    def lookup_hlr_create(phoneNumber, params={})
+      HLR.new(request(:post, "lookup/#{phoneNumber}/hlr", params))
+    end
+
+    def lookup_hlr(phoneNumber, params={})
+      HLR.new(request(:get, "lookup/#{phoneNumber}/hlr", params))
+    end
+
   end
 end

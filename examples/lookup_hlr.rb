@@ -32,6 +32,7 @@ begin
   puts "  msisdn          : #{hlr.msisdn}"
   puts "  reference       : #{hlr.reference}"
   puts "  status          : #{hlr.status}"
+  puts "  details         : #{hlr.details}"
   puts "  createdDatetime : #{hlr.createdDatetime}"
   puts "  statusDatetime  : #{hlr.statusDatetime}"
   puts

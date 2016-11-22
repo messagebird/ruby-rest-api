@@ -51,7 +51,7 @@ module MessageBird
       when 200, 201, 204, 401, 404, 405, 422
         json = JSON.parse(response.body)
       else
-        raise Net::HTTPServerError.new 'Unknown response from server', response
+        raise Net::HTTPServerError.new response.http_version, 'Unknown response from server', response
       end
 
       # If the request returned errors, create Error objects and raise.

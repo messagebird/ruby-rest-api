@@ -1,11 +1,11 @@
 MessageBird's REST API for Ruby
 ===============================
-This repository contains the open source Ruby client for MessageBird's REST API. Documentation can be found at: https://www.messagebird.com/developers/ruby.
+This repository contains the open source Ruby client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com/
 
 Requirements
 ------------
 - [Sign up](https://www.messagebird.com/en/signup) for a free MessageBird account
-- Create a new access_key in the developers sections
+- Create a new `access_key` in the developers sections
 - MessageBird's API client for Ruby requires Ruby >= 1.9
 
 Installation
@@ -176,7 +176,7 @@ client.voice_message('a08e51a0353bd16cea7f298a37405850')
 Documentation
 -------------
 Complete documentation, instructions, and examples are available at:
-[https://www.messagebird.com/developers/ruby](https://www.messagebird.com/developers/ruby).
+[https://developers.messagebird.com/](https://developers.messagebird.com/).
 
 License
 -------

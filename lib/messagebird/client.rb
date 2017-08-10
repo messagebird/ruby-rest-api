@@ -19,6 +19,8 @@ module MessageBird
     end
   end
 
+  class InvalidPhoneNumberException < TypeError; end
+
   class Client
     attr_reader :access_key
 
@@ -51,7 +53,7 @@ module MessageBird
       when 200, 201, 204, 401, 404, 405, 422
         json = JSON.parse(response.body)
       else
-        raise Net::HTTPServerError.new response.http_version, 'Unknown response from server', response
+        raise InvalidPhoneNumberException, 'Unknown response from server'
       end
 
       # If the request returned errors, create Error objects and raise.
@@ -141,7 +143,7 @@ module MessageBird
 
     def lookup(phoneNumber, params={})
       Lookup.new(request(:get, "lookup/#{phoneNumber}", params))
-    end 
+    end
 
     def lookup_hlr_create(phoneNumber, params={})
       HLR.new(request(:post, "lookup/#{phoneNumber}/hlr", params))

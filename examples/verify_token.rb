@@ -3,9 +3,9 @@
 $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = 'pWwN1qi9DXrQvKDmDyp0avDFJ'
-VERIFY_ID  = 'a06e99d14d75433faacfd1206a3dd1ce'
-TOKEN      = '12345'
+ACCESS_KEY = ''
+VERIFY_ID  = ''
+TOKEN      = ''
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'

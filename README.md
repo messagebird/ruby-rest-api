@@ -132,7 +132,7 @@ This sends a token to the recipient, which can be verified with the **verify_tok
 
 ```ruby
 # verify_token requires the id of the verify request and a token as required parameters.
-client.verify_token(31612345678, 123456)
+client.verify_token('080b7f804555213678f14f6o24607735', 123456)
 ```
 
 ##### Voice Message

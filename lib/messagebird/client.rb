@@ -101,11 +101,7 @@ module MessageBird
 
     # Verify the One-Time-Password.
     def verify_token(id, token)
-      Verify.new(request(
-        :get,
-        "verify/#{id.to_s}",
-        {:token => token}
-      ))
+      Verify.new(request(:get, "verify/#{id.to_s}?token=#{token}"))
     end
 
     # Delete a Verify

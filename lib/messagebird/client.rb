@@ -35,9 +35,11 @@ module MessageBird
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl     = true
 
-      # Construct the HTTP GET or POST request.
+      # Construct the HTTP GET, POST or DELETE request.
       request = Net::HTTP::Get.new(uri.request_uri)  if method == :get
       request = Net::HTTP::Post.new(uri.request_uri) if method == :post
+      request = Net::HTTP::Delete.new(uri.request_uri) if method == :delete
+
       request['Accept']        = 'application/json'
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
@@ -51,16 +53,16 @@ module MessageBird
       # Parse the HTTP response.
       case response.code.to_i
       when 200, 201, 204, 401, 404, 405, 422
-        json = JSON.parse(response.body)
+        unless response.body.nil?
+          json = JSON.parse(response.body)
+          # If the request returned errors, create Error objects and raise.
+          if json.has_key?('errors')
+            raise ErrorException, json['errors'].map { |e| Error.new(e) }
+          end
+        end
       else
         raise InvalidPhoneNumberException, 'Unknown response from server'
       end
-
-      # If the request returned errors, create Error objects and raise.
-      if json.has_key?('errors')
-        raise ErrorException, json['errors'].map { |e| Error.new(e) }
-      end
-
       json
     end
 

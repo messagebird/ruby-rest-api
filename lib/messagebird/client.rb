@@ -108,6 +108,18 @@ module MessageBird
         OTP.new(request(:get, path))
     end
 
+    # Retrieve all messages. Provides the latest message first, unless
+    # ordered_by_received is set to true
+    # Params:
+    # +ordered_by_received+:: boolean - order by received date. Default false.
+    def messages(ordered_by_received = false)
+      messages = Array.new
+      request(:get, "messages")['items'].each do |message|
+        messages.push Message.new(message)
+      end
+      ordered_by_received ? messages.reverse! : messages
+    end
+
     # Retrieve the information of specific message.
     def message(id)
       Message.new(request(:get, "messages/#{id.to_s}"))
@@ -125,6 +137,11 @@ module MessageBird
           :originator => originator.to_s,
           :body       => body.to_s,
           :recipients => recipients })))
+    end
+
+    # Delete a specific message.
+    def message_delete(id)
+      request(:delete, "messages/#{id.to_s}")
     end
 
     # Retrieve the information of a specific voice message.

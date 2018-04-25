@@ -5,7 +5,7 @@ require 'uri'
 require 'messagebird/balance'
 require 'messagebird/error'
 require 'messagebird/hlr'
-require 'messagebird/otp'
+require 'messagebird/verify'
 require 'messagebird/message'
 require 'messagebird/voicemessage'
 require 'messagebird/lookup'
@@ -83,27 +83,30 @@ module MessageBird
         :reference => reference))
     end
 
-    # Generate a new One-Time-Password message
-    def otp_generate(recipient, params={})
-        OTP.new(request(
-            :post,
-            'otp/generate',
-            params.merge({
-                :recipient => recipient
-            })
-        ))
+    # Retrieve the information of specific Verify.
+    def verify(id)
+      Verify.new(request(:get, "verify/#{id.to_s}"))
     end
 
-    # Verify the One-Time-Password
-    def otp_verify(recipient, token, params={})
-        # Set the path to include all the parameters
-        # Blame Sam Wierema for not adhering to REST principles...
-        path = 'otp/verify?' + URI.encode_www_form(params.merge({
-            :recipient => recipient,
-            :token => token
-        }))
+    # Generate a new One-Time-Password message.
+    def verify_create(recipient, params={})
+      Verify.new(request(
+          :post,
+          'verify',
+          params.merge({
+              :recipient => recipient
+          })
+      ))
+    end
 
-        OTP.new(request(:get, path))
+    # Verify the One-Time-Password.
+    def verify_token(id, token)
+      Verify.new(request(:get, "verify/#{id.to_s}?token=#{token}"))
+    end
+
+    # Delete a Verify
+    def verify_delete(id)
+      Verify.new(request(:delete, "verify/#{id.to_s}"))
     end
 
     # Retrieve the information of specific message.

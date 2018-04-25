@@ -3,7 +3,7 @@ require 'time'
 require 'messagebird/base'
 
 module MessageBird
-  class OTP < MessageBird::Base
+  class Verify < MessageBird::Base
     attr_accessor :id, :recipient, :reference, :status, :href,
                   :createdDatetime, :validUntilDatetime
 

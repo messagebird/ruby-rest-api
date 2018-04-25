@@ -14,8 +14,8 @@ begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Verify an OTP message with a token
-  otp = client.otp_verify(31612345678, 123456, {
+  # Generate a new OTP message
+  otp = client.verify_create(31612345678, {
       :reference => "MessageBirdReference"
   })
 

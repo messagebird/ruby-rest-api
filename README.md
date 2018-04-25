@@ -111,14 +111,14 @@ Similar to the **message_create** and **message** methods, the **hlr_create** me
 client.hlr('4933bed0453ba7455031712h16830892')
 ```
 
-##### OTP (One-Time Password)
-You can send and verify One-Time Passwords through the MessageBird API using the **otp_generate** and **otp_verify** methods.
+##### Verify (One-Time Password)
+You can send and verify One-Time Passwords through the MessageBird API using the **verify_create** and **verify_token** methods.
 
 ```ruby
-# otp_generate requires a recipient as a required parameter, and other optional paramaters
-client.otp_generate(31612345678, {:reference => "YourReference"})
+# verify_create requires a recipient as a required parameter, and other optional paramaters
+client.verify_create(31612345678, {:reference => "YourReference"})
 
-#<MessageBird::OTP:0x007fb3c18c8148
+#<MessageBird::Verify:0x007fb3c18c8148
  @id="080b7f804555213678f14f6o24607735",
  @recipient="31612345678",
  @reference="YourReference",
@@ -128,11 +128,11 @@ client.otp_generate(31612345678, {:reference => "YourReference"})
  @validUntilDatetime=2015-05-12 16:51:49 +0200>
 ```
 
-This sends a token to the recipient, which can be verified with the **otp_verify** method.
+This sends a token to the recipient, which can be verified with the **verify_token** method.
 
 ```ruby
-# otp_verify requires a recipient, a token as required parameters, and other optional paramaters
-client.otp_verify(31612345678, 123456, {:reference => "YourReference"})
+# verify_token requires the id of the verify request and a token as required parameters.
+client.verify_token('080b7f804555213678f14f6o24607735', 123456)
 ```
 
 ##### Voice Message

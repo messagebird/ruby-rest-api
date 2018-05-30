@@ -2,7 +2,7 @@ libdir = File.dirname(__FILE__)
 $:.unshift(libdir) unless $:.include?(libdir)
 
 module MessageBird
-  CLIENT_VERSION = '1.3.2'
+  CLIENT_VERSION = '1.3.3'
   ENDPOINT       = 'https://rest.messagebird.com'
 end
 

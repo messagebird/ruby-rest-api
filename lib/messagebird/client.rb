@@ -30,20 +30,20 @@ module MessageBird
 
     def request(method, path, params={})
       uri = URI.join(ENDPOINT, '/', path)
+      uri.query = URI.encode_www_form(params) unless method::REQUEST_HAS_BODY || params.empty?
 
       # Set up the HTTP object.
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl     = true
+      http.use_ssl = true
 
-      # Construct the HTTP GET or POST request.
-      request = Net::HTTP::Get.new(uri.request_uri)  if method == :get
-      request = Net::HTTP::Post.new(uri.request_uri) if method == :post
+      # Construct the request.
+      request = method.new(uri.request_uri)
+
       request['Accept']        = 'application/json'
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
 
-      # If present, add the HTTP POST parameters.
-      request.set_form_data(params) if method == :post && !params.empty?
+      request.set_form_data(params) if method::REQUEST_HAS_BODY
 
       # Execute the request and fetch the response.
       response = http.request(request)
@@ -51,33 +51,30 @@ module MessageBird
       # Parse the HTTP response.
       case response.code.to_i
       when 200, 201, 204, 401, 404, 405, 422
-        json = JSON.parse(response.body)
-      else
-        raise InvalidPhoneNumberException, 'Unknown response from server'
-      end
+        json = response.body.nil? ? {} : JSON.parse(response.body)
+        return json unless json.has_key?('errors')
 
-      # If the request returned errors, create Error objects and raise.
-      if json.has_key?('errors')
+        # If the request returned errors, create Error objects and raise.
         raise ErrorException, json['errors'].map { |e| Error.new(e) }
+      else
+        raise Net::HTTPServerError.new response.http_version, 'Unknown response from server', response
       end
-
-      json
     end
 
     # Retrieve your balance.
     def balance
-      Balance.new(request(:get, 'balance'))
+      Balance.new(request(GET, 'balance'))
     end
 
     # Retrieve the information of specific HLR.
     def hlr(id)
-      HLR.new(request(:get, "hlr/#{id.to_s}"))
+      HLR.new(request(GET, "hlr/#{id.to_s}"))
     end
 
     # Create a new HLR.
     def hlr_create(msisdn, reference)
       HLR.new(request(
-        :post,
+        POST,
         'hlr',
         :msisdn    => msisdn,
         :reference => reference))
@@ -85,13 +82,13 @@ module MessageBird
 
     # Retrieve the information of specific Verify.
     def verify(id)
-      Verify.new(request(:get, "verify/#{id.to_s}"))
+      Verify.new(request(GET, "verify/#{id.to_s}"))
     end
 
     # Generate a new One-Time-Password message.
     def verify_create(recipient, params={})
       Verify.new(request(
-          :post,
+          POST,
           'verify',
           params.merge({
               :recipient => recipient
@@ -101,17 +98,23 @@ module MessageBird
 
     # Verify the One-Time-Password.
     def verify_token(id, token)
-      Verify.new(request(:get, "verify/#{id.to_s}?token=#{token}"))
+      Verify.new(request(GET, "verify/#{id.to_s}?token=#{token}"))
     end
 
     # Delete a Verify
     def verify_delete(id)
-      Verify.new(request(:delete, "verify/#{id.to_s}"))
+      Verify.new(request(DELETE, "verify/#{id.to_s}"))
+    end
+
+    def messages(params = {})
+      request(GET, 'messages', params).tap do |data|
+        data['items'] = data['items'].map(&Message.method(:new))
+      end
     end
 
     # Retrieve the information of specific message.
     def message(id)
-      Message.new(request(:get, "messages/#{id.to_s}"))
+      Message.new(request(GET, "messages/#{id.to_s}"))
     end
 
     # Create a new message.
@@ -120,7 +123,7 @@ module MessageBird
       recipients = recipients.join(',') if recipients.kind_of?(Array)
 
       Message.new(request(
-        :post,
+        POST,
         'messages',
         params.merge({
           :originator => originator.to_s,
@@ -128,9 +131,14 @@ module MessageBird
           :recipients => recipients })))
     end
 
+    # Delete a specific message.
+    def message_delete(id)
+      request(DELETE, "messages/#{id.to_s}")
+    end
+
     # Retrieve the information of a specific voice message.
     def voice_message(id)
-      VoiceMessage.new(request(:get, "voicemessages/#{id.to_s}"))
+      VoiceMessage.new(request(GET, "voicemessages/#{id.to_s}"))
     end
 
     # Create a new voice message.
@@ -139,22 +147,27 @@ module MessageBird
       recipients = recipients.join(',') if recipients.kind_of?(Array)
 
       VoiceMessage.new(request(
-        :post,
+        POST,
         'voicemessages',
         params.merge({ :recipients => recipients, :body => body.to_s })))
     end
 
     def lookup(phoneNumber, params={})
-      Lookup.new(request(:get, "lookup/#{phoneNumber}", params))
+      Lookup.new(request(GET, "lookup/#{phoneNumber}", params))
     end
 
     def lookup_hlr_create(phoneNumber, params={})
-      HLR.new(request(:post, "lookup/#{phoneNumber}/hlr", params))
+      HLR.new(request(POST, "lookup/#{phoneNumber}/hlr", params))
     end
 
     def lookup_hlr(phoneNumber, params={})
-      HLR.new(request(:get, "lookup/#{phoneNumber}/hlr", params))
+      HLR.new(request(GET, "lookup/#{phoneNumber}/hlr", params))
     end
 
+    private
+
+    GET = Net::HTTP::Get
+    POST = Net::HTTP::Post
+    DELETE = Net::HTTP::Delete
   end
 end

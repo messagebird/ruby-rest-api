@@ -1,7 +1,6 @@
 require 'rspec'
 require 'rspec/mocks'
 require 'messagebird'
-require 'uri'
 
 describe 'Balance' do
 

@@ -6,3 +6,4 @@ rvm:
 matrix:
   allow_failures:
   - rvm: jruby
+script: rake spec

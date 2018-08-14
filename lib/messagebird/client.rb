@@ -5,6 +5,7 @@ require 'uri'
 require 'messagebird/balance'
 require 'messagebird/error'
 require 'messagebird/hlr'
+require 'messagebird/http_client'
 require 'messagebird/verify'
 require 'messagebird/message'
 require 'messagebird/voicemessage'
@@ -19,42 +20,19 @@ module MessageBird
     end
   end
 
-  class InvalidPhoneNumberException < TypeError; end
-
   class Client
-    attr_reader :access_key
 
-    def initialize(access_key = nil)
+    attr_reader :access_key
+    attr_reader :http_client
+
+    def initialize(access_key = nil, http_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
+      @http_client = http_client || HttpClient.new(@access_key)
     end
 
     def request(method, path, params={})
-      uri = URI.join(ENDPOINT, '/', path)
-
-      # Set up the HTTP object.
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl     = true
-
-      # Construct the HTTP GET or POST request.
-      request = Net::HTTP::Get.new(uri.request_uri)  if method == :get
-      request = Net::HTTP::Post.new(uri.request_uri) if method == :post
-      request['Accept']        = 'application/json'
-      request['Authorization'] = "AccessKey #{@access_key}"
-      request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
-
-      # If present, add the HTTP POST parameters.
-      request.set_form_data(params) if method == :post && !params.empty?
-
-      # Execute the request and fetch the response.
-      response = http.request(request)
-
-      # Parse the HTTP response.
-      case response.code.to_i
-      when 200, 201, 204, 401, 404, 405, 422
-        json = JSON.parse(response.body)
-      else
-        raise InvalidPhoneNumberException, 'Unknown response from server'
-      end
+      response_body = @http_client.request(method, path, params)
+      json = JSON.parse(response_body)
 
       # If the request returned errors, create Error objects and raise.
       if json.has_key?('errors')

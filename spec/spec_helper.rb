@@ -46,6 +46,9 @@ RSpec.configure do |config|
   # be too noisy due to issues in dependencies.
   config.warnings = true
 
+  # Turns deprecation warnings into errors.
+  config.raise_errors_for_deprecations!
+
   # Use the documentation formatter for detailed output,
   # unless a formatter has already been configured
   # (e.g. via a command-line flag).

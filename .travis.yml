@@ -8,4 +8,4 @@ matrix:
   allow_failures:
   - rvm: jruby
 install: gem install rspec
-script: rake spec -fd
+script: rake spec

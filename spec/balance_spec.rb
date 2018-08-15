@@ -4,7 +4,7 @@ require 'messagebird'
 
 describe 'Balance' do
 
-  it 'parses the balance' do
+  it 'reads' do
 
     http_client = double(MessageBird::HttpClient)
     client = MessageBird::Client.new('', http_client)

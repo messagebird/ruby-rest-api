@@ -1,7 +1,3 @@
-require 'rspec'
-require 'rspec/mocks'
-require 'messagebird'
-
 describe 'Balance' do
 
   it 'reads' do

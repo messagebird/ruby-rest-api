@@ -1,7 +1,3 @@
-require 'rspec'
-require 'rspec/mocks'
-require 'messagebird'
-
 describe 'Lookup' do
 
   it 'performs a new international lookup' do

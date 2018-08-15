@@ -1,7 +1,3 @@
-require 'rspec'
-require 'rspec/mocks'
-require 'messagebird'
-
 describe 'HLR' do
 
   it 'views an existing' do

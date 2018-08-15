@@ -1,7 +1,3 @@
-require 'rspec'
-require 'rspec/mocks'
-require 'messagebird'
-
 describe 'Message' do
 
   it 'reads an existing' do

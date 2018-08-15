@@ -5,6 +5,11 @@
 # light-weight as possible.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+require 'rspec'
+require 'rspec/mocks'
+require 'messagebird'
+
 RSpec.configure do |config|
 
   config.expect_with :rspec do |expectations|

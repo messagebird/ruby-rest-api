@@ -35,7 +35,7 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'contacts', {})
+      .with(:get, 'contacts?limit=0&offset=0', {})
       .and_return('{"offset": 0,"limit": 20,"count": 2,"totalCount": 2,"links": {"first": "https://rest.messagebird.com/contacts?offset=0","previous": null,"next": null,"last": "https://rest.messagebird.com/contacts?offset=0"},"items": [{"id": "first-id","href": "https://rest.messagebird.com/contacts/first-id","msisdn": 31612345678,"firstName": "Foo","lastName": "Bar","customDetails": {"custom1": null,"custom2": null,"custom3": null,"custom4": null},"groups": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/first-id/groups"},"messages": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/first-id/messages"},"createdDatetime": "2018-07-13T10:34:08+00:00","updatedDatetime": "2018-07-13T10:34:08+00:00"},{"id": "second-id","href": "https://rest.messagebird.com/contacts/second-id","msisdn": 49612345678,"firstName": "Hello","lastName": "World","customDetails": {"custom1": null,"custom2": null,"custom3": null,"custom4": null},"groups": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/second-id/groups"},"messages": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/second-id/messages"},"createdDatetime": "2018-07-13T10:33:52+00:00","updatedDatetime": null}]}')
 
     list = client.contact_list
@@ -56,10 +56,10 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'contacts', {})
+      .with(:get, 'contacts?limit=10&offset=0', {})
       .and_return('{"offset": 0,"limit": 20,"count": 2,"totalCount": 2,"links": {"first": "https://rest.messagebird.com/contacts?offset=0","previous": null,"next": null,"last": "https://rest.messagebird.com/contacts?offset=0"},"items": [{"id": "first-id","href": "https://rest.messagebird.com/contacts/first-id","msisdn": 31612345678,"firstName": "Foo","lastName": "Bar","customDetails": {"custom1": null,"custom2": null,"custom3": null,"custom4": null},"groups": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/first-id/groups"},"messages": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/first-id/messages"},"createdDatetime": "2018-07-13T10:34:08+00:00","updatedDatetime": "2018-07-13T10:34:08+00:00"},{"id": "second-id","href": "https://rest.messagebird.com/contacts/second-id","msisdn": 49612345678,"firstName": "Hello","lastName": "World","customDetails": {"custom1": null,"custom2": null,"custom3": null,"custom4": null},"groups": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/second-id/groups"},"messages": {"totalCount": 0,"href": "https://rest.messagebird.com/contacts/second-id/messages"},"createdDatetime": "2018-07-13T10:33:52+00:00","updatedDatetime": null}]}')
 
-    list = client.contact_list
+    list = client.contact_list(10)
 
     expect(list[1].id).to eq 'second-id'
 
@@ -72,10 +72,10 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'contacts', { :limit => 10, :offset => 20 })
+      .with(:get, 'contacts?limit=10&offset=20', {})
       .and_return('{}')
 
-    client.contact_list({:limit => 10, :offset => 20})
+    client.contact_list(10, 20)
 
   end
 

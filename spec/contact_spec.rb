@@ -108,7 +108,7 @@ describe 'Contact' do
 
     contact = client.contact('contact-id')
 
-    expect(contact.customDetails).to be_an_instance_of(CustomDetails)
+    expect(contact.customDetails).to be_an_instance_of(MessageBird::CustomDetails)
 
     expect(contact.customDetails.custom1).to eq 'First'
     expect(contact.customDetails.custom4).to eq 'Fourth'

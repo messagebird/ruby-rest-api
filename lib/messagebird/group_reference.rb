@@ -1,5 +1,7 @@
 require 'messagebird/base'
 
-class GroupReference < MessageBird::Base
-  attr_accessor :href, :totalCount
+module MessageBird
+  class GroupReference < MessageBird::Base
+    attr_accessor :href, :totalCount
+  end
 end

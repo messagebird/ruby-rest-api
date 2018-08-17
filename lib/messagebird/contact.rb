@@ -9,15 +9,15 @@ module MessageBird
                   :groups, :messages, :createdDatetime, :updatedDatetime
 
     def customDetails=(value)
-      @customDetails = CustomDetails.new(value)
+      @customDetails = MessageBird::CustomDetails.new(value)
     end
 
     def groups=(value)
-      @groups = GroupReference.new(value)
+      @groups = MessageBird::GroupReference.new(value)
     end
 
     def messages=(value)
-      @messages = MessageReference.new(value)
+      @messages = MessageBird::MessageReference.new(value)
     end
 
     def createdDatetime=(value)

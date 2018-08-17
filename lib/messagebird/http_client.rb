@@ -21,7 +21,7 @@ module MessageBird
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl     = true
 
-      request = prepare_request(method, path, params)
+      request = prepare_request(method, uri, params)
 
       # Execute the request and fetch the response.
       response = http.request(request)

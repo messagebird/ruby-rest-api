@@ -24,6 +24,8 @@ module MessageBird
 
       # Construct the HTTP GET or POST request.
       case method
+      when :delete
+        request = Net::HTTP::Delete.new(uri.request_uri)
       when :get
         request = Net::HTTP::Get.new(uri.request_uri)
       when :post

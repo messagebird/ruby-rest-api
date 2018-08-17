@@ -157,8 +157,8 @@ module MessageBird
       request(:patch, "contacts/#{id}", params)
     end
 
-    def contact_list(params={})
-      List.new(Contact, request(:get, 'contacts', params))
+    def contact_list(limit = 0, offset = 0)
+      List.new(Contact, request(:get, "contacts?limit=#{limit}&offset=#{offset}"))
     end
 
   end

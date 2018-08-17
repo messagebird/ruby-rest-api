@@ -14,9 +14,10 @@ begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Fetch the Contact list.
-  pagination = { :limit => 20, :offset => 0}
-  contacts = client.contact_list(pagination)
+  # Fetch the Contact list with pagination options (skip the first 5 objects and take 10).
+  limit = 10
+  offset = 5
+  contacts = client.contact_list(limit, offset)
 
   # Print the object information.
   puts

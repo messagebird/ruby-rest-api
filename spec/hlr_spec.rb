@@ -6,9 +6,9 @@ describe 'HLR' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:get, 'hlr/hlr-id', {})
-        .and_return('{"id":"hlr-id","href":"https://rest.messagebird.com/hlr/hlr-id","msisdn":31612345678,"network":20406,"reference":"MyReference","status": "sent","createdDatetime": "2015-01-04T13:14:08+00:00","statusDatetime": "2015-01-04T13:14:09+00:00"}')
+      .to receive(:request)
+      .with(:get, 'hlr/hlr-id', {})
+      .and_return('{"id":"hlr-id","href":"https://rest.messagebird.com/hlr/hlr-id","msisdn":31612345678,"network":20406,"reference":"MyReference","status": "sent","createdDatetime": "2015-01-04T13:14:08+00:00","statusDatetime": "2015-01-04T13:14:09+00:00"}')
 
     hlr = client.hlr('hlr-id')
 
@@ -22,9 +22,9 @@ describe 'HLR' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:post, 'hlr', {:msisdn => 31612345678, :reference => 'MyReference'})
-        .and_return('{}')
+      .to receive(:request)
+      .with(:post, 'hlr', {:msisdn => 31612345678, :reference => 'MyReference'})
+      .and_return('{}')
 
     client.hlr_create(31612345678, 'MyReference')
 

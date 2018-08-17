@@ -6,9 +6,9 @@ describe 'Balance' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:get, 'balance', {})
-        .and_return('{"payment":"prepaid","type":"credits","amount":12.34}')
+      .to receive(:request)
+      .with(:get, 'balance', {})
+      .and_return('{"payment":"prepaid","type":"credits","amount":12.34}')
 
     balance = client.balance
 

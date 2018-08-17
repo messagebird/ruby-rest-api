@@ -6,9 +6,9 @@ describe 'Verify' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:get, 'verify/verify-id', {})
-        .and_return('{"id": "verify-id","href": "https://rest.messagebird.com/verify/verify-id","recipient": 31612345678,"reference": "MyReference","messages": {"href": "https://rest.messagebird.com/messages/message-id"},"status": "verified","createdDatetime": "2017-05-30T12:39:50+00:00","validUntilDatetime": "2017-05-30T12:40:20+00:00"}')
+      .to receive(:request)
+      .with(:get, 'verify/verify-id', {})
+      .and_return('{"id": "verify-id","href": "https://rest.messagebird.com/verify/verify-id","recipient": 31612345678,"reference": "MyReference","messages": {"href": "https://rest.messagebird.com/messages/message-id"},"status": "verified","createdDatetime": "2017-05-30T12:39:50+00:00","validUntilDatetime": "2017-05-30T12:40:20+00:00"}')
 
     verify = client.verify('verify-id')
 
@@ -23,9 +23,9 @@ describe 'Verify' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:get, 'verify/verify-id?token=verify-token', {})
-        .and_return('{}')
+      .to receive(:request)
+      .with(:get, 'verify/verify-id?token=verify-token', {})
+      .and_return('{}')
 
 
     client.verify_token('verify-id', 'verify-token')
@@ -38,9 +38,9 @@ describe 'Verify' do
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
-        .to receive(:request)
-        .with(:post, 'verify', { :recipient => 31612345678, :originator => 'MessageBird' })
-        .and_return('{}')
+      .to receive(:request)
+      .with(:post, 'verify', { :recipient => 31612345678, :originator => 'MessageBird' })
+      .and_return('{}')
 
     client.verify_create(31612345678, { :originator => 'MessageBird' })
 

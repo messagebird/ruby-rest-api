@@ -40,6 +40,8 @@ module MessageBird
     def prepare_request(method, uri, params={})
       # Construct the HTTP request.
       case method
+      when :delete
+        request = Net::HTTP::Delete.new(uri.request_uri)
       when :get
         request = Net::HTTP::Get.new(uri.request_uri)
       when :post

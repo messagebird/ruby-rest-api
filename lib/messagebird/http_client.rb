@@ -24,9 +24,9 @@ module MessageBird
       # Construct the HTTP GET or POST request.
       case method
       when :get
-        request = Net::HTTP::Get.new(uri.request_uri)  if method == :get
+        request = Net::HTTP::Get.new(uri.request_uri)
       when :post
-        request = Net::HTTP::Post.new(uri.request_uri) if method == :post
+        request = Net::HTTP::Post.new(uri.request_uri)
       else
         raise MethodNotAllowedException
       end

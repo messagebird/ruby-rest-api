@@ -29,7 +29,20 @@ describe 'Group' do
   end
 
   it 'lists' do
-    # todo
+
+    http_client = double(MessageBird::HttpClient)
+    client = MessageBird::Client.new('', http_client)
+
+    expect(http_client)
+      .to receive(:request)
+      .with(:get, 'groups?limit=0&offset=0', {})
+      .and_return('{"offset": 0,"limit": 10,"count": 2,"totalCount": 2,"links": {"first": "https://rest.messagebird.com/groups?offset=0&limit=10","previous": null,"next": null,"last": "https://rest.messagebird.com/groups?offset=0&limit=10"},"items": [{"id": "first-id","href": "https://rest.messagebird.com/groups/first-id","name": "First","contacts": {"totalCount": 3,"href": "https://rest.messagebird.com/groups/first-id/contacts"},"createdDatetime": "2018-07-25T11:47:42+00:00","updatedDatetime": "2018-07-25T14:03:09+00:00"},{"id": "second-id","href": "https://rest.messagebird.com/groups/second-id","name": "Second","contacts": {"totalCount": 4,"href": "https://rest.messagebird.com/groups/second-id/contacts"},"createdDatetime": "2018-07-25T11:47:39+00:00","updatedDatetime": "2018-07-25T14:03:09+00:00"}]}')
+
+    list = client.group_list
+
+    expect(list.count).to eq 2
+    expect(list[0].id).to eq 'first-id'
+
   end
 
   it 'reads an existing' do

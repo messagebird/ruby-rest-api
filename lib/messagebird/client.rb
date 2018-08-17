@@ -174,6 +174,10 @@ module MessageBird
       request(:delete, "groups/#{id}")
     end
 
+    def group_list(limit = 0, offset = 0)
+      List.new(Group, request(:get, "groups?limit=#{limit}&offset=#{offset}"))
+    end
+
     def group_update(id, name)
       request(:patch, "groups/#{id}", { :name => name })
     end

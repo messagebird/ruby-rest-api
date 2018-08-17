@@ -21,22 +21,7 @@ module MessageBird
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl     = true
 
-      # Construct the HTTP GET or POST request.
-      case method
-      when :get
-        request = Net::HTTP::Get.new(uri.request_uri)
-      when :post
-        request = Net::HTTP::Post.new(uri.request_uri)
-      else
-        raise MethodNotAllowedException
-      end
-
-      request['Accept']        = 'application/json'
-      request['Authorization'] = "AccessKey #{@access_key}"
-      request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
-
-      # If present, add the HTTP POST parameters.
-      request.set_form_data(params) if method == :post && !params.empty?
+      request = prepare_request(method, path, params)
 
       # Execute the request and fetch the response.
       response = http.request(request)
@@ -50,6 +35,26 @@ module MessageBird
       end
 
       response.body
+    end
+
+    def prepare_request(method, uri, params={})
+      # Construct the HTTP request.
+      case method
+      when :get
+        request = Net::HTTP::Get.new(uri.request_uri)
+      when :post
+        request = Net::HTTP::Post.new(uri.request_uri)
+      else
+        raise MethodNotAllowedException
+      end
+
+      request['Accept']        = 'application/json'
+      request['Authorization'] = "AccessKey #{@access_key}"
+      request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
+
+      request.set_form_data(params) if method == :post && !params.empty?
+
+      request
     end
 
   end

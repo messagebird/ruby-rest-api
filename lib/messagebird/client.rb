@@ -205,12 +205,7 @@ module MessageBird
       # JSON by default. See also:
       # https://developers.messagebird.com/docs/alternatives.
 
-      s = StringIO.new
-
-      s << '_method=PUT'
-      contact_ids.each { |e| s << "&ids[]=#{e}" }
-
-      s.string
+      '_method=PUT&' + contact_ids.map { |e| "ids[]=#{e}" }.join('&')
     end
 
   end

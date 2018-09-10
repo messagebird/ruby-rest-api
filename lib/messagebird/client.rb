@@ -5,6 +5,7 @@ require 'uri'
 require 'messagebird/balance'
 require 'messagebird/contact'
 require 'messagebird/error'
+require 'messagebird/group'
 require 'messagebird/hlr'
 require 'messagebird/http_client'
 require 'messagebird/list'
@@ -159,6 +160,52 @@ module MessageBird
 
     def contact_list(limit = 0, offset = 0)
       List.new(Contact, request(:get, "contacts?limit=#{limit}&offset=#{offset}"))
+    end
+
+    def group(id)
+      Group.new(request(:get, "groups/#{id}"))
+    end
+
+    def group_create(name)
+      Group.new(request(:post, 'groups', { :name => name }))
+    end
+
+    def group_delete(id)
+      request(:delete, "groups/#{id}")
+    end
+
+    def group_list(limit = 0, offset = 0)
+      List.new(Group, request(:get, "groups?limit=#{limit}&offset=#{offset}"))
+    end
+
+    def group_update(id, name)
+      request(:patch, "groups/#{id}", { :name => name })
+    end
+
+    def group_add_contacts(group_id, contact_ids)
+      # We expect an array, but we can handle a string ID as well...
+      contact_ids = [contact_ids] if contact_ids.is_a? String
+
+      query = add_contacts_query(contact_ids)
+
+      request(:get, "groups/#{group_id}?#{query}")
+    end
+
+    def group_delete_contact(group_id, contact_id)
+      request(:delete, "groups/#{group_id}/contacts/#{contact_id}")
+    end
+
+    private # Applies to every method below this line
+
+    def add_contacts_query(contact_ids)
+      # add_contacts_query gets a query string to add contacts to a group.
+      # We're using the alternative "/foo?_method=PUT&key=value" format to send
+      # the contact IDs as GET params. Sending these in the request body would
+      # require a painful workaround, as the client sends request bodies as
+      # JSON by default. See also:
+      # https://developers.messagebird.com/docs/alternatives.
+
+      '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&')
     end
 
   end

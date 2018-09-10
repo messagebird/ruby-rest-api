@@ -27,17 +27,6 @@ module MessageBird
       # Execute the request and fetch the response.
       response = http.request(request)
 
-      # Parse the HTTP response.
-      case response.code.to_i
-      when 200, 201, 204, 401, 404, 405, 422
-        # Ok
-      else
-        raise InvalidPhoneNumberException, 'Unknown response from server'
-      end
-
-      # Execute the request and fetch the response.
-      response = http.request(request)
-
       assert_valid_response_code(response.code.to_i)
       assert_json_response_type(response['Content-Type']) unless check_json
 

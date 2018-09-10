@@ -22,8 +22,22 @@ module MessageBird
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl     = true
 
-      # Construct the HTTP GET or POST request.
+      request = prepare_request(method, uri, params)
+
+      # Execute the request and fetch the response.
+      response = http.request(request)
+
+      assert_valid_response_code(response.code.to_i)
+      assert_json_response_type(response['Content-Type']) unless check_json
+
+      response.body
+    end
+
+    def prepare_request(method, uri, params={})
+      # Construct the HTTP request.
       case method
+      when :delete
+        request = Net::HTTP::Delete.new(uri.request_uri)
       when :get
         request = Net::HTTP::Get.new(uri.request_uri)
       when :post
@@ -36,16 +50,9 @@ module MessageBird
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
 
-      # If present, add the HTTP POST parameters.
       request.set_form_data(params) if method == :post && !params.empty?
 
-      # Execute the request and fetch the response.
-      response = http.request(request)
-
-      assert_valid_response_code(response.code.to_i)
-      assert_json_response_type(response['Content-Type']) unless check_json
-
-      response.body
+      request
     end
 
     # Throw an exception if the response code is not one we expect from the

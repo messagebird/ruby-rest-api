@@ -3,13 +3,15 @@ require 'net/https'
 require 'uri'
 
 require 'messagebird/balance'
+require 'messagebird/contact'
 require 'messagebird/error'
 require 'messagebird/hlr'
 require 'messagebird/http_client'
-require 'messagebird/verify'
-require 'messagebird/message'
-require 'messagebird/voicemessage'
+require 'messagebird/list'
 require 'messagebird/lookup'
+require 'messagebird/message'
+require 'messagebird/verify'
+require 'messagebird/voicemessage'
 
 module MessageBird
   class ErrorException < StandardError
@@ -32,6 +34,8 @@ module MessageBird
 
     def request(method, path, params={})
       response_body = @http_client.request(method, path, params)
+      return if response_body.empty?
+
       json = JSON.parse(response_body)
 
       # If the request returned errors, create Error objects and raise.
@@ -132,6 +136,29 @@ module MessageBird
 
     def lookup_hlr(phoneNumber, params={})
       HLR.new(request(:get, "lookup/#{phoneNumber}/hlr", params))
+    end
+
+    def contact_create(phoneNumber, params={})
+      Contact.new(request(
+                      :post,
+                      'contacts',
+                      params.merge({ :msisdn => phoneNumber.to_s })))
+    end
+
+    def contact(id)
+      Contact.new(request(:get, "contacts/#{id}"))
+    end
+
+    def contact_delete(id)
+      request(:delete, "contacts/#{id}")
+    end
+
+    def contact_update(id, params={})
+      request(:patch, "contacts/#{id}", params)
+    end
+
+    def contact_list(limit = 0, offset = 0)
+      List.new(Contact, request(:get, "contacts?limit=#{limit}&offset=#{offset}"))
     end
 
   end

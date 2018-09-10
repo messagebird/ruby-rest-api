@@ -41,15 +41,15 @@ module MessageBird
       # Execute the request and fetch the response.
       response = http.request(request)
 
-      # Parse the HTTP response.
-      case response.code.to_i
-      when 200, 201, 204, 401, 404, 405, 422
-        # Ok
-      else
-        raise InvalidPhoneNumberException, 'Unknown response from server'
-      end
+      assert_valid_response_code(response.code.to_i)
 
       response.body
+    end
+
+    def assert_valid_response_code(response_code)
+      expected_codes = [200, 201, 204, 401, 404, 405, 422]
+
+      raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? response_code
     end
 
   end

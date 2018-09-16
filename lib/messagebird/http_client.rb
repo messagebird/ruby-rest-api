@@ -40,6 +40,8 @@ module MessageBird
         request = Net::HTTP::Delete.new(uri.request_uri)
       when :get
         request = Net::HTTP::Get.new(uri.request_uri)
+      when :patch
+        request = Net::HTTP::Patch.new(uri.request_uri)
       when :post
         request = Net::HTTP::Post.new(uri.request_uri)
       else
@@ -50,7 +52,7 @@ module MessageBird
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
 
-      request.set_form_data(params) if method == :post && !params.empty?
+      request.set_form_data(params) if [:patch, :post].include?(method) && !params.empty?
 
       request
     end

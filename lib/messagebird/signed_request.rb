@@ -1,4 +1,4 @@
-require 'active_support/all'
+require 'base64'
 require 'digest'
 require 'time'
 
@@ -34,7 +34,7 @@ module MessageBird
     def buildPayload
       parts = []
       parts.push(@requestTimestamp)
-      parts.push(@queryParameters.sort.to_h.to_query)
+      parts.push(URI.encode_www_form(@queryParameters.sort.to_h))
       parts.push(Digest::SHA256.new.digest @body)
       parts.join("\n")
     end

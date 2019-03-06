@@ -28,7 +28,7 @@ module MessageBird
     def verify(signingKey)
       calculatedSignature = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), signingKey, buildPayload)
       expectedSignature = Base64.decode64(@signature)
-      secure_compare(calculatedSignature, expectedSignature)
+      calculatedSignature.bytes == expectedSignature.bytes
     end
 
     def buildPayload
@@ -43,13 +43,5 @@ module MessageBird
       (Time.now.getutc.to_i - @requestTimestamp) < offset;
     end
 
-    def secure_compare(a, b)
-      return false if a.empty? || b.empty? || a.bytesize != b.bytesize
-      l = a.unpack "C#{a.bytesize}"
-
-      res = 0
-      b.each_byte {|byte| res |= byte ^ l.shift}
-      res == 0
-    end
   end
 end

@@ -34,7 +34,7 @@ module MessageBird
     def buildPayload
       parts = []
       parts.push(@requestTimestamp)
-      parts.push(URI.encode_www_form(@queryParameters.sort.to_h))
+      parts.push(URI.encode_www_form(@queryParameters.sort))
       parts.push(Digest::SHA256.new.digest @body)
       parts.join("\n")
     end

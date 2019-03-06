@@ -25,7 +25,7 @@ module MessageBird
     end
 
     def verify(signingKey)
-      calculatedSignature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), signingKey, buildPayload)).strip()
+      calculatedSignature = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), signingKey, buildPayload)
       expectedSignature = Base64.decode64(@signature)
       calculatedSignature == expectedSignature
     end

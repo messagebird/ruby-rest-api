@@ -6,8 +6,7 @@ rvm:
 - jruby
 matrix:
   allow_failures:
-  - rvm:
-    - jruby
-    - 1.9.3
+  - rvm: jruby
+  - rvm: 1.9.3
 install: gem install rspec
 script: rake spec

@@ -1,6 +1,7 @@
 require 'net/https'
 require 'uri'
 require 'json'
+require 'messagebird/http_client'
 
 module MessageBird
   class ConversationClient < HttpClient

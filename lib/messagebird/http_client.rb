@@ -15,14 +15,22 @@ module MessageBird
       @access_key = access_key
     end
 
+    def endpoint()
+      ENDPOINT
+    end
+
     def request(method, path, params={}, check_json=true)
-      uri = URI.join(ENDPOINT, '/', path)
+      uri = URI.join(endpoint, path)
 
       # Set up the HTTP object.
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl     = true
+      http.use_ssl = true
 
-      request = prepare_request(method, uri, params)
+      unless ENV['DEBUG_MB_HTTP_CLIENT'].nil?
+        http.set_debug_output($stdout)
+      end 
+
+      request = build_request(method, uri, params)
 
       # Execute the request and fetch the response.
       response = http.request(request)
@@ -33,7 +41,12 @@ module MessageBird
       response.body
     end
 
-    def prepare_request(method, uri, params={})
+    def prepare_request(request, params={})
+      request.set_form_data(params) 
+      request
+    end
+
+    def build_request(method, uri, params={})
       # Construct the HTTP request.
       case method
       when :delete
@@ -52,8 +65,9 @@ module MessageBird
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
 
-      request.set_form_data(params) if [:patch, :post].include?(method) && !params.empty?
-
+      if [:patch, :post].include?(method) && !params.empty?
+        prepare_request(request, params)
+      end
       request
     end
 
@@ -63,7 +77,7 @@ module MessageBird
       # InvalidPhoneNumberException does not make a lot of sense here, but it's
       # needed to maintain backwards compatibility. See issue:
       # https://github.com/messagebird/ruby-rest-api/issues/17
-      expected_codes = [200, 201, 204, 401, 404, 405, 422]
+      expected_codes = [200, 201, 202, 204, 401, 404, 405, 422]
       raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? code
     end
 

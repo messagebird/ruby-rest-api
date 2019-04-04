@@ -7,6 +7,7 @@ require 'messagebird/contact'
 require 'messagebird/conversation'
 require 'messagebird/conversation_client'
 require 'messagebird/conversation_message'
+require 'messagebird/conversation_webhook'
 require 'messagebird/error'
 require 'messagebird/group'
 require 'messagebird/hlr'
@@ -105,6 +106,32 @@ module MessageBird
       ConversationMessage.new(conversation_request(:get, "messages/#{id}"))
     end
     
+    def conversation_webhook_create(channelId, url, events=[])
+      ConversationWebhook.new(conversation_request(
+        :post,
+        "webhooks",
+        :channelId => channelId,
+        :url => url,
+        :events => events
+      ))
+    end
+
+    def conversation_webhooks(limit=0, offset=0)
+      List.new(ConversationWebhook, conversation_request(:get,"webhooks?limit=#{limit}&offset=#{offset}"))
+    end
+
+    def conversation_webhook_update(id, params={})
+      ConversationWebhook.new(conversation_request(:patch,"webhooks/#{id}",params))
+    end
+
+    def conversation_webhook(id)
+      ConversationWebhook.new(conversation_request(:get,"webhooks/#{id}"))
+    end
+
+    def conversation_webhook_delete(id)
+      conversation_request(:delete,"webhooks/#{id}")
+    end
+
     # Retrieve your balance.
     def balance
       Balance.new(request(:get, 'balance'))

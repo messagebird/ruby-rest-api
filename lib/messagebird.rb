@@ -9,6 +9,10 @@ module MessageBird
   CONVERSATION_STATUS_ACTIVE   = 'active'
   CONVERSATION_STATUS_ARCHIVED = 'archived'
 
+  WEBHOOK_EVENT_CONVERSATION_CREATED = 'conversation.created'
+  WEBHOOK_EVENT_CONVERSATION_UPDATED = 'conversation.updated'
+  WEBHOOK_EVENT_MESSAGE_CREATED = 'message.created'
+  WEBHOOK_EVENT_MESSAGE_UPDATED = 'message.updated'
 end
 
 require 'messagebird/balance'

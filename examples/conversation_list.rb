@@ -19,7 +19,7 @@ begin
   limit = 10
   conversations = client.conversation_list(limit, offset)
 
-  # Print the object information.  puts
+  # Print the object information.
   puts "The following information was returned as a Conversation list:"
   puts
   puts "  count           : #{conversations.count}"

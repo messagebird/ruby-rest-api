@@ -146,7 +146,7 @@ describe 'Conversation' do
       .with(:get, 'webhooks?limit=10&offset=0', {})
       .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
 
-    list = client.conversation_webhooks(10, 0)
+    list = client.conversation_webhooks_list(10, 0)
 
     expect(list.count).to eq 2
     expect(list[0].id).to eq '00000000000000000000000000000000'

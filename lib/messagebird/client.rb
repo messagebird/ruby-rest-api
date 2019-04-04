@@ -38,7 +38,7 @@ module MessageBird
 
     def conversation_request(method, path, params={})
       response_body = @conversation_client.request(method, path, params)
-      return if response_body.empty?
+      return if response_body.nil? || response_body.empty?
       parse_body(response_body)
     end
 
@@ -116,7 +116,7 @@ module MessageBird
       ))
     end
 
-    def conversation_webhooks(limit=0, offset=0)
+    def conversation_webhooks_list(limit=0, offset=0)
       List.new(ConversationWebhook, conversation_request(:get,"webhooks?limit=#{limit}&offset=#{offset}"))
     end
 

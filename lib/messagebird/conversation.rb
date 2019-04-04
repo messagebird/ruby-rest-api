@@ -5,7 +5,8 @@ require 'messagebird/conversation_channel'
 module MessageBird 
   class Conversation < MessageBird::Base
     attr_accessor :id, :contact, :channels, :status, :messages,
-                  :createdDatetime, :updatedDatetime, :lastReceivedDatetime, :lastUsedChannelId
+                  :createdDatetime, :updatedDatetime, :lastReceivedDatetime, :lastUsedChannelId,
+                  :contactId
 
     def contact=(value)
       @contact = Contact.new(value)

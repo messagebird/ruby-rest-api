@@ -89,6 +89,18 @@ module MessageBird
       Conversation.new(conversation_request(:get, "conversations/#{id}"))
     end
 
+    def conversation_update(id, status)
+      Conversation.new(conversation_request(:patch, "conversations/#{id}", :status => status))
+    end
+    
+    def conversation_reply(id, params={})
+      ConversationMessage.new(conversation_request(:post, "conversations/#{id}/messages", params))
+    end
+    
+    def conversation_messages_list(id, limit=0, offset=0)
+      List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages?limit=#{limit}&offset=#{offset}"))
+    end
+    
     # Retrieve your balance.
     def balance
       Balance.new(request(:get, 'balance'))

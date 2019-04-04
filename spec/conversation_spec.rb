@@ -106,4 +106,20 @@ describe 'Conversation' do
 
   end
 
+
+  it 'reads a message' do
+    http_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', http_client)
+
+    expect(http_client)
+      .to receive(:request)
+      .with(:get, 'messages/message-id', {})
+      .and_return('{"id":"00000000000000000000000000000000"}')
+
+    msg = client.conversation_message('message-id')
+
+    expect(msg.id).to eq '00000000000000000000000000000000'
+
+  end
+
 end

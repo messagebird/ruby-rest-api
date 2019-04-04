@@ -14,9 +14,9 @@ begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Reply to a conversation
-  msg = client.conversation_reply('00000000000000000000000000000000', :type => 'text', :content => { :text => "Hi there" })
-  
+  # Fetch a message
+  msg = client.conversation_message('00000000000000000000000000000000')
+   
   # Print the object information.
   puts <<EOF
 The following information was returned as a Message object:
@@ -33,7 +33,7 @@ EOF
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while updating a conversation:'
+  puts 'An error occured while creating a conversation:'
   puts
 
   ex.errors.each do |error|

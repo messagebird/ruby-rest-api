@@ -101,6 +101,10 @@ module MessageBird
       List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages?limit=#{limit}&offset=#{offset}"))
     end
     
+    def conversation_message(id)
+      ConversationMessage.new(conversation_request(:get, "messages/#{id}"))
+    end
+    
     # Retrieve your balance.
     def balance
       Balance.new(request(:get, 'balance'))

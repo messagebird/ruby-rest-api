@@ -4,6 +4,10 @@ require 'uri'
 
 require 'messagebird/balance'
 require 'messagebird/contact'
+require 'messagebird/conversation'
+require 'messagebird/conversation_client'
+require 'messagebird/conversation_message'
+require 'messagebird/conversation_webhook'
 require 'messagebird/error'
 require 'messagebird/group'
 require 'messagebird/hlr'
@@ -24,20 +28,28 @@ module MessageBird
   end
 
   class Client
-
-    attr_reader :access_key
-    attr_reader :http_client
+    attr_reader :access_key, :http_client, :conversation_client
 
     def initialize(access_key = nil, http_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
+      @conversation_client = http_client || ConversationClient.new(@access_key)
+    end
+
+    def conversation_request(method, path, params={})
+      response_body = @conversation_client.request(method, path, params)
+      return if response_body.nil? || response_body.empty?
+      parse_body(response_body)
     end
 
     def request(method, path, params={})
       response_body = @http_client.request(method, path, params)
       return if response_body.empty?
+      parse_body(response_body)
+    end
 
-      json = JSON.parse(response_body)
+    def parse_body(body)
+      json = JSON.parse(body)
 
       # If the request returned errors, create Error objects and raise.
       if json.has_key?('errors')
@@ -45,6 +57,79 @@ module MessageBird
       end
 
       json
+    end
+
+    ## Conversations
+    # Send a conversation message
+    def send_conversation_message(from, to, params={})
+      ConversationMessage.new(conversation_request(
+        :post,
+        'send', 
+        params.merge({
+          :from => from,
+          :to => to,
+        })))
+    end
+
+    # Start a conversation
+    def start_conversation(to, channelId, params={})
+      Conversation.new(conversation_request(
+        :post,
+        'conversations/start',
+        params.merge({
+          :to => to,
+          :channelId => channelId,
+        })))
+    end
+
+    def conversation_list(limit = 0, offset = 0)
+      List.new(Conversation, conversation_request(:get, "conversations?limit=#{limit}&offset=#{offset}"))
+    end
+
+    def conversation(id)
+      Conversation.new(conversation_request(:get, "conversations/#{id}"))
+    end
+
+    def conversation_update(id, status)
+      Conversation.new(conversation_request(:patch, "conversations/#{id}", :status => status))
+    end
+    
+    def conversation_reply(id, params={})
+      ConversationMessage.new(conversation_request(:post, "conversations/#{id}/messages", params))
+    end
+    
+    def conversation_messages_list(id, limit=0, offset=0)
+      List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages?limit=#{limit}&offset=#{offset}"))
+    end
+    
+    def conversation_message(id)
+      ConversationMessage.new(conversation_request(:get, "messages/#{id}"))
+    end
+    
+    def conversation_webhook_create(channelId, url, events=[])
+      ConversationWebhook.new(conversation_request(
+        :post,
+        "webhooks",
+        :channelId => channelId,
+        :url => url,
+        :events => events
+      ))
+    end
+
+    def conversation_webhooks_list(limit=0, offset=0)
+      List.new(ConversationWebhook, conversation_request(:get,"webhooks?limit=#{limit}&offset=#{offset}"))
+    end
+
+    def conversation_webhook_update(id, params={})
+      ConversationWebhook.new(conversation_request(:patch,"webhooks/#{id}",params))
+    end
+
+    def conversation_webhook(id)
+      ConversationWebhook.new(conversation_request(:get,"webhooks/#{id}"))
+    end
+
+    def conversation_webhook_delete(id)
+      conversation_request(:delete,"webhooks/#{id}")
     end
 
     # Retrieve your balance.

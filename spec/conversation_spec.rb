@@ -64,9 +64,9 @@ describe 'Conversation' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:patch, 'conversations/conversation-id', { :status => MessageBird::CONVERSATION_STATUS_ARCHIVED })
+      .with(:patch, 'conversations/conversation-id', { :status => MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED })
       .and_return('{"id":"conversation-id", "contactId": "contact-id"}')
-    conversation = client.conversation_update('conversation-id', MessageBird::CONVERSATION_STATUS_ARCHIVED)
+    conversation = client.conversation_update('conversation-id', MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED)
 
     expect(conversation.id).to eq 'conversation-id'
     expect(conversation.contactId).to eq 'contact-id'
@@ -128,10 +128,10 @@ describe 'Conversation' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'webhooks', :channelId => 'channel-id', :events => [MessageBird::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::WEBHOOK_EVENT_MESSAGE_UPDATED], :url => 'url')
+      .with(:post, 'webhooks', :channelId => 'channel-id', :events => [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], :url => 'url')
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created", "message.updated"]}')
 
-    webhook = client.conversation_webhook_create('channel-id', 'url', [MessageBird::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::WEBHOOK_EVENT_MESSAGE_UPDATED])
+    webhook = client.conversation_webhook_create('channel-id', 'url', [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])
 
     expect(webhook.id).to eq '00000000000000000000000000000000'
     expect(webhook.events.count).to eq 2
@@ -172,10 +172,10 @@ describe 'Conversation' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:patch, 'webhooks/webhook-id', :events => [MessageBird::WEBHOOK_EVENT_MESSAGE_CREATED], :url => 'url')
+      .with(:patch, 'webhooks/webhook-id', :events => [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], :url => 'url')
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created"]}')
 
-    webhook = client.conversation_webhook_update('webhook-id', :events => [MessageBird::WEBHOOK_EVENT_MESSAGE_CREATED], :url => 'url')
+    webhook = client.conversation_webhook_update('webhook-id', :events => [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], :url => 'url')
 
     expect(webhook.id).to eq '00000000000000000000000000000000'
     expect(webhook.events.count).to eq 1

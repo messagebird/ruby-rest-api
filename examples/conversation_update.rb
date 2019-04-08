@@ -15,7 +15,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Update a conversation
-  conversation = client.conversation_update('57b96dbe0fda40f0a814f5e3268c30a9', MessageBird::CONVERSATION_STATUS_ACTIVE)
+  conversation = client.conversation_update('57b96dbe0fda40f0a814f5e3268c30a9', MessageBird::Conversation::CONVERSATION_STATUS_ACTIVE)
   
   # Print the object information.
   puts <<EOF

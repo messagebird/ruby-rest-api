@@ -8,8 +8,9 @@ module MessageBird
   class MethodNotAllowedException < ArgumentError; end
 
   class HttpClient
-
     attr_reader :access_key
+
+    ENDPOINT = 'https://rest.messagebird.com/'
 
     def initialize(access_key)
       @access_key = access_key

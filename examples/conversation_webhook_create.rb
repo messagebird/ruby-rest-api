@@ -15,7 +15,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a webhook
-  webhook = client.conversation_webhook_create('00000000000000000000000000000000', 'https://test.com', [MessageBird::WEBHOOK_EVENT_MESSAGE_UPDATED])
+  webhook = client.conversation_webhook_create('00000000000000000000000000000000', 'https://test.com', [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])
 
   # Print the object information.
   puts "The following information was returned as a Webhook object"

@@ -8,6 +8,13 @@ module MessageBird
                   :createdDatetime, :updatedDatetime, :lastReceivedDatetime, :lastUsedChannelId,
                   :contactId
 
+    CONVERSATION_STATUS_ACTIVE = 'active'
+    CONVERSATION_STATUS_ARCHIVED = 'archived'
+    WEBHOOK_EVENT_CONVERSATION_CREATED = 'conversation.created'
+    WEBHOOK_EVENT_CONVERSATION_UPDATED = 'conversation.updated'
+    WEBHOOK_EVENT_MESSAGE_CREATED = 'message.created'
+    WEBHOOK_EVENT_MESSAGE_UPDATED = 'message.updated'
+
     def contact=(value)
       @contact = Contact.new(value)
     end

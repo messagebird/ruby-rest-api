@@ -4,8 +4,8 @@ require 'messagebird/base'
 
 module MessageBird
   class HLR < MessageBird::Base
-    attr_accessor :id, :href, :msisdn, :network, :reference, :status, 
-                  :details, :createdDatetime, :statusDatetime
+    attr_accessor :id, :href, :msisdn, :network, :reference, :status, :details
+    attr_reader :createdDatetime, :statusDatetime
 
     def createdDatetime=(value)
       @createdDatetime = value_to_time(value)

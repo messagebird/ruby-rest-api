@@ -5,8 +5,8 @@ require 'messagebird/message_reference'
 
 module MessageBird
   class Contact < MessageBird::Base
-    attr_accessor :id, :href, :msisdn, :firstName, :lastName, :customDetails,
-                  :groups, :messages, :createdDatetime, :updatedDatetime
+    attr_accessor :id, :href, :msisdn, :firstName, :lastName
+    attr_reader :customDetails, :groups, :messages, :createdDatetime, :updatedDatetime
 
     def customDetails=(value)
       @customDetails = MessageBird::CustomDetails.new(value)

@@ -3,8 +3,8 @@ require 'messagebird/contact_reference'
 
 module MessageBird
   class Group < MessageBird::Base
-    attr_accessor :id, :href, :name, :contacts, :createdDatetime,
-                  :updatedDatetime
+    attr_accessor :id, :href, :name
+    attr_reader :contacts, :createdDatetime, :updatedDatetime
 
     def contacts=(value)
       @contacts = MessageBird::ContactReference.new(value)

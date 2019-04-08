@@ -4,9 +4,9 @@ require 'messagebird/conversation_channel'
 
 module MessageBird 
   class Conversation < MessageBird::Base
-    attr_accessor :id, :contact, :channels, :status, :messages,
-                  :createdDatetime, :updatedDatetime, :lastReceivedDatetime, :lastUsedChannelId,
-                  :contactId
+    attr_accessor :id, :status, :lastUsedChannelId, :contactId
+    attr_reader :contact, :channels, :messages, :createdDatetime,
+                :updatedDatetime, :lastReceivedDatetime
 
     CONVERSATION_STATUS_ACTIVE = 'active'
     CONVERSATION_STATUS_ARCHIVED = 'archived'

@@ -1,7 +1,6 @@
 require 'messagebird/base'
 
 class List < MessageBird::Base
-
   attr_accessor :offset, :limit, :count, :totalCount, :links, :items
 
   # type will be used to create objects for the items, e.g.

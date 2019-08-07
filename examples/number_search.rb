@@ -3,7 +3,7 @@
 $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = 'A5MFbKci0xRSwM6529ivSfFqE'
+# ACCESS_KEY = 'YOUR KEY HERE'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'

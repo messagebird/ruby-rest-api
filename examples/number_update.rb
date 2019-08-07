@@ -4,7 +4,6 @@ $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
-
 # PHONE_NUMBER = "31612345670"
 
 unless defined?(ACCESS_KEY)

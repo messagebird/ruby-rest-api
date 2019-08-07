@@ -175,6 +175,53 @@ Similar to regular messaging and HLR lookups, there is a method available to fet
 client.voice_message('a08e51a0353bd16cea7f298a37405850')
 ```
 
+##### Numbers
+There is also a Numbers API that allow you to search for and purchase number subscriptions to use as originator in other services.
+
+```ruby
+pp client.number_search("NL", {:limit=>5})
+
+#<List:0x00007fa405130618
+ @count=5,
+ @items=
+  [#<MessageBird::Number:0x00007fa405130528
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005108",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa4051303c0
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005143",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa405130208
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005145",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa4051300c8
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005147",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa405131c48
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005148",
+    @region="",
+    @type="unknown">],
+ @limit=5,
+ @type=MessageBird::Number>
+```
 Documentation
 -------------
 Complete documentation, instructions, and examples are available at:

@@ -175,6 +175,14 @@ Similar to regular messaging and HLR lookups, there is a method available to fet
 client.voice_message('a08e51a0353bd16cea7f298a37405850')
 ```
 
+##### Conversations WhatsApp Sandbox
+To use the whatsapp sandbox you need to add `MessageBird::Client::ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX` to the list of features you want enabled. Don't forget to replace `YOUR_ACCESS_KEY` with your actual access key.
+
+```ruby
+require 'messagebird'
+
+client = MessageBird::Client.new(YOUR_ACCESS_KEY, nil, [MessageBird::Client::ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX])
+```
 Documentation
 -------------
 Complete documentation, instructions, and examples are available at:

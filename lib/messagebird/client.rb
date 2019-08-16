@@ -35,12 +35,7 @@ module MessageBird
     def initialize(access_key = nil, http_client = nil, features = [])
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
-<<<<<<< Updated upstream
-      @conversation_client = http_client || ConversationClient.new(@access_key)
-=======
       @conversation_client = http_client || ConversationClient.new(@access_key, features)
-      @number_client = http_client || NumberClient.new(@access_key)
->>>>>>> Stashed changes
     end
 
     def conversation_request(method, path, params={})

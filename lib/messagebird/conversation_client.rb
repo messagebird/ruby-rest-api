@@ -7,16 +7,27 @@ module MessageBird
   class ConversationClient < HttpClient
     attr_reader :endpoint
 
-    @endpoint  = 'https://conversations.messagebird.com/v1/'
+    BASE_ENDPOINT = 'https://conversations.messagebird.com/v1/'
     WHATSAPP_SANDBOX_ENDPOINT = 'https://whatsapp-sandbox.messagebird.com/v1/'
 
-    def initialize(access_key, features=[])
+    def initialize(access_key)
       super(access_key)
-      if features.include? Client::ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX then
+      @endpoint  = BASE_ENDPOINT
+    end
+
+    def enable_feature(feature) 
+      # To access the WhatsApp sandbox the endpoint changes to a proxy that emulates the real API to allow for easier testing of WhatsApp channels.
+      if feature == Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE then
         @endpoint = WHATSAPP_SANDBOX_ENDPOINT
       end
     end
 
+    def disable_feature() 
+      # When the feature gets disabled the endpoint changes back to the live endpoint.
+      if feature == Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE then
+        @endpoint = BASE_ENDPOINT
+      end
+    end
     
     def endpoint() 
       @endpoint

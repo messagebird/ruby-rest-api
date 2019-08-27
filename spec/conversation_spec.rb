@@ -3,7 +3,7 @@ describe 'Conversation' do
   it 'sends a message' do
 
     conversation_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', conversation_client)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
     expect(conversation_client)
       .to receive(:request)
@@ -16,7 +16,7 @@ describe 'Conversation' do
   it 'starts a conversation' do
 
     conversation_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', conversation_client)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
     expect(conversation_client)
       .to receive(:request)
@@ -28,10 +28,10 @@ describe 'Conversation' do
 
   it 'lists' do
 
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'conversations?limit=2&offset=0', {})
       .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
@@ -44,10 +44,10 @@ describe 'Conversation' do
   end
 
   it 'reads an existing' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'conversations/conversation-id', {})
       .and_return('{"id": "conversation-id","href": "https://conversations.messagebird.com/v1/conversations/conversation-id"}')
@@ -59,10 +59,10 @@ describe 'Conversation' do
   end
 
   it 'updates a conversation' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:patch, 'conversations/conversation-id', { :status => MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED })
       .and_return('{"id":"conversation-id", "contactId": "contact-id"}')
@@ -74,10 +74,10 @@ describe 'Conversation' do
   end
 
   it 'replies to a conversation' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:post, 'conversations/conversation-id/messages', { :type => 'text', :content => { :text => 'Hi there' }})
       .and_return('{"id":"message-id", "channelId": "channel-id", "conversationId": "conversation-id"}')
@@ -91,10 +91,10 @@ describe 'Conversation' do
   end
 
   it 'reads messages in a conversation' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'conversations/conversation-id/messages?limit=2&offset=0', {})
       .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
@@ -108,10 +108,10 @@ describe 'Conversation' do
 
 
   it 'reads a message' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'messages/message-id', {})
       .and_return('{"id":"00000000000000000000000000000000"}')
@@ -123,10 +123,10 @@ describe 'Conversation' do
   end
 
   it 'creates a webhook' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:post, 'webhooks', :channelId => 'channel-id', :events => [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], :url => 'url')
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created", "message.updated"]}')
@@ -138,10 +138,10 @@ describe 'Conversation' do
   end
 
   it 'reads a list of webhooks' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'webhooks?limit=10&offset=0', {})
       .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
@@ -153,10 +153,10 @@ describe 'Conversation' do
   end
 
   it 'reads a webhook' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:get, 'webhooks/webhook-id', {})
       .and_return('{"id":"00000000000000000000000000000000"}')
@@ -167,10 +167,10 @@ describe 'Conversation' do
   end
 
   it 'updates a webhook' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:patch, 'webhooks/webhook-id', :events => [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], :url => 'url')
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created"]}')
@@ -182,10 +182,10 @@ describe 'Conversation' do
   end
 
   it 'deletes a webhook' do
-    http_client = double(MessageBird::ConversationClient)
-    client = MessageBird::Client.new('', http_client)
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
 
-    expect(http_client)
+    expect(conversation_client)
       .to receive(:request)
       .with(:delete, 'webhooks/webhook-id', {})
       .and_return('')
@@ -193,4 +193,14 @@ describe 'Conversation' do
     client.conversation_webhook_delete('webhook-id')
   end
 
+  it 'enable whatsapp sandbox' do
+    conversation_client = MessageBird::ConversationClient.new('')
+    client = MessageBird::Client.new('', nil, conversation_client)
+
+    expect(conversation_client.endpoint).to eq "https://conversations.messagebird.com/v1/"
+
+    client.enable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
+
+    expect(conversation_client.endpoint).to eq "https://whatsapp-sandbox.messagebird.com/v1/"
+  end
 end

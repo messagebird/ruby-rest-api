@@ -30,12 +30,23 @@ module MessageBird
   class Client
     attr_reader :access_key, :http_client, :conversation_client
 
-    ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX = "ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX"
+    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE"
 
-    def initialize(access_key = nil, http_client = nil, features = [])
+    def initialize(access_key = nil, http_client = nil, conversation_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
-      @conversation_client = http_client || ConversationClient.new(@access_key, features)
+
+      @conversation_client = conversation_client || ConversationClient.new(@access_key)
+    end
+
+    def enable_feature(feature)
+      @http_client.enable_feature(feature)
+      @conversation_client.enable_feature(feature)
+    end
+
+    def disable_feature(feature)
+      @http_client.disable_feature(feature)
+      @conversation_client.disable_feature(feature)
     end
 
     def conversation_request(method, path, params={})

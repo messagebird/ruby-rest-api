@@ -181,7 +181,8 @@ To use the whatsapp sandbox you need to add `MessageBird::Client::ENABLE_CONVERS
 ```ruby
 require 'messagebird'
 
-client = MessageBird::Client.new(YOUR_ACCESS_KEY, nil, [MessageBird::Client::ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX])
+client = MessageBird::Client.new(YOUR_ACCESS_KEY)
+client.enable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
 ```
 Documentation
 -------------

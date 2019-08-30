@@ -22,7 +22,7 @@ module MessageBird
       end
     end
 
-    def disable_feature() 
+    def disable_feature(feature) 
       # When the feature gets disabled the endpoint changes back to the live endpoint.
       if feature == Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE then
         @endpoint = BASE_ENDPOINT

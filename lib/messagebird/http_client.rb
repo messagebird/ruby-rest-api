@@ -16,12 +16,6 @@ module MessageBird
       @access_key = access_key
     end
 
-    def enable_feature(feature) 
-    end
-
-    def disable_feature() 
-    end
-
     def endpoint()
       ENDPOINT
     end

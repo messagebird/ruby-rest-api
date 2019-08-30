@@ -202,5 +202,19 @@ describe 'Conversation' do
     client.enable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
 
     expect(conversation_client.endpoint).to eq "https://whatsapp-sandbox.messagebird.com/v1/"
+
+    client.disable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
+
+    expect(conversation_client.endpoint).to eq "https://conversations.messagebird.com/v1/"
+  end
+
+  it 'invalid feature' do
+    conversation_client = MessageBird::ConversationClient.new('')
+    client = MessageBird::Client.new('', nil, conversation_client)
+
+    expect{
+      client.enable_feature("INVALID")
+    }.to raise_error(MessageBird::InvalidFeatureException)
+
   end
 end

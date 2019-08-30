@@ -27,13 +27,36 @@ module MessageBird
     end
   end
 
+  class InvalidFeatureException < StandardError
+  end
+
   class Client
     attr_reader :access_key, :http_client, :conversation_client
 
-    def initialize(access_key = nil, http_client = nil)
+    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE" # Enables the whatsapp sandbox
+    VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE]                         # List of valid features for validation
+
+    def initialize(access_key = nil, http_client = nil, conversation_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
-      @conversation_client = http_client || ConversationClient.new(@access_key)
+
+      @conversation_client = conversation_client || ConversationClient.new(@access_key)
+    end
+
+    def enable_feature(feature)
+      if VALID_FEATURES.include? feature
+        @conversation_client.enable_feature(feature)
+      else
+        raise InvalidFeatureException
+      end
+    end
+
+    def disable_feature(feature)
+      if VALID_FEATURES.include? feature
+        @conversation_client.disable_feature(feature)
+      else
+        raise InvalidFeatureException
+      end
     end
 
     def conversation_request(method, path, params={})

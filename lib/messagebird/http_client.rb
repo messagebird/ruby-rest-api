@@ -76,9 +76,6 @@ module MessageBird
     # Throw an exception if the response code is not one we expect from the
     # MessageBird API.
     def assert_valid_response_code(code)
-      # InvalidPhoneNumberException does not make a lot of sense here, but it's
-      # needed to maintain backwards compatibility. See issue:
-      # https://github.com/messagebird/ruby-rest-api/issues/17
       raise ServerException, 'Unknown response from server' unless VALID_RESPONSE_CODES.include? code
     end
 

@@ -10,7 +10,7 @@ module MessageBird
   class HttpClient
     attr_reader :access_key
 
-    ENDPOINT = 'https://rest.messagebird.com/'
+    ENDPOINT = 'https://rest.messagebird.com/'.freeze
     VALID_RESPONSE_CODES = [200, 201, 202, 204, 401, 404, 405, 422].freeze
 
     def initialize(access_key)

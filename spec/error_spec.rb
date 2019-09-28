@@ -12,4 +12,14 @@ describe 'Error' do
     expect{ client.message('some-id') }.to raise_error(MessageBird::ErrorException)
   end
 
+  context 'server responds with an invalid HTTP status code' do
+    it 'raises ServerException' do
+      stub_request(:any, /#{MessageBird::HttpClient::ENDPOINT}/)
+        .to_return(status: 500)
+
+      client = MessageBird::Client.new
+
+      expect { client.message('some-id') }.to raise_error(MessageBird::ServerException)
+    end
+  end
 end

@@ -9,6 +9,7 @@
 require 'rspec'
 require 'rspec/mocks'
 require 'messagebird'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
 

@@ -3,7 +3,7 @@ require 'uri'
 
 module MessageBird
 
-  class InvalidPhoneNumberException < TypeError; end
+  class ServerException < StandardError; end
   class InvalidResponseException < StandardError; end
   class MethodNotAllowedException < ArgumentError; end
 

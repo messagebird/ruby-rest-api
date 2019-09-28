@@ -79,7 +79,7 @@ module MessageBird
       # InvalidPhoneNumberException does not make a lot of sense here, but it's
       # needed to maintain backwards compatibility. See issue:
       # https://github.com/messagebird/ruby-rest-api/issues/17
-      raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? code
+      raise ServerException, 'Unknown response from server' unless VALID_RESPONSE_CODES.include? code
     end
 
     # Throw an exception if the response's content type is not JSON. This only

@@ -245,8 +245,8 @@ module MessageBird
         params.merge({ :source => source, :destination => destination, :callFlow => call_flow.to_s })))
     end
 
-    def call_list
-      CallList.new(Call, request(:get, 'calls'))
+    def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)
+      CallList.new(Call, request(:get, "calls?perPage=#{per_page}&page=#{page}"))
     end
 
     def call_view(id)

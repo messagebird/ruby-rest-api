@@ -1,3 +1,4 @@
+require 'messagebird/call'
 describe 'Call' do
   let(:source) { '31621234567' }
   let(:destination) { '31621234568'}
@@ -43,7 +44,7 @@ describe 'Call' do
   it 'list all calls' do
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'calls', {})
+      .with(:get, "calls?perPage=20&page=1", {})
       .and_return('{ "data": [ { "id": "f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", "status": "ended", "source": "'+source+'", "destination": "31612345678", "createdAt": "2017-02-16T10:52:00Z", "updatedAt": "2017-02-16T10:59:04Z", "endedAt": "2017-02-16T10:59:04Z", "_links": { "self": "/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58" } }, { "id": "ac07a602-dbc1-11e6-bf26-cec0c932ce01", "status": "ended", "source": "'+source+'", "destination": "31612345678", "createdAt": "2017-01-16T07:51:56Z", "updatedAt": "2017-01-16T07:55:56Z", "endedAt": "2017-01-16T07:55:56Z", "webhook": '+webhook.to_json+',"_links": { "self": "/calls/ac07a602-dbc1-11e6-bf26-cec0c932ce01" } } ], "_links": { "self": "/calls?page=1" }, "pagination": { "totalCount": 2, "pageCount": 1, "currentPage": 1, "perPage": 10 } }
 ')
     list = client.call_list
@@ -72,7 +73,8 @@ describe 'Call' do
     "self": "/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58"
   }
 }')
-    client.call_view(call_id)
+    call = client.call_view(call_id)
+    expect(call.id).to eq(call_id)
   end
 
   it 'delete a call' do

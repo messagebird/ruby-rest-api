@@ -18,7 +18,7 @@ require 'messagebird/message'
 require 'messagebird/verify'
 require 'messagebird/voicemessage'
 require 'messagebird/call'
-require 'messagebird/call_list'
+require 'messagebird/call/list'
 
 module MessageBird
   class ErrorException < StandardError
@@ -237,7 +237,8 @@ module MessageBird
         params.merge({ :recipients => recipients, :body => body.to_s })))
     end
 
-    def call_create(source, destination, call_flow, params={})
+    def call_create(source, destination, call_flow, webhook = {}, params={})
+      params = params.merge({webhook: webhook.to_json}) unless webhook.empty?
       Call.new(request(
         :post,
         'calls',

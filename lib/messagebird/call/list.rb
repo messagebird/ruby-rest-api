@@ -6,7 +6,10 @@ module MessageBird
     PER_PAGE = 20
     CURRENT_PAGE = 1
     def data=(value)
-      @items = value.map { |i| @type.new i }
+      # Call List API retruns data object instead of items
+      # to make it consistence with the rest of the SDK we shall 
+      # propagate it to items= method 
+      self.items=value
     end
 
     def pagination=(value)

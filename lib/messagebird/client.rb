@@ -237,12 +237,13 @@ module MessageBird
         params.merge({ :recipients => recipients, :body => body.to_s })))
     end
 
-    def call_create(source, destination, call_flow, webhook = {}, params={})
+    def call_create(source, destination, call_flow = {}, webhook = {}, params={})
+      params = params.merge({callFlow: call_flow.to_json}) unless call_flow.empty?
       params = params.merge({webhook: webhook.to_json}) unless webhook.empty?
       Call.new(request(
         :post,
         'calls',
-        params.merge({ :source => source, :destination => destination, :callFlow => call_flow.to_s })))
+        params.merge({ :source => source, :destination => destination })))
     end
 
     def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)

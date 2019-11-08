@@ -10,7 +10,7 @@ module MessageBird
   class HttpClient
     attr_reader :access_key
 
-    ENDPOINT = 'https://rest.messagebird.com/'
+    ENDPOINT = 'https://rest.messagebird.com/'.freeze
 
     def initialize(access_key)
       @access_key = access_key
@@ -44,23 +44,15 @@ module MessageBird
 
     def prepare_request(request, params={})
       request.set_form_data(params) 
+
       request
     end
 
     def build_request(method, uri, params={})
       # Construct the HTTP request.
-      case method
-      when :delete
-        request = Net::HTTP::Delete.new(uri.request_uri)
-      when :get
-        request = Net::HTTP::Get.new(uri.request_uri)
-      when :patch
-        request = Net::HTTP::Patch.new(uri.request_uri)
-      when :post
-        request = Net::HTTP::Post.new(uri.request_uri)
-      else
-        raise MethodNotAllowedException
-      end
+      raise MethodNotAllowedException unless [:delete, :get, :patch, :post].include?(method)
+
+      request = "Net::HTTP::#{method.to_s.capitalize}".constantize.new(uri.request_uri)
 
       request['Accept']        = 'application/json'
       request['Authorization'] = "AccessKey #{@access_key}"
@@ -69,6 +61,7 @@ module MessageBird
       if [:patch, :post].include?(method) && !params.empty?
         prepare_request(request, params)
       end
+
       request
     end
 
@@ -79,6 +72,7 @@ module MessageBird
       # needed to maintain backwards compatibility. See issue:
       # https://github.com/messagebird/ruby-rest-api/issues/17
       expected_codes = [200, 201, 202, 204, 401, 404, 405, 422]
+
       raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? code
     end
 
@@ -89,7 +83,5 @@ module MessageBird
       # for equality: some API's may append the charset to this header.
       raise InvalidResponseException, 'Response is not JSON' unless content_type.start_with? 'application/json'
     end
-
   end
-
 end

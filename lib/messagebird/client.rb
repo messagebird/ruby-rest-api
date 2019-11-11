@@ -17,6 +17,7 @@ require 'messagebird/lookup'
 require 'messagebird/message'
 require 'messagebird/verify'
 require 'messagebird/voicemessage'
+require 'messagebird/voice_client'
 
 module MessageBird
   class ErrorException < StandardError
@@ -31,16 +32,17 @@ module MessageBird
   end
 
   class Client
-    attr_reader :access_key, :http_client, :conversation_client
+    attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
     CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE" # Enables the whatsapp sandbox
     VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE]                         # List of valid features for validation
 
-    def initialize(access_key = nil, http_client = nil, conversation_client = nil)
+    def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
 
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
+      @voice_client = voice_client || VoiceClient.new(@access_key)
     end
 
     def enable_feature(feature)
@@ -301,6 +303,34 @@ module MessageBird
 
     def group_delete_contact(group_id, contact_id)
       request(:delete, "groups/#{group_id}/contacts/#{contact_id}")
+    end
+
+    def voice_request(method, path, params={})
+      response_body = @voice_client.request(method, path, params)
+      return if response_body.nil? || response_body.empty?
+      parse_body(response_body)
+    end
+
+    def call_flow_create(title, steps, default, record, params={})
+      params = params.merge({
+        :title => title, 
+        :steps => steps, 
+        :default => default, 
+        :record => record
+        })
+      CallFlow.new(voice_request(:post, 'call-flows', params))
+    end
+
+    def call_flow_view(id)
+      CallFlow.new(voice_request(:get, "call-flows/#{id.to_s}"))
+    end
+
+    def call_flow_list(per_page = CallFlowList::PER_PAGE, page = CallFlowList::CURRENT_PAGE)
+      CallFlowList.new(CallFlow, voice_request(:get, "call-flows?perPage=#{per_page}&page=#{page}"))
+    end
+
+    def call_flow_delete(id)
+      voice_request(:delete, "call-flows/#{id}")
     end
 
     private # Applies to every method below this line

@@ -17,6 +17,8 @@ require 'messagebird/lookup'
 require 'messagebird/message'
 require 'messagebird/verify'
 require 'messagebird/voicemessage'
+require 'messagebird/call'
+require 'messagebird/call/list'
 
 module MessageBird
   class ErrorException < StandardError
@@ -233,6 +235,27 @@ module MessageBird
         :post,
         'voicemessages',
         params.merge({ :recipients => recipients, :body => body.to_s })))
+    end
+
+    def call_create(source, destination, call_flow = {}, webhook = {}, params={})
+      params = params.merge({callFlow: call_flow.to_json}) unless call_flow.empty?
+      params = params.merge({webhook: webhook.to_json}) unless webhook.empty?
+      Call.new(request(
+        :post,
+        'calls',
+        params.merge({ :source => source, :destination => destination })))
+    end
+
+    def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)
+      CallList.new(Call, request(:get, "calls?perPage=#{per_page}&page=#{page}"))
+    end
+
+    def call_view(id)
+      Call.new(request(:get, "calls/#{id.to_s}"))
+    end
+
+    def call_delete(id)
+      request(:delete, "calls/#{id}")
     end
 
     def lookup(phoneNumber, params={})

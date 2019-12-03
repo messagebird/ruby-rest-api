@@ -16,6 +16,9 @@ require 'messagebird/list'
 require 'messagebird/lookup'
 require 'messagebird/message'
 require 'messagebird/verify'
+require 'messagebird/voice/client'
+require 'messagebird/voice/list'
+require 'messagebird/voice/webhook'
 require 'messagebird/voicemessage'
 require 'messagebird/call'
 require 'messagebird/call/list'
@@ -33,16 +36,17 @@ module MessageBird
   end
 
   class Client
-    attr_reader :access_key, :http_client, :conversation_client
+    attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
     CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE" # Enables the whatsapp sandbox
     VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE]                         # List of valid features for validation
 
-    def initialize(access_key = nil, http_client = nil, conversation_client = nil)
+    def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
 
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
+      @voice_client = voice_client || VoiceClient.new(@access_key)
     end
 
     def enable_feature(feature)
@@ -63,6 +67,12 @@ module MessageBird
 
     def conversation_request(method, path, params={})
       response_body = @conversation_client.request(method, path, params)
+      return if response_body.nil? || response_body.empty?
+      parse_body(response_body)
+    end
+
+    def voice_request(method, path, params={})
+      response_body = @voice_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
       parse_body(response_body)
     end
@@ -237,6 +247,43 @@ module MessageBird
         params.merge({ :recipients => recipients, :body => body.to_s })))
     end
 
+    def voice_webhook_create(url, params={})
+      list = VoiceList.new(VoiceWebhook, voice_request(
+        :post,
+        "webhooks",
+        params.merge({ :url => url })
+      ))
+
+      list.items[0]
+    end
+
+    def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
+      VoiceList.new(VoiceWebhook, voice_request(:get,"webhooks?perPage=#{per_page}&page=#{page}"))
+    end
+
+    def voice_webhook_update(id, params={})
+      list = VoiceList.new(VoiceWebhook, voice_request(
+        :put,
+        "webhooks/#{id}",
+        params
+      ))
+
+      list.items[0]
+    end
+
+    def voice_webhook(id)
+      list = VoiceList.new(VoiceWebhook, voice_request(
+        :get,
+        "webhooks/#{id}"
+      ))
+
+      list.items[0]
+    end
+
+    def voice_webhook_delete(id)
+      voice_request(:delete,"webhooks/#{id}")
+    end
+    
     def call_create(source, destination, call_flow = {}, webhook = {}, params={})
       params = params.merge({callFlow: call_flow.to_json}) unless call_flow.empty?
       params = params.merge({webhook: webhook.to_json}) unless webhook.empty?

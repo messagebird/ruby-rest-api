@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require "messagebird/base"
+require 'messagebird/base'
 
 class List < MessageBird::Base
-  attr_accessor :offset, :limit, :count, :totalCount, :links, :items
+  attr_accessor :offset, :limit, :count, :total_count, :links
+  attr_reader :items
 
   # type will be used to create objects for the items, e.g.
   # List.new(Contact, {}).

@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require "messagebird/base"
-require "messagebird/contact"
-require "messagebird/conversation_channel"
+require 'messagebird/base'
+require 'messagebird/contact'
+require 'messagebird/conversation_channel'
 
 module MessageBird
   class Conversation < MessageBird::Base
-    attr_accessor :id, :status, :lastUsedChannelId, :contactId
+    attr_accessor :id, :status, :last_used_channel_id, :contact_id
     attr_reader :contact, :channels, :messages, :created_datetime,
                 :updated_datetime, :last_received_datetime
 
-    CONVERSATION_STATUS_ACTIVE = "active"
-    CONVERSATION_STATUS_ARCHIVED = "archived"
-    WEBHOOK_EVENT_CONVERSATION_CREATED = "conversation.created"
-    WEBHOOK_EVENT_CONVERSATION_UPDATED = "conversation.updated"
-    WEBHOOK_EVENT_MESSAGE_CREATED = "message.created"
-    WEBHOOK_EVENT_MESSAGE_UPDATED = "message.updated"
+    CONVERSATION_STATUS_ACTIVE = 'active'
+    CONVERSATION_STATUS_ARCHIVED = 'archived'
+    WEBHOOK_EVENT_CONVERSATION_CREATED = 'conversation.created'
+    WEBHOOK_EVENT_CONVERSATION_UPDATED = 'conversation.updated'
+    WEBHOOK_EVENT_MESSAGE_CREATED = 'message.created'
+    WEBHOOK_EVENT_MESSAGE_UPDATED = 'message.updated'
 
     def contact=(value)
       @contact = Contact.new(value)

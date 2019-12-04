@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
-require "messagebird"
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+require 'messagebird'
 
 # ACCESS_KEY = ''
 # MESSAGE_ID = ''
 
 unless defined?(ACCESS_KEY)
-  puts "You need to set an ACCESS_KEY constant in this file"
+  puts 'You need to set an ACCESS_KEY constant in this file'
   exit 1
 end
 
 unless defined?(MESSAGE_ID)
-  puts "You need to set an MESSAGE_ID constant in this file"
+  puts 'You need to set an MESSAGE_ID constant in this file'
 end
 
 begin
@@ -25,7 +25,7 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as a Message object:"
+  puts 'The following information was returned as a Message object:'
   puts
   puts "  id                : #{msg.id}"
   puts "  href              : #{msg.href}"
@@ -43,10 +43,9 @@ begin
   puts "  created_datetime   : #{msg.created_datetime}"
   puts "  recipients        : #{msg.recipients}"
   puts
-
 rescue MessageBird::ErrorException => e
   puts
-  puts "An error occured while requesting an Message object:"
+  puts 'An error occured while requesting an Message object:'
   puts
 
   e.errors.each do |error|

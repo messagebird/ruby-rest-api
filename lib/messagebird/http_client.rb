@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "net/https"
-require "uri"
+require 'net/https'
+require 'uri'
 
 module MessageBird
   class InvalidPhoneNumberException < TypeError; end
@@ -11,7 +11,7 @@ module MessageBird
   class HttpClient
     attr_reader :access_key
 
-    ENDPOINT = "https://rest.messagebird.com/"
+    ENDPOINT = 'https://rest.messagebird.com/'
 
     def initialize(access_key)
       @access_key = access_key
@@ -28,9 +28,7 @@ module MessageBird
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
-      unless ENV["DEBUG_MB_HTTP_CLIENT"].nil?
-        http.set_debug_output($stdout)
-      end
+      http.set_debug_output($stdout) unless ENV['DEBUG_MB_HTTP_CLIENT'].nil?
 
       request = build_request(method, uri, params)
 
@@ -38,7 +36,7 @@ module MessageBird
       response = http.request(request)
 
       assert_valid_response_code(response.code.to_i)
-      assert_json_response_type(response["Content-Type"]) unless check_json
+      assert_json_response_type(response['Content-Type']) unless check_json
 
       response.body
     end
@@ -63,11 +61,11 @@ module MessageBird
         raise MethodNotAllowedException
       end
 
-      request["Accept"]        = "application/json"
-      request["Authorization"] = "AccessKey #{@access_key}"
-      request["User-Agent"]    = "MessageBird/ApiClient/#{Version::STRING} Ruby/#{RUBY_VERSION}"
+      request['Accept']        = 'application/json'
+      request['Authorization'] = "AccessKey #{@access_key}"
+      request['User-Agent']    = "MessageBird/ApiClient/#{Version::STRING} Ruby/#{RUBY_VERSION}"
 
-      if [:patch, :post].include?(method) && !params.empty?
+      if %i[patch post].include?(method) && !params.empty?
         prepare_request(request, params)
       end
       request
@@ -80,7 +78,7 @@ module MessageBird
       # needed to maintain backwards compatibility. See issue:
       # https://github.com/messagebird/ruby-rest-api/issues/17
       expected_codes = [200, 201, 202, 204, 401, 404, 405, 422]
-      raise InvalidPhoneNumberException, "Unknown response from server" unless expected_codes.include? code
+      raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? code
     end
 
     # Throw an exception if the response's content type is not JSON. This only
@@ -88,7 +86,7 @@ module MessageBird
     def assert_json_response_type(content_type)
       # Check whether the header starts with application/json and don't check
       # for equality: some API's may append the charset to this header.
-      raise InvalidResponseException, "Response is not JSON" unless content_type.start_with? "application/json"
+      raise InvalidResponseException, 'Response is not JSON' unless content_type.start_with? 'application/json'
     end
   end
 end

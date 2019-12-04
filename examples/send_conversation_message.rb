@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
-require "messagebird"
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+require 'messagebird'
 
 # ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
-  puts "You need to set an ACCESS_KEY constant in this file"
+  puts 'You need to set an ACCESS_KEY constant in this file'
   exit 1
 end
 
@@ -16,24 +16,20 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Send a message
-  message = client.send_conversation_message("channelID", "+31617100000", type: "text", content: { text: "Hi there!" })
+  message = client.send_conversation_message('channelID', '+31617100000', type: 'text', content: { text: 'Hi there!' })
 
   # Print the object information.
   puts
-  puts "The following information was returned as a response:"
+  puts 'The following information was returned as a response:'
   puts "  id  : #{message.id}"
   puts "  status  : #{message.status}"
 
-  unless message.fallback.nil?
-    puts "  fallback  : #{message.fallback}"
-  end
+  puts "  fallback  : #{message.fallback}" unless message.fallback.nil?
 
   puts
-
-
 rescue MessageBird::ErrorException => e
   puts
-  puts "An error occured while sending a message:"
+  puts 'An error occured while sending a message:'
   puts
 
   e.errors.each do |error|

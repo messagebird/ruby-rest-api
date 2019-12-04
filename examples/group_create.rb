@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
-require "messagebird"
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
 # GROUP_NAME = 'YOUR GROUP NAME HERE'
 
 unless defined?(ACCESS_KEY)
-  puts "You need to set an ACCESS_KEY constant in this file"
+  puts 'You need to set an ACCESS_KEY constant in this file'
   exit 1
 end
 
 unless defined?(GROUP_NAME)
-  puts "You need to set an GROUP_NAME constant in this file"
+  puts 'You need to set an GROUP_NAME constant in this file'
   exit 1
 end
 
@@ -26,16 +26,15 @@ begin
 
   # Print the object information.
   puts
-  puts "  Group             :"
+  puts '  Group             :'
   puts "    id              : #{group.id}"
   puts "    href            : #{group.href}"
   puts "    name            : #{group.name}"
   puts "    contacts        : #{group.contacts.href}"
   puts
-
 rescue MessageBird::ErrorException => e
   puts
-  puts "An error occurred while creating a group:"
+  puts 'An error occurred while creating a group:'
   puts
 
   e.errors.each do |error|

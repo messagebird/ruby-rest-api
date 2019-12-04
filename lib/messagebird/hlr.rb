@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "time"
+require 'time'
 
-require "messagebird/base"
+require 'messagebird/base'
 
 module MessageBird
   class HLR < MessageBird::Base

@@ -23,7 +23,6 @@ matrix:
   allow_failures:
   - rvm: jruby
   - rvm: ruby-head
-  - rvm: 1.9.3
 
 install:
   - bundle install

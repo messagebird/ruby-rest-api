@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "time"
+require 'time'
 
-require "messagebird/base"
+require 'messagebird/base'
 
 module MessageBird
   class Lookup < MessageBird::Base
-    attr_accessor :href, :countryCode, :countryPrefix, :phoneNumber, :type
+    attr_accessor :href, :country_code, :countryPrefix, :phoneNumber, :type
     attr_reader :formats, :hlr
 
     def formats=(new_formats)

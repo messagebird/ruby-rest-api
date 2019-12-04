@@ -1,21 +1,21 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
-require "messagebird"
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+require 'messagebird'
 
-ACCESS_KEY = "test_gshuPaZoeEG6ovbc8M79w0QyM"
+ACCESS_KEY = 'test_gshuPaZoeEG6ovbc8M79w0QyM'
 
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Send a new message.
-  msg = client.message_create("FromMe", "31612345678", "Hello World", reference: "Foobar")
+  msg = client.message_create('FromMe', '31612345678', 'Hello World', reference: 'Foobar')
 
   # Print the object information.
   puts
-  puts "The following information was returned as a Message object:"
+  puts 'The following information was returned as a Message object:'
   puts
   puts "  id                : #{msg.id}"
   puts "  href              : #{msg.href}"
@@ -33,10 +33,9 @@ begin
   puts "  created_datetime   : #{msg.created_datetime}"
   puts "  recipients        : #{msg.recipients}"
   puts
-
 rescue MessageBird::ErrorException => e
   puts
-  puts "An error occured while requesting a Message object:"
+  puts 'An error occured while requesting a Message object:'
   puts
 
   e.errors.each do |error|

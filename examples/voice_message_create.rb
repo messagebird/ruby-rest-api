@@ -1,21 +1,21 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
-require "messagebird"
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+require 'messagebird'
 
-ACCESS_KEY = "test_gshuPaZoeEG6ovbc8M79w0QyM"
+ACCESS_KEY = 'test_gshuPaZoeEG6ovbc8M79w0QyM'
 
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Send a new voice message.
-  vmsg = client.voice_message_create("31612345678", "Hello World", reference: "Foobar")
+  vmsg = client.voice_message_create('31612345678', 'Hello World', reference: 'Foobar')
 
   # Print the object information.
   puts
-  puts "The following information was returned as a VoiceMessage object:"
+  puts 'The following information was returned as a VoiceMessage object:'
   puts
   puts "  id                : #{vmsg.id}"
   puts "  href              : #{vmsg.href}"
@@ -30,10 +30,9 @@ begin
   puts "  created_datetime   : #{vmsg.created_datetime}"
   puts "  recipients        : #{vmsg.recipients}"
   puts
-
 rescue MessageBird::ErrorException => e
   puts
-  puts "An error occured while requesting an VoiceMessage object:"
+  puts 'An error occured while requesting an VoiceMessage object:'
   puts
 
   e.errors.each do |error|

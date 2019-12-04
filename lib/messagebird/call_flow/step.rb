@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "messagebird/base"
+require 'messagebird/base'
 
 module MessageBird
   class CallFlowStep < MessageBird::Base

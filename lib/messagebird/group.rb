@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "messagebird/base"
-require "messagebird/contact_reference"
+require 'messagebird/base'
+require 'messagebird/contact_reference'
 
 module MessageBird
   class Group < MessageBird::Base

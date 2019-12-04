@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift File.expand_path("lib", __dir__)
 
 require "messagebird/version"
 
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.name        = "messagebird-rest"
   s.version     = MessageBird::Version::STRING
   s.platform    = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = ">= 1.9.3"
   s.date        = Time.now
   s.summary     = "MessageBird's REST API"
   s.description = "A simple REST API for MessageBird in Ruby"

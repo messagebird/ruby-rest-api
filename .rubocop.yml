@@ -1,8 +1,4 @@
-require:
-  - rubocop-performance
-
 AllCops:
-  TargetRubyVersion: 2.5
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
   # to ignore them, so only the ones explicitly set in this file are enabled.
   DisabledByDefault: true
@@ -37,10 +33,6 @@ Security/YAMLLoad:
 Style/AccessModifierDeclarations:
   Enabled: true
 
-
-Performance:
-  Exclude:
-    - 'examples/'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
@@ -231,25 +223,4 @@ Style/ColonMethodCall:
   Enabled: true
 
 Style/TrivialAccessors:
-  Enabled: true
-
-Performance/FlatMap:
-  Enabled: true
-
-Performance/RedundantMerge:
-  Enabled: true
-
-Performance/StartWith:
-  Enabled: true
-
-Performance/EndWith:
-  Enabled: true
-
-Performance/RegexpMatch:
-  Enabled: true
-
-Performance/ReverseEach:
-  Enabled: true
-
-Performance/UnfreezeString:
   Enabled: true

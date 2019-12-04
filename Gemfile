@@ -3,7 +3,6 @@
 
 source "https://rubygems.org"
 
-
 group :test, :development do
   if RUBY_VERSION == "1.9.3"
     gem "rspec-expectations", "3.8.2", require: false
@@ -11,6 +10,9 @@ group :test, :development do
 
   gem "rspec"
 
-  gem "rubocop", "~> 0.77.0", require: false
-  gem "rubocop-performance", require: false
+  if RUBY_VERSION == "1.9.3"
+    gem "rubucop", "~> 0.40.0", require: false
+  else
+    gem "rubocop", "~> 0.77.0", require: false
+  end
 end

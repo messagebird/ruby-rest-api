@@ -1,11 +1,14 @@
 describe "CallFlow" do
+  
+  let(:voice_client) { double(MessageBird::VoiceClient) }
+  let(:client) { MessageBird::Client.new("", nil, nil, voice_client) }
+  let(:call_flow_id) { "7355a691-381d-42b0-a037-9df5dab19e8e" }
+  let(:step_id) { "dd33982b-2c51-4a38-8975-fb8725e57c5d" }
+  let(:title) { "" }
+  let(:record) { true }
+  let(:default) { false }
+  
   it "creates a call flow" do
-    voice_client = double(MessageBird::VoiceClient)
-    client = MessageBird::Client.new("", nil, nil, voice_client)
-
-    call_flow_id = "7355a691-381d-42b0-a037-9df5dab19e8e"
-    step_id = "dd33982b-2c51-4a38-8975-fb8725e57c5d"
-    title = ""
     steps = [
       {
         :action => "transfer",
@@ -14,8 +17,6 @@ describe "CallFlow" do
         },
       },
     ]
-    record = true
-    default = false
 
     mock_data = {
       :data => [

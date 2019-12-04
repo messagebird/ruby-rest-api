@@ -2,7 +2,8 @@ require "messagebird/base"
 
 module MessageBird
   class CallFlow < MessageBird::Base
-    attr_accessor :id, :title, :record, :steps, :default, :createdAt, :updatedAt
+    attr_accessor :id, :title, :record, :default
+    attr_reader :steps, :createdAt, :updatedAt
 
     def initialize(json)
       params = json.include?("data") ? json["data"].first : json

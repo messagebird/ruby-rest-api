@@ -5,8 +5,8 @@ language: ruby
 bundler_args: --jobs 3 --retry 3
 before_install:
   - "rm ${BUNDLE_GEMFILE}.lock"
-  - "travis_retry gem update --no-document  --system 2.4.8"
-  - "travis_retry gem install bundler"
+  - gem update --no-document --system 2.4.8
+  - gem install bundler
 
 rvm:
 - 2.5.1

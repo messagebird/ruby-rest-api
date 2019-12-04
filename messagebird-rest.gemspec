@@ -15,13 +15,11 @@ Gem::Specification.new do |s|
   s.description = "A simple REST API for MessageBird in Ruby"
   s.author      = "Maurice Nonnekes"
   s.email       = "maurice@messagebird.com"
-  s.files       = `git ls-files lib LICENSE README.md`
+  s.files       = `git ls-files lib LICENSE README.md Gemfile Gemfile.lock`
                   .split($RS)
   s.homepage    = "https://github.com/messagebird/ruby-rest-api"
   s.license     = "BSD-2-Clause"
 
   s.files        = Dir.glob("lib/**/*") + %w(LICENSE README.md)
   s.require_path = "lib"
-
-  s.add_development_dependency "rspec", "~> 3.8"
 end

@@ -1,8 +1,3 @@
-PATH
-  remote: .
-  specs:
-    messagebird-rest (2.0.0.pre.rc)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,8 +37,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  messagebird-rest!
-  rspec (~> 3.8)
+  rspec
   rubocop (~> 0.77.0)
   rubocop-performance
 

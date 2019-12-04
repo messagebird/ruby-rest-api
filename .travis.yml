@@ -18,7 +18,9 @@ matrix:
   - rvm: jruby
   - rvm: ruby-head
   - rvm: 1.9.3
-before_install: gem update --remote bundler
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
 install:
   - bundle install --retry=3
 script:

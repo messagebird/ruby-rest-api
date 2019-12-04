@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -26,21 +27,21 @@ begin
   puts "  limit           : #{webhooks.limit}"
   puts "  offset          : #{webhooks.offset}"
   puts "  totalCount      : #{webhooks.totalCount}"
-  puts 
+  puts
   webhooks.items.each do |webhook|
-     puts "Webhook:"
-     puts "  id                        : #{webhook.id}"
-     puts "  events                    : #{webhook.events}"
-     puts "  channelId                 : #{webhook.channelId}"
-     puts "  url                       : #{webhook.url}"
-     puts "  status                    : #{webhook.status}"
-     puts "  createdDatetime           : #{webhook.createdDatetime}"
-     puts "  updatedDatetime           : #{webhook.updatedDatetime}"
-  end 
+    puts "Webhook:"
+    puts "  id                        : #{webhook.id}"
+    puts "  events                    : #{webhook.events}"
+    puts "  channelId                 : #{webhook.channelId}"
+    puts "  url                       : #{webhook.url}"
+    puts "  status                    : #{webhook.status}"
+    puts "  createdDatetime           : #{webhook.createdDatetime}"
+    puts "  updatedDatetime           : #{webhook.updatedDatetime}"
+  end
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while creating a conversation:'
+  puts "An error occured while creating a conversation:"
   puts
 
   ex.errors.each do |error|

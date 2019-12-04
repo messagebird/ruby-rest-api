@@ -1,7 +1,9 @@
-require 'messagebird/base'
-require 'messagebird/custom_details'
-require 'messagebird/group_reference'
-require 'messagebird/message_reference'
+# frozen_string_literal: true
+
+require "messagebird/base"
+require "messagebird/custom_details"
+require "messagebird/group_reference"
+require "messagebird/message_reference"
 
 module MessageBird
   class Contact < MessageBird::Base

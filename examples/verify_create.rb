@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
-ACCESS_KEY = ''
+ACCESS_KEY = ""
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -16,7 +17,7 @@ begin
 
   # Generate a new OTP message
   otp = client.verify_create(31612345678, {
-      :reference => "MessageBirdReference"
+      reference: "MessageBirdReference"
   })
 
   # Print the object information.
@@ -34,7 +35,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while requesting an OTP object:'
+  puts "An error occured while requesting an OTP object:"
   puts
 
   ex.errors.each do |error|

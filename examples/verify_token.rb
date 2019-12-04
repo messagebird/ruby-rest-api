@@ -1,24 +1,25 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
-ACCESS_KEY = ''
-VERIFY_ID  = ''
-TOKEN      = ''
+ACCESS_KEY = ""
+VERIFY_ID  = ""
+TOKEN      = ""
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
 unless defined?(VERIFY_ID)
-  puts 'You need to set an VERIFY_ID constant in this file'
+  puts "You need to set an VERIFY_ID constant in this file"
   exit 1
 end
 
 unless defined?(TOKEN)
-  puts 'You need to set an TOKEN constant in this file'
+  puts "You need to set an TOKEN constant in this file"
   exit 1
 end
 
@@ -44,7 +45,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while requesting an OTP object:'
+  puts "An error occured while requesting an OTP object:"
   puts
 
   ex.errors.each do |error|

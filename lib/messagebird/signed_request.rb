@@ -1,14 +1,15 @@
-require 'base64'
-require 'digest'
-require 'time'
+# frozen_string_literal: true
+
+require "base64"
+require "digest"
+require "time"
 
 module MessageBird
-  class ValidationException < TypeError;
+  class ValidationException < TypeError
   end
 
   class SignedRequest
     def initialize(queryParameters, signature, requestTimestamp, body)
-
       if !queryParameters.is_a? Hash
         raise ValidationException, 'The "queryParameters" value is invalid.'
       end
@@ -26,7 +27,7 @@ module MessageBird
     end
 
     def verify(signingKey)
-      calculatedSignature = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), signingKey, buildPayload)
+      calculatedSignature = OpenSSL::HMAC.digest(OpenSSL::Digest.new("sha256"), signingKey, buildPayload)
       expectedSignature = Base64.decode64(@signature)
       calculatedSignature.bytes == expectedSignature.bytes
     end
@@ -40,8 +41,7 @@ module MessageBird
     end
 
     def isRecent(offset = 10)
-      (Time.now.getutc.to_i - @requestTimestamp) < offset;
+      (Time.now.getutc.to_i - @requestTimestamp) < offset
     end
-
   end
 end

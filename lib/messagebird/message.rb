@@ -1,5 +1,7 @@
-require 'messagebird/base'
-require 'messagebird/recipient'
+# frozen_string_literal: true
+
+require "messagebird/base"
+require "messagebird/recipient"
 
 module MessageBird
   class Message < MessageBird::Base
@@ -16,7 +18,7 @@ module MessageBird
     end
 
     def recipients=(json)
-      json['items'] = json['items'].map { |r| Recipient.new(r) }
+      json["items"] = json["items"].map { |r| Recipient.new(r) }
       @recipients = json
     end
   end

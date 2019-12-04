@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -15,7 +16,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a webhook
-  webhook = client.conversation_webhook_create('00000000000000000000000000000000', 'https://test.com', [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])
+  webhook = client.conversation_webhook_create("00000000000000000000000000000000", "https://test.com", [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])
 
   # Print the object information.
   puts "The following information was returned as a Webhook object"
@@ -29,7 +30,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while creating a conversation:'
+  puts "An error occured while creating a conversation:"
   puts
 
   ex.errors.each do |error|

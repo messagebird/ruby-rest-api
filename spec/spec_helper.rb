@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is always be loaded, without a need to explicitly require it in any
 # files.
 #
@@ -6,14 +8,12 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-require 'rspec'
-require 'rspec/mocks'
-require 'messagebird'
+require "rspec"
+require "rspec/mocks"
+require "messagebird"
 
 RSpec.configure do |config|
-
   config.expect_with :rspec do |expectations|
-
     # Makes the `description` and `failure_message` of custom matchers include
     # text for helper methods  defined using `chain`, e.g.:
     #     be_bigger_than(2).and_smaller_than(4).description
@@ -21,7 +21,6 @@ RSpec.configure do |config|
     # ...rather than:
     #     # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-
   end
 
   config.mock_with :rspec do |mocks|
@@ -70,5 +69,4 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
 end

@@ -1,5 +1,7 @@
-require 'messagebird/base'
-require 'messagebird/call/webhook'
+# frozen_string_literal: true
+
+require "messagebird/base"
+require "messagebird/call/webhook"
 
 module MessageBird
   class Call < MessageBird::Base

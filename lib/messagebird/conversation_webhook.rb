@@ -1,6 +1,8 @@
-require 'messagebird/base'
+# frozen_string_literal: true
 
-module MessageBird 
+require "messagebird/base"
+
+module MessageBird
   class ConversationWebhook < MessageBird::Base
     attr_accessor :id, :events, :channelId, :url, :status, :createdDatetime, :updatedDatetime
   end

@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
-ACCESS_KEY = 'YOUR KEY HERE'
+ACCESS_KEY = "YOUR KEY HERE"
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -49,7 +50,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occurred while listing your contacts:'
+  puts "An error occurred while listing your contacts:"
   puts
 
   ex.errors.each do |error|

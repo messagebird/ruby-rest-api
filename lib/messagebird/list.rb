@@ -1,4 +1,6 @@
-require 'messagebird/base'
+# frozen_string_literal: true
+
+require "messagebird/base"
 
 class List < MessageBird::Base
   attr_accessor :offset, :limit, :count, :totalCount, :links, :items
@@ -18,5 +20,4 @@ class List < MessageBird::Base
   def [](index)
     @items[index]
   end
-
 end

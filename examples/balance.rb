@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
-ACCESS_KEY = 'test_gshuPaZoeEG6ovbc8M79w0QyM'
+ACCESS_KEY = "test_gshuPaZoeEG6ovbc8M79w0QyM"
 
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
@@ -23,7 +24,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while requesting a Balance object:'
+  puts "An error occured while requesting a Balance object:"
   puts
 
   ex.errors.each do |error|

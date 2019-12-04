@@ -1,15 +1,15 @@
-require 'json'
-require 'time'
+# frozen_string_literal: true
+
+require "json"
+require "time"
 
 module MessageBird
   class Base
     def initialize(json)
-      json.each do |k,v|
-        begin
-          send("#{k}=", v)
-        rescue NoMethodError
-          # Silently ignore parameters that are not supported.
-        end
+      json.each do |k, v|
+        send("#{k}=", v)
+      rescue NoMethodError
+        # Silently ignore parameters that are not supported.
       end
     end
 

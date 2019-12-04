@@ -1,6 +1,8 @@
-require 'time'
+# frozen_string_literal: true
 
-require 'messagebird/base'
+require "time"
+
+require "messagebird/base"
 
 module MessageBird
   class Lookup < MessageBird::Base

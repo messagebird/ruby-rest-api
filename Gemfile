@@ -5,5 +5,5 @@ source "https://rubygems.org"
 
 gemspec
 
-gem 'rubocop', '~> 0.77.0', require: false
-gem 'rubocop-performance', require: false
+gem "rubocop", "~> 0.77.0", require: false
+gem "rubocop-performance", require: false

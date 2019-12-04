@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -15,7 +16,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Start a conversation
-  conversation = client.conversation('conversationId')
+  conversation = client.conversation("conversationId")
 
   # Print the object information.
   puts
@@ -39,15 +40,15 @@ begin
   puts "    custom4                 : #{conversation.contact.customDetails.custom4}"
   puts "    createdDatetime         : #{conversation.contact.createdDatetime}"
   puts "    updatedDatetime         : #{conversation.contact.updatedDatetime}"
-  
+
   puts "  Channels                  :"
   conversation.channels.each do |channel|
-  puts "    id                      : #{channel.id}"
-  puts "    name                    : #{channel.name}"
-  puts "    platformId              : #{channel.platformId}"
-  puts "    createdDatetime         : #{channel.createdDatetime}"
-  puts "    updatedDatetime         : #{channel.updatedDatetime}"
-  puts
+    puts "    id                      : #{channel.id}"
+    puts "    name                    : #{channel.name}"
+    puts "    platformId              : #{channel.platformId}"
+    puts "    createdDatetime         : #{channel.createdDatetime}"
+    puts "    updatedDatetime         : #{channel.updatedDatetime}"
+    puts
   end
 
   puts "  Messages                  :"
@@ -56,7 +57,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while creating a conversation:'
+  puts "An error occured while creating a conversation:"
   puts
 
   ex.errors.each do |error|

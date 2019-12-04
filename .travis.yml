@@ -1,12 +1,26 @@
+sudo: false
+cache: bundler
 language: ruby
 rvm:
 - 2.5.1
 - 2.0.0
+- 2.2
+- 2.3.0
 - 1.9.3
 - jruby
+- ruby-head
+env:
+  # this doesn't do anything for MRI or RBX, but it doesn't hurt them either
+  # for JRuby, it enables us to get more accurate coverage data
+  - JRUBY_OPTS="--debug"
 matrix:
   allow_failures:
   - rvm: jruby
+  - rvm: ruby-head
   - rvm: 1.9.3
-install: gem install rspec
-script: rake spec
+before_install: gem update --remote bundler
+install:
+  - bundle install --retry=3
+script:
+  - bundle exec rspec
+  - bundle exec rubocop

@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
@@ -15,8 +16,8 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Fetch a message
-  msg = client.conversation_message('00000000000000000000000000000000')
-   
+  msg = client.conversation_message("00000000000000000000000000000000")
+
   # Print the object information.
   puts <<EOF
 The following information was returned as a Message object:
@@ -33,7 +34,7 @@ EOF
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while creating a conversation:'
+  puts "An error occured while creating a conversation:"
   puts
 
   ex.errors.each do |error|

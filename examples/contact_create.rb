@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = 'YOUR KEY HERE'
 # PHONE_NUMBER = 'YOUR PHONE NUMBER HERE'
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
 unless defined?(PHONE_NUMBER)
-  puts 'You need to set an PHONE_NUMBER constant in this file'
+  puts "You need to set an PHONE_NUMBER constant in this file"
   exit 1
 end
 
@@ -21,7 +22,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a new Contact object.
-  contact = client.contact_create(PHONE_NUMBER, { :firstName => 'Foo', :lastName => 'Bar'})
+  contact = client.contact_create(PHONE_NUMBER, { firstName: "Foo", lastName: "Bar" })
 
   # Print the object information.
   puts
@@ -42,7 +43,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occurred while creating a contact:'
+  puts "An error occurred while creating a contact:"
   puts
 
   ex.errors.each do |error|

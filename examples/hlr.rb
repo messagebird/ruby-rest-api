@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
-require 'messagebird'
+$:.unshift File.expand_path(File.dirname(__FILE__) + "/../lib/")
+require "messagebird"
 
 # ACCESS_KEY = ''
 # HLR_ID = ''
 
 unless defined?(ACCESS_KEY)
-  puts 'You need to set an ACCESS_KEY constant in this file'
+  puts "You need to set an ACCESS_KEY constant in this file"
   exit 1
 end
 
 unless defined?(HLR_ID)
-  puts 'You need to set an HLR_ID constant in this file'
+  puts "You need to set an HLR_ID constant in this file"
 end
 
 begin
@@ -37,7 +38,7 @@ begin
 
 rescue MessageBird::ErrorException => ex
   puts
-  puts 'An error occured while requesting an HLR object:'
+  puts "An error occured while requesting an HLR object:"
   puts
 
   ex.errors.each do |error|

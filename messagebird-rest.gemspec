@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = "A simple REST API for MessageBird in Ruby"
   s.author      = "Maurice Nonnekes"
   s.email       = "maurice@messagebird.com"
-  s.files       = `git ls-files lib LICENSE README.md Gemfile Gemfile.lock`
+  s.files       = `git ls-files lib LICENSE README.md`
                   .split($RS)
   s.homepage    = "https://github.com/messagebird/ruby-rest-api"
   s.license     = "BSD-2-Clause"

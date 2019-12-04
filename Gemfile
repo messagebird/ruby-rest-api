@@ -8,11 +8,11 @@ group :test, :development do
     gem "rspec-expectations", "3.8.2", require: false
   end
 
-  gem "rspec"
-
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.3.0")
+    gem "rspec", "~> 3.9.0", require: false
     gem "rubocop", "~> 0.40.0", require: false
   else
+    gem "rspec"
     gem "rubocop", "~> 0.77.0", require: false
   end
 end

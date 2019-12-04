@@ -17,9 +17,31 @@ describe "CallFlow" do
     record = true
     default = false
 
+    mock_data = {
+      :data => [
+        {
+          :id => call_flow_id,
+          :title => title,
+          :steps => [
+            {
+              :id => step_id,
+              :action => "transfer", 
+              :options => {
+                :destination => "31612345678"
+              }
+            }
+          ],
+          :record => true, 
+          :default => false, 
+          :createdAt => "2019-11-07T12:37:59Z", 
+          :updatedAt => "2019-11-07T12:37:59Z"
+        }
+      ]
+    }
     expect(voice_client).to receive(:request)
                               .with(:post, "call-flows", { :title => title, :steps => steps, :default => default, :record => record })
-                              .and_return('{ "data": [ { "id": "' + call_flow_id + '", "title": "' + title + '", "steps": [ { "id": "' + step_id + '", "action": "transfer", "options": { "destination": "31612345678" } } ], "record": true, "default": false, "createdAt": "2019-11-07T12:37:59Z", "updatedAt": "2019-11-07T12:37:59Z" } ], "_links": { "self": "/call-flows/' + call_flow_id + '" } }')
+                              .and_return(mock_data.to_json)
+                              
     call_flow = client.call_flow_create(title, steps, default, record)
     expect(call_flow.id).to eq call_flow_id
   end
@@ -28,9 +50,48 @@ describe "CallFlow" do
     voice_client = double(MessageBird::VoiceClient)
     client = MessageBird::Client.new("", nil, nil, voice_client)
 
+    mock_data = {
+      :data => [
+        {
+          :id => "cfid-0000",
+          :title => "another title",
+          :steps => [
+            {
+              :id => "sf001",
+              :action => "transfer", 
+              :options => {
+                :destination => "31612345678"
+              }
+            }
+          ],
+          :record => true, 
+          :default => false, 
+          :createdAt => "2019-11-07T12:37:59Z", 
+          :updatedAt => "2019-11-07T12:37:59Z"
+        },
+        {
+          :id => "cfid-0001",
+          :title => "the title",
+          :steps => [
+            {
+              :id => "s000000000",
+              :action => "transfer", 
+              :options => {
+                :destination => "31612345678"
+              }
+            }
+          ],
+          :record => true, 
+          :default => false, 
+          :createdAt => "2019-11-07T12:37:59Z", 
+          :updatedAt => "2019-11-07T12:37:59Z"
+        }
+      ]
+    }
+
     expect(voice_client).to receive(:request)
                               .with(:get, "call-flows?perPage=2&page=1", {})
-                              .and_return('{ "data": [ { "id": "cfid-0000", "title": "another title", "steps": [ { "id": "sf001", "action": "transfer", "options": { "destination": "31612345678" } } ], "record": true, "default": false, "createdAt": "2019-11-07T12:37:59Z", "updatedAt": "2019-11-07T12:37:59Z" }, { "id": "cfid-0001", "title": "the title", "steps": [ { "id": "s000000000", "action": "transfer", "options": { "destination": "31612345678" } } ], "record": true, "default": false, "createdAt": "2019-11-07T12:37:59Z", "updatedAt": "2019-11-07T12:37:59Z" } ], "_links": { "self": "/call-flows/cfid-0001" } }')
+                              .and_return(mock_data.to_json)
     list = client.call_flow_list(2, 1)
 
     expect(list.items.count).to eq 2
@@ -41,9 +102,31 @@ describe "CallFlow" do
     voice_client = double(MessageBird::VoiceClient)
     client = MessageBird::Client.new("", nil, nil, voice_client)
 
+    mock_data = {
+      :data => [
+        {
+          :id => "cfid-1",
+          :title => "the title",
+          :steps => [
+            {
+              :id => "sfid-1",
+              :action => "transfer", 
+              :options => {
+                :destination => "31612345678"
+              }
+            }
+          ],
+          :record => true, 
+          :default => false, 
+          :createdAt => "2019-11-07T12:37:59Z", 
+          :updatedAt => "2019-11-07T12:37:59Z"
+        }
+      ]
+    }
+
     expect(voice_client).to receive(:request)
                               .with(:get, "call-flows/cfid-1", {})
-                              .and_return('{ "data": [ { "id": "cfid-1", "title": "the title", "steps": [ { "id": "sfid-1", "action": "transfer", "options": { "destination": "31612345678" } } ], "record": true, "default": false, "createdAt": "2019-11-07T12:37:59Z", "updatedAt": "2019-11-07T12:37:59Z" } ], "_links": { "self": "/call-flows/cfid-1" } }')
+                              .and_return(mock_data.to_json)
     call_flow = client.call_flow_view('cfid-1')
     expect(call_flow.id).to eq 'cfid-1'
   end

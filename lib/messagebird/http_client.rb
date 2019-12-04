@@ -65,7 +65,7 @@ module MessageBird
 
       request["Accept"]        = "application/json"
       request["Authorization"] = "AccessKey #{@access_key}"
-      request["User-Agent"]    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
+      request["User-Agent"]    = "MessageBird/ApiClient/#{Version::STRING} Ruby/#{RUBY_VERSION}"
 
       if [:patch, :post].include?(method) && !params.empty?
         prepare_request(request, params)

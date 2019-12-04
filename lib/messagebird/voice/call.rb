@@ -1,14 +1,10 @@
-require 'messagebird/base'
+require 'messagebird/voice/base'
 require 'messagebird/call/webhook'
 
 module MessageBird
   module Voice
-    class Call < MessageBird::Base
+    class Call < MessageBird::Voice::Base
       attr_accessor :id, :status, :source, :destination, :createdAt, :updatedAt, :endedAt, :webhook, :callFlow
-      def initialize(json)
-        params = json.include?("data") ? json["data"].first : json
-        super(params)
-      end
 
       def webhook=(webhook)
         @webhook = CallWebhook.new(webhook)

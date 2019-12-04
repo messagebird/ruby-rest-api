@@ -4,7 +4,7 @@ libdir = File.dirname(__FILE__)
 $:.unshift(libdir) unless $:.include?(libdir)
 
 module MessageBird
-  CLIENT_VERSION          = "1.4.2"
+  CLIENT_VERSION          = "2.0.0-rc"
 end
 
 require "messagebird/balance"

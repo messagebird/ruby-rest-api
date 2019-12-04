@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    messagebird-rest (1.4.2)
+    messagebird-rest (2.0.0.pre.rc)
 
 GEM
   remote: https://rubygems.org/

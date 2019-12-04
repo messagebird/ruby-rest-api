@@ -35,7 +35,7 @@ begin
   puts "  id                        : #{conversation.id}"
   puts "  status                    : #{conversation.status}"
   puts "  created_datetime           : #{conversation.created_datetime}"
-  puts "  updated_date_time           : #{conversation.updated_date_time}"
+  puts "  updated_datetime           : #{conversation.updated_datetime}"
   puts "  lastReceivedDateklme      : #{conversation.lastReceivedDatetime}"
   puts "  lastUsedChannelId         : #{conversation.lastUsedChannelId}"
 
@@ -50,7 +50,7 @@ begin
   puts "    custom3                 : #{conversation.contact.custom_details.custom3}"
   puts "    custom4                 : #{conversation.contact.custom_details.custom4}"
   puts "    created_datetime         : #{conversation.contact.created_datetime}"
-  puts "    updated_date_time         : #{conversation.contact.updated_date_time}"
+  puts "    updated_datetime         : #{conversation.contact.updated_datetime}"
 
   puts "  Channels                  :"
   conversation.channels.each do |channel|
@@ -58,7 +58,7 @@ begin
     puts "    name                    : #{channel.name}"
     puts "    platformId              : #{channel.platformId}"
     puts "    created_datetime         : #{channel.created_datetime}"
-    puts "    updated_date_time         : #{channel.updated_date_time}"
+    puts "    updated_datetime         : #{channel.updated_datetime}"
     puts
   end
 

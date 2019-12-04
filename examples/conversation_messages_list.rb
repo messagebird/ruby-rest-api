@@ -41,7 +41,7 @@ begin
     puts "  status                    : #{msg.status}"
     puts "  content                   : #{msg.content}"
     puts "  created_datetime           : #{msg.created_datetime}"
-    puts "  updated_date_time           : #{msg.updated_date_time}"
+    puts "  updated_datetime           : #{msg.updated_datetime}"
     puts
   end
 

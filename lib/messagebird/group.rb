@@ -6,7 +6,7 @@ require "messagebird/contact_reference"
 module MessageBird
   class Group < MessageBird::Base
     attr_accessor :id, :href, :name
-    attr_reader :contacts, :created_datetime, :updated_date_time
+    attr_reader :contacts, :created_datetime, :updated_datetime
 
     def contacts=(value)
       @contacts = MessageBird::ContactReference.new(value)
@@ -16,8 +16,8 @@ module MessageBird
       @created_datetime = value_to_time(value)
     end
 
-    def updated_date_time=(value)
-      @updated_date_time = value_to_time(value)
+    def updated_datetime=(value)
+      @updated_datetime = value_to_time(value)
     end
   end
 end

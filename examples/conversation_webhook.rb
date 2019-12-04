@@ -26,7 +26,7 @@ begin
   puts "  url                       : #{webhook.url}"
   puts "  status                    : #{webhook.status}"
   puts "  created_datetime           : #{webhook.created_datetime}"
-  puts "  updated_date_time           : #{webhook.updated_date_time}"
+  puts "  updated_datetime           : #{webhook.updated_datetime}"
 
 rescue MessageBird::ErrorException => e
   puts

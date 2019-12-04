@@ -25,7 +25,7 @@ The following information was returned as an updated conversation object:
   status                    : #{conversation.status}
   contactId                 : #{conversation.contactId}
   created_datetime           : #{conversation.created_datetime}
-  updated_date_time           : #{conversation.updated_date_time}
+  updated_datetime           : #{conversation.updated_datetime}
   lastReceivedDateklme      : #{conversation.lastReceivedDatetime}
   lastUsedChannelId         : #{conversation.lastUsedChannelId}
   Messages                  :

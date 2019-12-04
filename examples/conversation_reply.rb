@@ -29,7 +29,7 @@ The following information was returned as a Message object:
     status                    : #{msg.status}
     content                   : #{msg.content}
     created_datetime           : #{msg.created_datetime}
-    updated_date_time           : #{msg.updated_date_time}
+    updated_datetime           : #{msg.updated_datetime}
 EOF
 
 rescue MessageBird::ErrorException => e

@@ -46,6 +46,8 @@ module MessageBird
       request
     end
 
+    SUBMIT_METHODS = [:patch, :post].freeze
+
     def build_request(method, uri, params = {})
       # Construct the HTTP request.
       case method
@@ -65,9 +67,10 @@ module MessageBird
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{Version::STRING} Ruby/#{RUBY_VERSION}"
 
-      if %i(patch post).include?(method) && !params.empty?
+      if SUBMIT_METHODS.include?(method) && !params.empty?
         prepare_request(request, params)
       end
+
       request
     end
 

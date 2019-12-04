@@ -7,9 +7,9 @@ module MessageBird
   class Base
     def initialize(json)
       json.each do |k, v|
-        send("#{k}=", v)
-      rescue NoMethodError
-        # Silently ignore parameters that are not supported.
+        if respond_to?(:"#{k}=")
+          send("#{k}=", v)
+        end
       end
     end
 

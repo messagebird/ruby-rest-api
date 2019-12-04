@@ -11,7 +11,7 @@ group :test, :development do
   gem "rspec"
 
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.3.0")
-    gem "rubucop", "~> 0.40.0", require: false
+    gem "rubocop", "~> 0.40.0", require: false
   else
     gem "rubocop", "~> 0.77.0", require: false
   end

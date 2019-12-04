@@ -31,12 +31,12 @@ begin
   puts
 
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while sending a message:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

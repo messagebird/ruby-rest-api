@@ -6,6 +6,37 @@ AllCops:
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
   # to ignore them, so only the ones explicitly set in this file are enabled.
   DisabledByDefault: true
+Naming/AccessorMethodName:
+  Enabled: true
+Naming/AsciiIdentifiers:
+  Enabled: true
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+Naming/BlockParameterName:
+  Enabled: true
+Naming/ConstantName:
+  Enabled: true
+Naming/FileName:
+  Enabled: true
+Naming/MemoizedInstanceVariableName:
+  Enabled: true
+Naming/MethodName:
+  Enabled: true
+Naming/MethodParameterName:
+  Enabled: true
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+Naming/VariableName:
+  Enabled: true
+Naming/VariableNumber:
+  Enabled: true
+Security/Open:
+  Enabled: true
+Security/YAMLLoad:
+  Enabled: true
+Style/AccessModifierDeclarations:
+  Enabled: true
+
 
 Performance:
   Exclude:
@@ -112,15 +143,6 @@ Style/MethodDefParentheses:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
-  Exclude:
-    - 'actionview/test/**/*.builder'
-    - 'actionview/test/**/*.ruby'
-    - 'actionpack/test/**/*.builder'
-    - 'actionpack/test/**/*.ruby'
-    - 'activestorage/db/migrate/**/*.rb'
-    - 'activestorage/db/update_migrate/**/*.rb'
-    - 'actionmailbox/db/migrate/**/*.rb'
-    - 'actiontext/db/migrate/**/*.rb'
 
 Style/RedundantFreeze:
   Enabled: true

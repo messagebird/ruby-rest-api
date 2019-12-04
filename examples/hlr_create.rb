@@ -22,16 +22,16 @@ begin
   puts "  msisdn          : #{hlr.msisdn}"
   puts "  reference       : #{hlr.reference}"
   puts "  status          : #{hlr.status}"
-  puts "  createdDatetime : #{hlr.createdDatetime}"
+  puts "  created_datetime : #{hlr.created_datetime}"
   puts "  statusDatetime  : #{hlr.statusDatetime}"
   puts
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while requesting an HLR object:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

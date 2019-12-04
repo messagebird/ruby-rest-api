@@ -99,13 +99,13 @@ module MessageBird
     end
 
     # Start a conversation
-    def start_conversation(to, channelId, params = {})
+    def start_conversation(to, channel_id, params = {})
       Conversation.new(conversation_request(
                          :post,
         "conversations/start",
         params.merge({
           to: to,
-          channelId: channelId,
+          channel_id: channel_id,
         })))
     end
 
@@ -133,11 +133,11 @@ module MessageBird
       ConversationMessage.new(conversation_request(:get, "messages/#{id}"))
     end
 
-    def conversation_webhook_create(channelId, url, events = [])
+    def conversation_webhook_create(channel_id, url, events = [])
       ConversationWebhook.new(conversation_request(
                                 :post,
         "webhooks",
-        channelId: channelId,
+        channel_id: channel_id,
         url: url,
         events: events
       ))
@@ -260,23 +260,23 @@ module MessageBird
       request(:delete, "calls/#{id}")
     end
 
-    def lookup(phoneNumber, params = {})
-      Lookup.new(request(:get, "lookup/#{phoneNumber}", params))
+    def lookup(phone_number, params = {})
+      Lookup.new(request(:get, "lookup/#{phone_number}", params))
     end
 
-    def lookup_hlr_create(phoneNumber, params = {})
-      HLR.new(request(:post, "lookup/#{phoneNumber}/hlr", params))
+    def lookup_hlr_create(phone_number, params = {})
+      HLR.new(request(:post, "lookup/#{phone_number}/hlr", params))
     end
 
-    def lookup_hlr(phoneNumber, params = {})
-      HLR.new(request(:get, "lookup/#{phoneNumber}/hlr", params))
+    def lookup_hlr(phone_number, params = {})
+      HLR.new(request(:get, "lookup/#{phone_number}/hlr", params))
     end
 
-    def contact_create(phoneNumber, params = {})
+    def contact_create(phone_number, params = {})
       Contact.new(request(
                     :post,
                       "contacts",
-                      params.merge({ msisdn: phoneNumber.to_s })))
+                      params.merge({ msisdn: phone_number.to_s })))
     end
 
     def contact(id)

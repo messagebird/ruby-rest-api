@@ -23,8 +23,8 @@ begin
   puts "The following information was returned as a conversation object:"
   puts "  id                        : #{conversation.id}"
   puts "  status                    : #{conversation.status}"
-  puts "  createdDatetime           : #{conversation.createdDatetime}"
-  puts "  updatedDatetime           : #{conversation.updatedDatetime}"
+  puts "  created_datetime           : #{conversation.created_datetime}"
+  puts "  updated_date_time           : #{conversation.updated_date_time}"
   puts "  lastReceivedDateklme      : #{conversation.lastReceivedDatetime}"
   puts "  lastUsedChannelId         : #{conversation.lastUsedChannelId}"
 
@@ -34,20 +34,20 @@ begin
   puts "    msisdn                  : #{conversation.contact.msisdn}"
   puts "    firstName               : #{conversation.contact.firstName}"
   puts "    lastName                : #{conversation.contact.lastName}"
-  puts "    custom1                 : #{conversation.contact.customDetails.custom1}"
-  puts "    custom2                 : #{conversation.contact.customDetails.custom2}"
-  puts "    custom3                 : #{conversation.contact.customDetails.custom3}"
-  puts "    custom4                 : #{conversation.contact.customDetails.custom4}"
-  puts "    createdDatetime         : #{conversation.contact.createdDatetime}"
-  puts "    updatedDatetime         : #{conversation.contact.updatedDatetime}"
+  puts "    custom1                 : #{conversation.contact.custom_details.custom1}"
+  puts "    custom2                 : #{conversation.contact.custom_details.custom2}"
+  puts "    custom3                 : #{conversation.contact.custom_details.custom3}"
+  puts "    custom4                 : #{conversation.contact.custom_details.custom4}"
+  puts "    created_datetime         : #{conversation.contact.created_datetime}"
+  puts "    updated_date_time         : #{conversation.contact.updated_date_time}"
 
   puts "  Channels                  :"
   conversation.channels.each do |channel|
     puts "    id                      : #{channel.id}"
     puts "    name                    : #{channel.name}"
     puts "    platformId              : #{channel.platformId}"
-    puts "    createdDatetime         : #{channel.createdDatetime}"
-    puts "    updatedDatetime         : #{channel.updatedDatetime}"
+    puts "    created_datetime         : #{channel.created_datetime}"
+    puts "    updated_date_time         : #{channel.updated_date_time}"
     puts
   end
 
@@ -55,12 +55,12 @@ begin
   puts "    href                    : #{conversation.messages.href}"
   puts "    totalCount              : #{conversation.messages.totalCount}"
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while creating a conversation:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

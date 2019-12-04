@@ -33,12 +33,12 @@ begin
   puts "    contacts        : #{group.contacts.href}"
   puts
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occurred while creating a group:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

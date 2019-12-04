@@ -32,19 +32,19 @@ begin
     puts "Webhook:"
     puts "  id                        : #{webhook.id}"
     puts "  events                    : #{webhook.events}"
-    puts "  channelId                 : #{webhook.channelId}"
+    puts "  channel_id                 : #{webhook.channel_id}"
     puts "  url                       : #{webhook.url}"
     puts "  status                    : #{webhook.status}"
-    puts "  createdDatetime           : #{webhook.createdDatetime}"
-    puts "  updatedDatetime           : #{webhook.updatedDatetime}"
+    puts "  created_datetime           : #{webhook.created_datetime}"
+    puts "  updated_date_time           : #{webhook.updated_date_time}"
   end
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while creating a conversation:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

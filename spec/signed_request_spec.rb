@@ -14,13 +14,13 @@ describe "SignedRequest" do
         "ported" => "1"
     }
     signature = "KVBdcVdz2lYMwcBLZCRITgxUfA/WkwSi+T3Wxl2HL6w="
-    requestTimestamp = 1547198231
+    request_timestamp = 1547198231
     body = ""
 
     # Create a MessageBird signed request.
-    signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+    signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
-    expect(signedRequest.verify(SIGNING_KEY)).to eq true
+    expect(signed_request.verify(SIGNING_KEY)).to eq true
   end
 
   it "verifies a correctly signed request with a body" do
@@ -34,13 +34,13 @@ describe "SignedRequest" do
         "ported" => "1"
     }
     signature = "2bl+38H4oHVg03pC3bk2LvCB0IHFgfC4cL5HPQ0LdmI="
-    requestTimestamp = 1547198231
+    request_timestamp = 1547198231
     body = '{"foo":"bar"}'
 
     # Create a MessageBird signed request.
-    signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+    signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
-    expect(signedRequest.verify(SIGNING_KEY)).to eq true
+    expect(signed_request.verify(SIGNING_KEY)).to eq true
   end
 
   it "fails to verify an incorrectly signed request" do
@@ -54,36 +54,36 @@ describe "SignedRequest" do
         "ported" => "1"
     }
     signature = "KVBdcVdz2lYMwcBLZCRITgxUfA/WkwSi+T3Wxl2HL6w="
-    requestTimestamp = 1547198231
+    request_timestamp = 1547198231
     body = ""
 
     # Create a MessageBird signed request.
-    signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+    signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
-    expect(signedRequest.verify(SIGNING_KEY)).to eq false
+    expect(signed_request.verify(SIGNING_KEY)).to eq false
   end
 
   it "correctly identifies a request as recent" do
     query = {}
     signature = "KVBdcVdz2lYMwcBLZCRITgxUfA/WkwSi+T3Wxl2HL6w="
-    requestTimestamp = Time.now.getutc.to_i - 1
+    request_timestamp = Time.now.getutc.to_i - 1
     body = ""
 
     # Create a MessageBird signed request.
-    signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+    signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
-    expect(signedRequest.isRecent()).to eq true
+    expect(signed_request.is_recent()).to eq true
   end
 
   it "correctly identifies a request as not recent" do
     query = {}
     signature = "KVBdcVdz2lYMwcBLZCRITgxUfA/WkwSi+T3Wxl2HL6w="
-    requestTimestamp = Time.now.getutc.to_i - 100
+    request_timestamp = Time.now.getutc.to_i - 100
     body = ""
 
     # Create a MessageBird signed request.
-    signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+    signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
-    expect(signedRequest.isRecent()).to eq false
+    expect(signed_request.is_recent()).to eq false
   end
 end

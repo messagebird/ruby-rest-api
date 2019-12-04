@@ -8,10 +8,10 @@ require "messagebird/message_reference"
 module MessageBird
   class Contact < MessageBird::Base
     attr_accessor :id, :href, :msisdn, :firstName, :lastName
-    attr_reader :customDetails, :groups, :messages, :createdDatetime, :updatedDatetime
+    attr_reader :custom_details, :groups, :messages, :created_datetime, :updated_date_time
 
-    def customDetails=(value)
-      @customDetails = MessageBird::CustomDetails.new(value)
+    def custom_details=(value)
+      @custom_details = MessageBird::CustomDetails.new(value)
     end
 
     def groups=(value)
@@ -22,12 +22,12 @@ module MessageBird
       @messages = MessageBird::MessageReference.new(value)
     end
 
-    def createdDatetime=(value)
-      @createdDatetime = value_to_time(value)
+    def created_datetime=(value)
+      @created_datetime = value_to_time(value)
     end
 
-    def updatedDatetime=(value)
-      @updatedDatetime = value_to_time(value)
+    def updated_date_time=(value)
+      @updated_date_time = value_to_time(value)
     end
   end
 end

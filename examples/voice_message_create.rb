@@ -26,17 +26,17 @@ begin
   puts "  voice             : #{vmsg.voice}"
   puts "  repeat            : #{vmsg.repeat}"
   puts "  ifMachine         : #{vmsg.ifMachine}"
-  puts "  scheduledDatetime : #{vmsg.scheduledDatetime}"
-  puts "  createdDatetime   : #{vmsg.createdDatetime}"
+  puts "  scheduled_date_time : #{vmsg.scheduled_date_time}"
+  puts "  created_datetime   : #{vmsg.created_datetime}"
   puts "  recipients        : #{vmsg.recipients}"
   puts
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while requesting an VoiceMessage object:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

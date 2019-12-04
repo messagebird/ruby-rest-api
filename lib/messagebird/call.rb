@@ -5,7 +5,7 @@ require "messagebird/call/webhook"
 
 module MessageBird
   class Call < MessageBird::Base
-    attr_accessor :id, :status, :source, :destination, :createdAt, :updatedAt, :endedAt, :webhook, :callFlow
+    attr_accessor :id, :status, :source, :destination, :created_at, :updated_at, :endedAt, :webhook, :callFlow
     def initialize(json)
       params = json.include?("data") ? json["data"].first : json
       super(params)

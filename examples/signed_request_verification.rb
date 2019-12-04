@@ -17,28 +17,28 @@ begin
       "ported" => "1"
   }
   signature = "KVBdcVdz2lYMwcBLZCRITgxUfA/WkwSi+T3Wxl2HL6w="
-  requestTimestamp = 1547198231
+  request_timestamp = 1547198231
   body = ""
 
   # Create a MessageBird signed request.
-  signedRequest = MessageBird::SignedRequest.new(query, signature, requestTimestamp, body)
+  signed_request = MessageBird::SignedRequest.new(query, signature, request_timestamp, body)
 
   # Verify the signed request.
-  if signedRequest.verify(SIGNING_KEY)
+  if signed_request.verify(SIGNING_KEY)
     puts "The signed request has been verified."
   else
     puts "The signed request cannot be verified."
   end
 
   # Check recentness of the signed request.
-  if signedRequest.isRecent()
+  if signed_request.is_recent()
     puts "The signed request is recent."
   else
     puts "The signed request is not recent."
   end
 
-rescue MessageBird::ValidationException => ex
+rescue MessageBird::ValidationException => e
   puts
   puts "An error occurred while verifying the signed request:"
-  puts ex
+  puts e
 end

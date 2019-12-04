@@ -23,21 +23,21 @@ begin
 The following information was returned as a Message object:
     id                        : #{msg.id}
     conversationId            : #{msg.conversationId}
-    channelId                 : #{msg.channelId}
+    channel_id                 : #{msg.channel_id}
     direction                 : #{msg.direction}
     type                      : #{msg.type}
     status                    : #{msg.status}
     content                   : #{msg.content}
-    createdDatetime           : #{msg.createdDatetime}
-    updatedDatetime           : #{msg.updatedDatetime}
+    created_datetime           : #{msg.created_datetime}
+    updated_date_time           : #{msg.updated_date_time}
 EOF
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while updating a conversation:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

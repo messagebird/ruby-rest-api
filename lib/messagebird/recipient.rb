@@ -5,10 +5,10 @@ require "messagebird/base"
 module MessageBird
   class Recipient < MessageBird::Base
     attr_accessor :recipient, :status
-    attr_reader :statusDatetime
+    attr_reader :status_date_time
 
-    def statusDatetime=(value)
-      @statusDatetime = value_to_time(value)
+    def status_date_time=(value)
+      @status_date_time = value_to_time(value)
     end
   end
 end

@@ -6,14 +6,14 @@ require "messagebird/recipient"
 module MessageBird
   class VoiceMessage < MessageBird::Base
     attr_accessor :id, :href, :originator, :body, :reference, :language, :voice, :repeat, :ifMachine
-    attr_reader :scheduledDatetime, :createdDatetime, :recipients
+    attr_reader :scheduled_date_time, :created_datetime, :recipients
 
-    def scheduledDatetime=(value)
-      @scheduledDatetime = value_to_time(value)
+    def scheduled_date_time=(value)
+      @scheduled_date_time = value_to_time(value)
     end
 
-    def createdDatetime=(value)
-      @createdDatetime = value_to_time(value)
+    def created_datetime=(value)
+      @created_datetime = value_to_time(value)
     end
 
     def recipients=(json)

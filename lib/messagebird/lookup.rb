@@ -9,12 +9,12 @@ module MessageBird
     attr_accessor :href, :countryCode, :countryPrefix, :phoneNumber, :type
     attr_reader :formats, :hlr
 
-    def formats=(newFormats)
-      @formats = Formats.new(newFormats)
+    def formats=(new_formats)
+      @formats = Formats.new(new_formats)
     end
 
-    def hlr=(newHLR)
-      @hlr = HLR.new(newHLR)
+    def hlr=(new_hlr)
+      @hlr = HLR.new(new_hlr)
     end
   end
 

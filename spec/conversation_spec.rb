@@ -19,7 +19,7 @@ describe "Conversation" do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, "conversations/start", { channelId: "c0dae31e440145e094c4708b7d000000", to: 31612345678, type: "text",  content: { text: "Hi there!" } })
+      .with(:post, "conversations/start", { channel_id: "c0dae31e440145e094c4708b7d000000", to: 31612345678, type: "text",  content: { text: "Hi there!" } })
       .and_return("{}")
 
     client.start_conversation(31612345678, "c0dae31e440145e094c4708b7d000000", type: "text", content: { text: "Hi there!" })
@@ -75,12 +75,12 @@ describe "Conversation" do
     expect(conversation_client)
       .to receive(:request)
       .with(:post, "conversations/conversation-id/messages", { type: "text", content: { text: "Hi there" } })
-      .and_return('{"id":"message-id", "channelId": "channel-id", "conversationId": "conversation-id"}')
+      .and_return({ id: "message-id", channel_id: "channel-id", conversationId: "conversation-id" }.to_json)
 
     msg = client.conversation_reply("conversation-id", type: "text", content: { text: "Hi there" })
 
     expect(msg.id).to eq "message-id"
-    expect(msg.channelId).to eq "channel-id"
+    expect(msg.channel_id).to eq "channel-id"
     expect(msg.conversationId).to eq "conversation-id"
   end
 
@@ -120,7 +120,7 @@ describe "Conversation" do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, "webhooks", channelId: "channel-id", events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: "url")
+      .with(:post, "webhooks", channel_id: "channel-id", events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: "url")
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created", "message.updated"]}')
 
     webhook = client.conversation_webhook_create("channel-id", "url", [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])

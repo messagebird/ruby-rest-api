@@ -24,8 +24,8 @@ The following information was returned as an updated conversation object:
   id                        : #{conversation.id}
   status                    : #{conversation.status}
   contactId                 : #{conversation.contactId}
-  createdDatetime           : #{conversation.createdDatetime}
-  updatedDatetime           : #{conversation.updatedDatetime}
+  created_datetime           : #{conversation.created_datetime}
+  updated_date_time           : #{conversation.updated_date_time}
   lastReceivedDateklme      : #{conversation.lastReceivedDatetime}
   lastUsedChannelId         : #{conversation.lastUsedChannelId}
   Messages                  :
@@ -33,12 +33,12 @@ The following information was returned as an updated conversation object:
     totalCount              : #{conversation.messages.totalCount}
 EOF
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while updating a conversation:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

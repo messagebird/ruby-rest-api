@@ -35,22 +35,22 @@ begin
     puts "Message:"
     puts "  id                        : #{msg.id}"
     puts "  conversationId            : #{msg.conversationId}"
-    puts "  channelId                 : #{msg.channelId}"
+    puts "  channel_id                 : #{msg.channel_id}"
     puts "  direction                 : #{msg.direction}"
     puts "  type                      : #{msg.type}"
     puts "  status                    : #{msg.status}"
     puts "  content                   : #{msg.content}"
-    puts "  createdDatetime           : #{msg.createdDatetime}"
-    puts "  updatedDatetime           : #{msg.updatedDatetime}"
+    puts "  created_datetime           : #{msg.created_datetime}"
+    puts "  updated_date_time           : #{msg.updated_date_time}"
     puts
   end
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while creating a conversation:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

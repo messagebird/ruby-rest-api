@@ -39,16 +39,16 @@ begin
   puts "  reference           : #{otp.reference}"
   puts "  status              : #{otp.status}"
   puts "  href                : #{otp.href}"
-  puts "  createdDatetime     : #{otp.createdDatetime}"
+  puts "  created_datetime     : #{otp.created_datetime}"
   puts "  validUntilDatetime  : #{otp.validUntilDatetime}"
   puts
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while requesting an OTP object:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

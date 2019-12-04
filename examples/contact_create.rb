@@ -35,18 +35,18 @@ begin
   puts "    lastName        : #{contact.lastName}"
   puts "    groups          : #{contact.groups.href}" # contact.groups.totalCount is also available.
   puts "    messages        : #{contact.messages.href}" # contact.messages.totalCount is also available.
-  puts "    custom1         : #{contact.customDetails.custom1}"
-  puts "    custom2         : #{contact.customDetails.custom2}"
-  puts "    custom3         : #{contact.customDetails.custom3}"
-  puts "    custom4         : #{contact.customDetails.custom4}"
+  puts "    custom1         : #{contact.custom_details.custom1}"
+  puts "    custom2         : #{contact.custom_details.custom2}"
+  puts "    custom3         : #{contact.custom_details.custom3}"
+  puts "    custom4         : #{contact.custom_details.custom4}"
   puts
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occurred while creating a contact:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

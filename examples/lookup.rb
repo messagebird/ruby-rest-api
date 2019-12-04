@@ -46,16 +46,16 @@ begin
     puts "    msisdn          : #{lookup.hlr.msisdn}"
     puts "    reference       : #{lookup.hlr.reference}"
     puts "    status          : #{lookup.hlr.status}"
-    puts "    createdDatetime : #{lookup.hlr.createdDatetime}"
+    puts "    created_datetime : #{lookup.hlr.created_datetime}"
     puts "    statusDatetime  : #{lookup.hlr.statusDatetime}"
   end
 
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts "An error occured while requesting the lookup:"
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

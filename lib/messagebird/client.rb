@@ -96,7 +96,7 @@ module MessageBird
                                 'send',
                                 params.merge(from: from,
                                              to: to)
-                              ))
+      ))
     end
 
     # Start a conversation
@@ -106,7 +106,7 @@ module MessageBird
                          'conversations/start',
                          params.merge(to: to,
                                       channel_id: channel_id)
-                       ))
+      ))
     end
 
     def conversation_list(limit = 0, offset = 0)
@@ -140,7 +140,7 @@ module MessageBird
                                 channel_id: channel_id,
                                 url: url,
                                 events: events
-                              ))
+      ))
     end
 
     def conversation_webhooks_list(limit = 0, offset = 0)
@@ -176,7 +176,7 @@ module MessageBird
                 'hlr',
                 msisdn: msisdn,
                 reference: reference
-              ))
+      ))
     end
 
     # Retrieve the information of specific Verify.
@@ -190,7 +190,7 @@ module MessageBird
                    :post,
                    'verify',
                    params.merge(recipient: recipient)
-                 ))
+      ))
     end
 
     # Verify the One-Time-Password.
@@ -219,7 +219,7 @@ module MessageBird
                     params.merge(originator: originator.to_s,
                                  body: body.to_s,
                                  recipients: recipients)
-                  ))
+      ))
     end
 
     # Retrieve the information of a specific voice message.
@@ -236,7 +236,7 @@ module MessageBird
                          :post,
                          'voicemessages',
                          params.merge(recipients: recipients, body: body.to_s)
-                       ))
+      ))
     end
 
     def call_create(source, destination, call_flow = {}, webhook = {}, params = {})
@@ -246,7 +246,7 @@ module MessageBird
                  :post,
                  'calls',
                  params.merge(source: source, destination: destination)
-               ))
+      ))
     end
 
     def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)
@@ -278,7 +278,7 @@ module MessageBird
                     :post,
                     'contacts',
                     params.merge(msisdn: phone_number.to_s)
-                  ))
+      ))
     end
 
     def contact(id)

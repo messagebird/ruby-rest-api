@@ -58,6 +58,8 @@ module MessageBird
         request = Net::HTTP::Patch.new(uri.request_uri)
       when :post
         request = Net::HTTP::Post.new(uri.request_uri)
+      when :put
+        request = Net::HTTP::Put.new(uri.request_uri)
       else
         raise MethodNotAllowedException
       end
@@ -66,7 +68,7 @@ module MessageBird
       request['Authorization'] = "AccessKey #{@access_key}"
       request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
 
-      if [:patch, :post].include?(method) && !params.empty?
+      if [:patch, :post, :put].include?(method) && !params.empty?
         prepare_request(request, params)
       end
       request

@@ -58,7 +58,7 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
 
 #<MessageBird::Message:0x007f8d5b883520
  @body="Hello World",
- @createdDatetime=2014-07-07 12:20:30 +0200,
+ @created_datetime=2014-07-07 12:20:30 +0200,
  @datacoding="plain",
  @direction="mt",
  @gateway=239,
@@ -68,7 +68,7 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
  @mclass=1,
  @originator="FromMe",
  @recipient=
-  {"totalCount"=>1,
+  {"total_count"=>1,
    "totalSentCount"=>1,
    "totalDeliveredCount"=>0,
    "totalDeliveryFailedCount"=>0,
@@ -78,9 +78,9 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
       @status="sent",
       @statusDatetime=2014-07-07 12:20:30 +0200>]},
  @reference="MyReference",
- @scheduledDatetime=nil,
+ @scheduled_datetime=nil,
  @type="sms",
- @typeDetails={},
+ @type_details={},
  @validity=nil>
 ```
 
@@ -97,7 +97,7 @@ To perform HLR lookups we have created the **hlr_create** method, which takes a 
 pp client.hlr_create('31612345678', 'MyReference')
 
 #<MessageBird::HLR:0x007f8d5b8dafc8
- @createdDatetime=2014-07-07 12:20:05 +0200,
+ @created_datetime=2014-07-07 12:20:05 +0200,
  @href="https://rest.messagebird.com/hlr/4933bed0453ba7455031712h16830892",
  @id="4933bed0453ba7455031712h16830892",
  @msisdn=31612345678,
@@ -126,7 +126,7 @@ client.verify_create(31612345678, {:reference => "YourReference"})
  @reference="YourReference",
  @status="sent",
  @href={"message"=>"https://rest.messagebird.com/messages/67d42f004555213679416f0b13254392"},
- @createdDatetime=2015-05-12 16:51:19 +0200,
+ @created_datetime=2015-05-12 16:51:19 +0200,
  @validUntilDatetime=2015-05-12 16:51:49 +0200>
 ```
 
@@ -147,14 +147,14 @@ pp client.voice_message_create('31612345678', 'Hello World', :reference => 'MyRe
 
 #<MessageBird::VoiceMessage:0x000001030101b8
  @body="Hello World",
- @createdDatetime=2014-07-09 12:17:50 +0200,
+ @created_datetime=2014-07-09 12:17:50 +0200,
  @href=
   "https://rest.messagebird.com/voicemessages/a08e51a0353bd16cea7f298a37405850",
  @id="a08e51a0353bd16cea7f298a37405850",
  @ifMachine="continue",
  @language="en-gb",
  @recipients=
-  {"totalCount"=>1,
+  {"total_count"=>1,
    "totalSentCount"=>1,
    "totalDeliveredCount"=>0,
    "totalDeliveryFailedCount"=>0,

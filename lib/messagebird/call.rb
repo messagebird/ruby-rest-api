@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
 require 'messagebird/base'
 require 'messagebird/call/webhook'
 
 module MessageBird
   class Call < MessageBird::Base
-    attr_accessor :id, :status, :source, :destination, :createdAt, :updatedAt, :endedAt, :webhook, :callFlow
+    attr_accessor :id, :status, :source, :destination, :created_at, :updated_at, :endedAt, :call_flow
+    attr_reader :webhook
+
     def initialize(json)
-      params = json.include?("data") ? json["data"].first : json
+      params = json.include?('data') ? json['data'].first : json
       super(params)
     end
 

@@ -1,15 +1,15 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'time'
 
 module MessageBird
   class Base
     def initialize(json)
-      json.each do |k,v|
-        begin
-          send("#{k}=", v)
-        rescue NoMethodError
-          # Silently ignore parameters that are not supported.
-        end
+      json.each do |k, v|
+        m = k.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase # convert came case to snake case
+
+        send("#{m}=", v) if respond_to?(:"#{m}=")
       end
     end
 

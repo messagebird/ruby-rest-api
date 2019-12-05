@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
@@ -25,19 +26,18 @@ begin
 
   # Print the object information.
   puts
-  puts "  Group             :"
+  puts '  Group             :'
   puts "    id              : #{group.id}"
   puts "    href            : #{group.href}"
   puts "    name            : #{group.name}"
   puts "    contacts        : #{group.contacts.href}"
   puts
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occurred while creating a group:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

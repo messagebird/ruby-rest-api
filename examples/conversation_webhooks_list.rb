@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -20,30 +21,29 @@ begin
   webhooks = client.conversation_webhooks_list(limit, offset)
 
   # Print the object information.
-  puts "The following information was returned as a Webhooks list:"
+  puts 'The following information was returned as a Webhooks list:'
   puts
   puts "  count           : #{webhooks.count}"
   puts "  limit           : #{webhooks.limit}"
   puts "  offset          : #{webhooks.offset}"
-  puts "  totalCount      : #{webhooks.totalCount}"
-  puts 
+  puts "  total_count      : #{webhooks.total_count}"
+  puts
   webhooks.items.each do |webhook|
-     puts "Webhook:"
-     puts "  id                        : #{webhook.id}"
-     puts "  events                    : #{webhook.events}"
-     puts "  channelId                 : #{webhook.channelId}"
-     puts "  url                       : #{webhook.url}"
-     puts "  status                    : #{webhook.status}"
-     puts "  createdDatetime           : #{webhook.createdDatetime}"
-     puts "  updatedDatetime           : #{webhook.updatedDatetime}"
-  end 
-
-rescue MessageBird::ErrorException => ex
+    puts 'Webhook:'
+    puts "  id                        : #{webhook.id}"
+    puts "  events                    : #{webhook.events}"
+    puts "  channel_id                 : #{webhook.channel_id}"
+    puts "  url                       : #{webhook.url}"
+    puts "  status                    : #{webhook.status}"
+    puts "  created_datetime           : #{webhook.created_datetime}"
+    puts "  updated_datetime           : #{webhook.updated_datetime}"
+  end
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while creating a conversation:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

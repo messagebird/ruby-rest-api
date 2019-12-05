@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'net/https'
 require 'uri'
@@ -38,8 +40,8 @@ module MessageBird
   class Client
     attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
-    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE" # Enables the whatsapp sandbox
-    VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE]                         # List of valid features for validation
+    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = 'CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE' # Enables the whatsapp sandbox
+    VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE].freeze # List of valid features for validation
 
     def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
@@ -65,21 +67,24 @@ module MessageBird
       end
     end
 
-    def conversation_request(method, path, params={})
+    def conversation_request(method, path, params = {})
       response_body = @conversation_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
+
       parse_body(response_body)
     end
 
-    def voice_request(method, path, params={})
+    def voice_request(method, path, params = {})
       response_body = @voice_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
+
       parse_body(response_body)
     end
 
-    def request(method, path, params={})
+    def request(method, path, params = {})
       response_body = @http_client.request(method, path, params)
       return if response_body.empty?
+
       parse_body(response_body)
     end
 
@@ -87,8 +92,8 @@ module MessageBird
       json = JSON.parse(body)
 
       # If the request returned errors, create Error objects and raise.
-      if json.has_key?('errors')
-        raise ErrorException, json['errors'].map { |e| Error.new(e) }
+      if json.key?('errors')
+        raise(ErrorException, json['errors'].map { |e| Error.new(e) })
       end
 
       json
@@ -96,25 +101,23 @@ module MessageBird
 
     ## Conversations
     # Send a conversation message
-    def send_conversation_message(from, to, params={})
+    def send_conversation_message(from, to, params = {})
       ConversationMessage.new(conversation_request(
-        :post,
-        'send', 
-        params.merge({
-          :from => from,
-          :to => to,
-        })))
+                                :post,
+                                'send',
+                                params.merge(from: from,
+                                             to: to)
+      ))
     end
 
     # Start a conversation
-    def start_conversation(to, channelId, params={})
+    def start_conversation(to, channel_id, params = {})
       Conversation.new(conversation_request(
-        :post,
-        'conversations/start',
-        params.merge({
-          :to => to,
-          :channelId => channelId,
-        })))
+                         :post,
+                         'conversations/start',
+                         params.merge(to: to,
+                                      channel_id: channel_id)
+      ))
     end
 
     def conversation_list(limit = 0, offset = 0)
@@ -126,45 +129,45 @@ module MessageBird
     end
 
     def conversation_update(id, status)
-      Conversation.new(conversation_request(:patch, "conversations/#{id}", :status => status))
+      Conversation.new(conversation_request(:patch, "conversations/#{id}", status: status))
     end
-    
-    def conversation_reply(id, params={})
+
+    def conversation_reply(id, params = {})
       ConversationMessage.new(conversation_request(:post, "conversations/#{id}/messages", params))
     end
-    
-    def conversation_messages_list(id, limit=0, offset=0)
+
+    def conversation_messages_list(id, limit = 0, offset = 0)
       List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages?limit=#{limit}&offset=#{offset}"))
     end
-    
+
     def conversation_message(id)
       ConversationMessage.new(conversation_request(:get, "messages/#{id}"))
     end
-    
-    def conversation_webhook_create(channelId, url, events=[])
+
+    def conversation_webhook_create(channel_id, url, events = [])
       ConversationWebhook.new(conversation_request(
-        :post,
-        "webhooks",
-        :channelId => channelId,
-        :url => url,
-        :events => events
+                                :post,
+                                'webhooks',
+                                channel_id: channel_id,
+                                url: url,
+                                events: events
       ))
     end
 
-    def conversation_webhooks_list(limit=0, offset=0)
-      List.new(ConversationWebhook, conversation_request(:get,"webhooks?limit=#{limit}&offset=#{offset}"))
+    def conversation_webhooks_list(limit = 0, offset = 0)
+      List.new(ConversationWebhook, conversation_request(:get, "webhooks?limit=#{limit}&offset=#{offset}"))
     end
 
-    def conversation_webhook_update(id, params={})
-      ConversationWebhook.new(conversation_request(:patch,"webhooks/#{id}",params))
+    def conversation_webhook_update(id, params = {})
+      ConversationWebhook.new(conversation_request(:patch, "webhooks/#{id}", params))
     end
 
     def conversation_webhook(id)
-      ConversationWebhook.new(conversation_request(:get,"webhooks/#{id}"))
+      ConversationWebhook.new(conversation_request(:get, "webhooks/#{id}"))
     end
 
     def conversation_webhook_delete(id)
-      conversation_request(:delete,"webhooks/#{id}")
+      conversation_request(:delete, "webhooks/#{id}")
     end
 
     # Retrieve your balance.
@@ -174,98 +177,98 @@ module MessageBird
 
     # Retrieve the information of specific HLR.
     def hlr(id)
-      HLR.new(request(:get, "hlr/#{id.to_s}"))
+      HLR.new(request(:get, "hlr/#{id}"))
     end
 
     # Create a new HLR.
     def hlr_create(msisdn, reference)
       HLR.new(request(
-        :post,
-        'hlr',
-        :msisdn    => msisdn,
-        :reference => reference))
+                :post,
+                'hlr',
+                msisdn: msisdn,
+                reference: reference
+      ))
     end
 
     # Retrieve the information of specific Verify.
     def verify(id)
-      Verify.new(request(:get, "verify/#{id.to_s}"))
+      Verify.new(request(:get, "verify/#{id}"))
     end
 
     # Generate a new One-Time-Password message.
-    def verify_create(recipient, params={})
+    def verify_create(recipient, params = {})
       Verify.new(request(
-          :post,
-          'verify',
-          params.merge({
-              :recipient => recipient
-          })
+                   :post,
+                   'verify',
+                   params.merge(recipient: recipient)
       ))
     end
 
     # Verify the One-Time-Password.
     def verify_token(id, token)
-      Verify.new(request(:get, "verify/#{id.to_s}?token=#{token}"))
+      Verify.new(request(:get, "verify/#{id}?token=#{token}"))
     end
 
     # Delete a Verify
     def verify_delete(id)
-      Verify.new(request(:delete, "verify/#{id.to_s}"))
+      Verify.new(request(:delete, "verify/#{id}"))
     end
 
     # Retrieve the information of specific message.
     def message(id)
-      Message.new(request(:get, "messages/#{id.to_s}"))
+      Message.new(request(:get, "messages/#{id}"))
     end
 
     # Create a new message.
-    def message_create(originator, recipients, body, params={})
+    def message_create(originator, recipients, body, params = {})
       # Convert an array of recipients to a comma-separated string.
-      recipients = recipients.join(',') if recipients.kind_of?(Array)
+      recipients = recipients.join(',') if recipients.is_a?(Array)
 
       Message.new(request(
-        :post,
-        'messages',
-        params.merge({
-          :originator => originator.to_s,
-          :body       => body.to_s,
-          :recipients => recipients })))
+                    :post,
+                    'messages',
+                    params.merge(originator: originator.to_s,
+                                 body: body.to_s,
+                                 recipients: recipients)
+      ))
     end
 
     # Retrieve the information of a specific voice message.
     def voice_message(id)
-      VoiceMessage.new(request(:get, "voicemessages/#{id.to_s}"))
+      VoiceMessage.new(request(:get, "voicemessages/#{id}"))
     end
 
     # Create a new voice message.
-    def voice_message_create(recipients, body, params={})
+    def voice_message_create(recipients, body, params = {})
       # Convert an array of recipients to a comma-separated string.
-      recipients = recipients.join(',') if recipients.kind_of?(Array)
+      recipients = recipients.join(',') if recipients.is_a?(Array)
 
       VoiceMessage.new(request(
-        :post,
-        'voicemessages',
-        params.merge({ :recipients => recipients, :body => body.to_s })))
+                         :post,
+                         'voicemessages',
+                         params.merge(recipients: recipients, body: body.to_s)
+      ))
     end
 
-    def voice_webhook_create(url, params={})
+    def voice_webhook_create(url, params = {})
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :post,
-        "webhooks",
-        params.merge({ :url => url })
+                                           :post,
+                                           'webhooks',
+                                           params.merge(url: url)
       ))
 
       list.items[0]
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
-      VoiceList.new(VoiceWebhook, voice_request(:get,"webhooks?perPage=#{per_page}&page=#{page}"))
+      VoiceList.new(VoiceWebhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
     end
 
-    def voice_webhook_update(id, params={})
+    def voice_webhook_update(id, params = {})
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :put,
-        "webhooks/#{id}",
-        params
+                                           :put,
+                                           "webhooks/#{id}",
+                                           params
       ))
 
       list.items[0]
@@ -273,24 +276,26 @@ module MessageBird
 
     def voice_webhook(id)
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :get,
-        "webhooks/#{id}"
+                                           :get,
+                                           "webhooks/#{id}"
       ))
 
       list.items[0]
     end
 
     def voice_webhook_delete(id)
-      voice_request(:delete,"webhooks/#{id}")
+      voice_request(:delete, "webhooks/#{id}")
     end
-    
-    def call_create(source, destination, call_flow = {}, webhook = {}, params={})
-      params = params.merge({callFlow: call_flow.to_json}) unless call_flow.empty?
-      params = params.merge({webhook: webhook.to_json}) unless webhook.empty?
+
+    def call_create(source, destination, call_flow = {}, webhook = {}, params = {})
+      params = params.merge(callFlow: call_flow.to_json) unless call_flow.empty?
+      params = params.merge(webhook: webhook.to_json) unless webhook.empty?
+
       Call.new(request(
-        :post,
-        'calls',
-        params.merge({ :source => source, :destination => destination })))
+                 :post,
+                 'calls',
+                 params.merge(source: source, destination: destination)
+      ))
     end
 
     def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)
@@ -298,30 +303,31 @@ module MessageBird
     end
 
     def call_view(id)
-      Call.new(request(:get, "calls/#{id.to_s}"))
+      Call.new(request(:get, "calls/#{id}"))
     end
 
     def call_delete(id)
       request(:delete, "calls/#{id}")
     end
 
-    def lookup(phoneNumber, params={})
-      Lookup.new(request(:get, "lookup/#{phoneNumber}", params))
+    def lookup(phone_number, params = {})
+      Lookup.new(request(:get, "lookup/#{phone_number}", params))
     end
 
-    def lookup_hlr_create(phoneNumber, params={})
-      HLR.new(request(:post, "lookup/#{phoneNumber}/hlr", params))
+    def lookup_hlr_create(phone_number, params = {})
+      HLR.new(request(:post, "lookup/#{phone_number}/hlr", params))
     end
 
-    def lookup_hlr(phoneNumber, params={})
-      HLR.new(request(:get, "lookup/#{phoneNumber}/hlr", params))
+    def lookup_hlr(phone_number, params = {})
+      HLR.new(request(:get, "lookup/#{phone_number}/hlr", params))
     end
 
-    def contact_create(phoneNumber, params={})
+    def contact_create(phone_number, params = {})
       Contact.new(request(
-                      :post,
-                      'contacts',
-                      params.merge({ :msisdn => phoneNumber.to_s })))
+                    :post,
+                    'contacts',
+                    params.merge(msisdn: phone_number.to_s)
+      ))
     end
 
     def contact(id)
@@ -332,7 +338,7 @@ module MessageBird
       request(:delete, "contacts/#{id}")
     end
 
-    def contact_update(id, params={})
+    def contact_update(id, params = {})
       request(:patch, "contacts/#{id}", params)
     end
 
@@ -345,7 +351,7 @@ module MessageBird
     end
 
     def group_create(name)
-      Group.new(request(:post, 'groups', { :name => name }))
+      Group.new(request(:post, 'groups', name: name))
     end
 
     def group_delete(id)
@@ -357,7 +363,7 @@ module MessageBird
     end
 
     def group_update(id, name)
-      request(:patch, "groups/#{id}", { :name => name })
+      request(:patch, "groups/#{id}", name: name)
     end
 
     def group_add_contacts(group_id, contact_ids)
@@ -373,8 +379,9 @@ module MessageBird
       request(:delete, "groups/#{group_id}/contacts/#{contact_id}")
     end
 
-    private # Applies to every method below this line
+    private
 
+    # Applies to every method below this line
     def add_contacts_query(contact_ids)
       # add_contacts_query gets a query string to add contacts to a group.
       # We're using the alternative "/foo?_method=PUT&key=value" format to send
@@ -385,6 +392,5 @@ module MessageBird
 
       '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&')
     end
-
   end
 end

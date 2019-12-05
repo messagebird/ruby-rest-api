@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -11,9 +12,7 @@ unless defined?(ACCESS_KEY)
   exit 1
 end
 
-unless defined?(HLR_ID)
-  puts 'You need to set an HLR_ID constant in this file'
-end
+puts 'You need to set an HLR_ID constant in this file' unless defined?(HLR_ID)
 
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
@@ -24,23 +23,22 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as an HLR object:"
+  puts 'The following information was returned as an HLR object:'
   puts
   puts "  id              : #{hlr.id}"
   puts "  href            : #{hlr.href}"
   puts "  msisdn          : #{hlr.msisdn}"
   puts "  reference       : #{hlr.reference}"
   puts "  status          : #{hlr.status}"
-  puts "  createdDatetime : #{hlr.createdDatetime}"
+  puts "  created_datetime : #{hlr.created_datetime}"
   puts "  statusDatetime  : #{hlr.statusDatetime}"
   puts
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting an HLR object:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

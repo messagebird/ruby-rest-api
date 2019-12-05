@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MessageBird
   module Voice
     class Base < MessageBird::Base

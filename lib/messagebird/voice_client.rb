@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/https'
 require 'uri'
 require 'json'
@@ -7,7 +9,7 @@ module MessageBird
   class VoiceClient < HttpClient
     attr_reader :endpoint
 
-    BASE_ENDPOINT = 'https://voice.messagebird.com/'.freeze
+    BASE_ENDPOINT = 'https://voice.messagebird.com/'
 
     def initialize(access_key)
       super(access_key)

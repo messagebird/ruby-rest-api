@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'messagebird/voice/base'
 
 module MessageBird

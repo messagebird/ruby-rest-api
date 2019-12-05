@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = 'YOUR KEY HERE'.freeze
-CALL_ID    = 'YOUR CALL ID HERE'.freeze
+ACCESS_KEY = 'YOUR KEY HERE'
+CALL_ID    = 'YOUR CALL ID HERE'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'

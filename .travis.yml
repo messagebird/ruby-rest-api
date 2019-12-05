@@ -8,13 +8,13 @@ before_install:
   - gem install bundler -v '< 2'
 
 rvm:
+- 2.6.5
 - 2.5.1
 - 2.0.0
 - 2.2
 - 2.3.0
 - 1.9.3
 - jruby
-- ruby-head
 env:
   # this doesn't do anything for MRI or RBX, but it doesn't hurt them either
   # for JRuby, it enables us to get more accurate coverage data
@@ -22,7 +22,6 @@ env:
 matrix:
   allow_failures:
   - rvm: jruby
-  - rvm: ruby-head
   - rvm: 1.9.3
 
 install:

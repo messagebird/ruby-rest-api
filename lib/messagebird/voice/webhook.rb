@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-require 'messagebird/base'
+require 'messagebird/voice/base'
 
 module MessageBird
-  class VoiceWebhook < MessageBird::Base
-    attr_accessor :id, :url, :token, :createdAt, :updatedAt
+  module Voice
+    class Webhook < MessageBird::Voice::Base
+      attr_accessor :id, :url, :token, :created_at, :updated_at
+    end
   end
 end

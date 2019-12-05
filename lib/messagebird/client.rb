@@ -22,8 +22,11 @@ require 'messagebird/voice/client'
 require 'messagebird/voice/list'
 require 'messagebird/voice/webhook'
 require 'messagebird/voicemessage'
-require 'messagebird/call'
-require 'messagebird/call/list'
+require 'messagebird/voice_client'
+require 'messagebird/voice/call'
+require 'messagebird/voice/call_leg'
+require 'messagebird/voice/call_leg_recording'
+require 'messagebird/voice/list'
 
 module MessageBird
   class ErrorException < StandardError
@@ -251,36 +254,19 @@ module MessageBird
     end
 
     def voice_webhook_create(url, params = {})
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :post,
-                                           'webhooks',
-                                           params.merge(url: url)
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:post, 'webhooks', params.merge(url: url)))
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
-      VoiceList.new(VoiceWebhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
+      Voice::List.new(Voice::Webhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
     end
 
     def voice_webhook_update(id, params = {})
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :put,
-                                           "webhooks/#{id}",
-                                           params
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:put, "webhooks/#{id}", params))
     end
 
     def voice_webhook(id)
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :get,
-                                           "webhooks/#{id}"
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:get, "webhooks/#{id}"))
     end
 
     def voice_webhook_delete(id)
@@ -291,23 +277,35 @@ module MessageBird
       params = params.merge(callFlow: call_flow.to_json) unless call_flow.empty?
       params = params.merge(webhook: webhook.to_json) unless webhook.empty?
 
-      Call.new(request(
-                 :post,
-                 'calls',
-                 params.merge(source: source, destination: destination)
-      ))
+      Voice::Call.new(voice_request(:post, 'calls', params.merge(source: source, destination: destination)))
     end
 
-    def call_list(per_page = CallList::PER_PAGE, page = CallList::CURRENT_PAGE)
-      CallList.new(Call, request(:get, "calls?perPage=#{per_page}&page=#{page}"))
+    def call_list(per_page = Voice::List::PER_PAGE, page = Voice::List::CURRENT_PAGE)
+      Voice::List.new(Voice::Call, voice_request(:get, "calls?perPage=#{per_page}&currentPage=#{page}"))
     end
 
     def call_view(id)
-      Call.new(request(:get, "calls/#{id}"))
+      Voice::Call.new(voice_request(:get, "calls/#{id}"))
     end
 
     def call_delete(id)
-      request(:delete, "calls/#{id}")
+      voice_request(:delete, "calls/#{id}")
+    end
+
+    def call_leg_list(call_id, per_page = Voice::List::PER_PAGE, current_page = Voice::List::CURRENT_PAGE)
+      Voice::List.new(Voice::CallLeg, voice_request(:get, "calls/#{call_id}/legs?perPage=#{per_page}&currentPage=#{current_page}"))
+    end
+
+    def call_leg_recording_view(call_id, leg_id, recording_id)
+      Voice::CallLegRecording.new(voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}"))
+    end
+
+    def call_leg_recording_list(call_id, leg_id)
+      Voice::List.new(Voice::CallLegRecording, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings"))
+    end
+
+    def call_leg_recording_download(recording_uri)
+      @voice_client.request_block(:get, recording_uri, {}, &Proc.new)
     end
 
     def lookup(phone_number, params = {})

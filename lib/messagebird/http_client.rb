@@ -21,15 +21,18 @@ module MessageBird
       ENDPOINT
     end
 
-    def request(method, path, params = {}, check_json = true)
-      uri = URI.join(endpoint, path)
-
-      # Set up the HTTP object.
+    def build_http_client(uri)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
       http.set_debug_output($stdout) unless ENV['DEBUG_MB_HTTP_CLIENT'].nil?
 
+      http
+    end
+
+    def request(method, path, params = {}, check_json = true)
+      uri     = URI.join(endpoint, path)
+      http    = build_http_client(uri)
       request = build_request(method, uri, params)
 
       # Execute the request and fetch the response.
@@ -39,6 +42,14 @@ module MessageBird
       assert_json_response_type(response['Content-Type']) unless check_json
 
       response.body
+    end
+
+    def request_block(method, path, params = {})
+      uri     = URI.join(endpoint, path)
+      http    = build_http_client(uri)
+      request = build_request(method, uri, params)
+
+      http.request(request, &Proc.new)
     end
 
     def prepare_request(request, params = {})

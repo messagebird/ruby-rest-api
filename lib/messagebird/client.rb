@@ -74,9 +74,10 @@ module MessageBird
       parse_body(response_body)
     end
 
-    def voice_request(method, path, params={})
+    def voice_request(method, path, params = {})
       response_body = @voice_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
+
       parse_body(response_body)
     end
 
@@ -249,26 +250,25 @@ module MessageBird
       ))
     end
 
-
-    def voice_webhook_create(url, params={})
+    def voice_webhook_create(url, params = {})
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :post,
-        "webhooks",
-        params.merge({ :url => url })
+                                           :post,
+                                           'webhooks',
+                                           params.merge(url: url)
       ))
 
       list.items[0]
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
-      VoiceList.new(VoiceWebhook, voice_request(:get,"webhooks?perPage=#{per_page}&page=#{page}"))
+      VoiceList.new(VoiceWebhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
     end
 
-    def voice_webhook_update(id, params={})
+    def voice_webhook_update(id, params = {})
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :put,
-        "webhooks/#{id}",
-        params
+                                           :put,
+                                           "webhooks/#{id}",
+                                           params
       ))
 
       list.items[0]
@@ -276,17 +276,17 @@ module MessageBird
 
     def voice_webhook(id)
       list = VoiceList.new(VoiceWebhook, voice_request(
-        :get,
-        "webhooks/#{id}"
+                                           :get,
+                                           "webhooks/#{id}"
       ))
 
       list.items[0]
     end
 
     def voice_webhook_delete(id)
-      voice_request(:delete,"webhooks/#{id}")
+      voice_request(:delete, "webhooks/#{id}")
     end
-    
+
     def call_create(source, destination, call_flow = {}, webhook = {}, params = {})
       params = params.merge(callFlow: call_flow.to_json) unless call_flow.empty?
       params = params.merge(webhook: webhook.to_json) unless webhook.empty?

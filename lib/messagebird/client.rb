@@ -254,36 +254,19 @@ module MessageBird
     end
 
     def voice_webhook_create(url, params = {})
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :post,
-                                           'webhooks',
-                                           params.merge(url: url)
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:post, 'webhooks', params.merge(url: url)))
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
-      VoiceList.new(VoiceWebhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
+      Voice::List.new(Voice::Webhook, voice_request(:get, "webhooks?perPage=#{per_page}&page=#{page}"))
     end
 
     def voice_webhook_update(id, params = {})
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :put,
-                                           "webhooks/#{id}",
-                                           params
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:put, "webhooks/#{id}", params))
     end
 
     def voice_webhook(id)
-      list = VoiceList.new(VoiceWebhook, voice_request(
-                                           :get,
-                                           "webhooks/#{id}"
-      ))
-
-      list.items[0]
+      Voice::Webhook.new(voice_request(:get, "webhooks/#{id}"))
     end
 
     def voice_webhook_delete(id)

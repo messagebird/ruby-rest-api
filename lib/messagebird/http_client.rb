@@ -46,7 +46,7 @@ module MessageBird
       request
     end
 
-    SUBMIT_METHODS = [:patch, :post].freeze
+    SUBMIT_METHODS = [:patch, :post, :put].freeze
 
     def build_request(method, uri, params = {})
       # Construct the HTTP request.
@@ -59,6 +59,8 @@ module MessageBird
         request = Net::HTTP::Patch.new(uri.request_uri)
       when :post
         request = Net::HTTP::Post.new(uri.request_uri)
+      when :put
+        request = Net::HTTP::Put.new(uri.request_uri)
       else
         raise MethodNotAllowedException
       end

@@ -5,7 +5,7 @@ require 'messagebird/list'
 module MessageBird
   module Voice
     class List < List
-      attr_accessor :perPage, :currentPage, :pageCount, :totalCount
+      attr_accessor :per_page, :current_page, :page_count, :total_count
       PER_PAGE = 20
       CURRENT_PAGE = 1
       def data=(value)
@@ -15,11 +15,9 @@ module MessageBird
         self.items = value.nil? ? [] : value
       end
 
+      # map the pagination data to root level properties
       def pagination=(value)
-        value.each do |k, v|
-          method_name = "#{k}="
-          send(method_name, v) if respond_to? method_name
-        end
+        map_hash_elements_to_self(value)
       end
     end
   end

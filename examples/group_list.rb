@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 ACCESS_KEY = 'YOUR KEY HERE'
@@ -21,30 +22,29 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as a Group list:"
+  puts 'The following information was returned as a Group list:'
   puts
   puts "  count           : #{groups.count}"
   puts "  limit           : #{groups.limit}"
   puts "  offset          : #{groups.offset}"
-  puts "  totalCount      : #{groups.totalCount}"
+  puts "  total_count      : #{groups.total_count}"
   puts "  links           : #{groups.links}"
 
   unless groups.items.empty?
     group = groups[0] # Equivalent to groups.items[0]
 
-    puts "  Group             :"
+    puts '  Group             :'
     puts "    id              : #{group.id}"
     puts "    href            : #{group.href}"
     puts "    name            : #{group.name}"
     puts "    contacts        : #{group.contacts.href}"
   end
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occurred while listing your groups:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

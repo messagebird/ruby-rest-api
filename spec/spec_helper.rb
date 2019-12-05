@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is always be loaded, without a need to explicitly require it in any
 # files.
 #
@@ -11,9 +13,7 @@ require 'rspec/mocks'
 require 'messagebird'
 
 RSpec.configure do |config|
-
   config.expect_with :rspec do |expectations|
-
     # Makes the `description` and `failure_message` of custom matchers include
     # text for helper methods  defined using `chain`, e.g.:
     #     be_bigger_than(2).and_smaller_than(4).description
@@ -21,7 +21,6 @@ RSpec.configure do |config|
     # ...rather than:
     #     # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-
   end
 
   config.mock_with :rspec do |mocks|
@@ -52,7 +51,7 @@ RSpec.configure do |config|
   # Use the documentation formatter for detailed output,
   # unless a formatter has already been configured
   # (e.g. via a command-line flag).
-  config.default_formatter = "doc"
+  config.default_formatter = 'doc'
 
   # Print the 10 slowest examples and example groups at the
   # end of the spec run, to help surface which specs are running
@@ -70,5 +69,4 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
 end

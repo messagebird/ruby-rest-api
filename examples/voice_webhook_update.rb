@@ -5,37 +5,29 @@ $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
-# HLR_ID = ''
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
   exit 1
 end
 
-puts 'You need to set an HLR_ID constant in this file' unless defined?(HLR_ID)
-
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Fetch the HLR object for the specified HLR_ID.
-  hlr = client.hlr(HLR_ID)
+  # Create a webhook
+  webhook = client.voice_webhook_update('00000000000000000000', url: 'https://other.com', token: 'othertoken')
 
   # Print the object information.
-  puts
-  puts 'The following information was returned as an HLR object:'
-  puts
-  puts "  id              : #{hlr.id}"
-  puts "  href            : #{hlr.href}"
-  puts "  msisdn          : #{hlr.msisdn}"
-  puts "  reference       : #{hlr.reference}"
-  puts "  status          : #{hlr.status}"
-  puts "  created_datetime : #{hlr.created_datetime}"
-  puts "  statusDatetime  : #{hlr.statusDatetime}"
-  puts
+  puts 'Webhook:'
+  puts "  id                        : #{webhook.id}"
+  puts "  url                       : #{webhook.url}"
+  puts "  status                    : #{webhook.token}"
+  puts "  createdAt                 : #{webhook.createdAt}"
+  puts "  updatedAt                 : #{webhook.updatedAt}"
 rescue MessageBird::ErrorException => e
   puts
-  puts 'An error occured while requesting an HLR object:'
+  puts 'An error occured while updating a voice webhook:'
   puts
 
   e.errors.each do |error|

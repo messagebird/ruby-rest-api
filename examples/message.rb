@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -24,7 +25,7 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as a Message object:"
+  puts 'The following information was returned as a Message object:'
   puts
   puts "  id                : #{msg.id}"
   puts "  href              : #{msg.href}"
@@ -38,17 +39,16 @@ begin
   puts "  typeDetails       : #{msg.typeDetails}"
   puts "  datacoding        : #{msg.datacoding}"
   puts "  mclass            : #{msg.mclass}"
-  puts "  scheduledDatetime : #{msg.scheduledDatetime}"
-  puts "  createdDatetime   : #{msg.createdDatetime}"
+  puts "  scheduled_date_time : #{msg.scheduled_date_time}"
+  puts "  created_datetime   : #{msg.created_datetime}"
   puts "  recipients        : #{msg.recipients}"
   puts
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting an Message object:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

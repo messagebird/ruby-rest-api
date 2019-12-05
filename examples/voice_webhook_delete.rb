@@ -4,26 +4,22 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = 'test_gshuPaZoeEG6ovbc8M79w0QyM'
+# ACCESS_KEY = ''
+
+unless defined?(ACCESS_KEY)
+  puts 'You need to set an ACCESS_KEY constant in this file'
+  exit 1
+end
 
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Fetch the Balance object.
-  balance = client.balance
-
-  # Print the object information.
-  puts
-  puts 'The following information was returned as a Balance object:'
-  puts
-  puts "  payment : #{balance.payment}"
-  puts "  type    : #{balance.type}"
-  puts "  amount  : #{balance.amount}"
-  puts
+  # Delete a webhook
+  client.voice_webhook_delete('00000000000000000000')
 rescue MessageBird::ErrorException => e
   puts
-  puts 'An error occured while requesting a Balance object:'
+  puts 'An error occured while deleting a voice:'
   puts
 
   e.errors.each do |error|

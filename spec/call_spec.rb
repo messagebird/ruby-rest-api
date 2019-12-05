@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 require 'messagebird/voice/call'
 describe 'Call' do
   let(:source) { '31621234567' }
-  let(:destination) { '31621234568'}
-  let(:call_id) { "21025ed1-cc1d-4554-ac05-043fa6c84e00" }
-  let(:leg_id) { "30c42b27-dce6-4f72-b9c1-01f78ebc1008" }
-  let(:recording_id) { "3f7b2a0b-3f42-4b6c-a492-22cf35df98f6" }
+  let(:destination) { '31621234568' }
+  let(:call_id) { '21025ed1-cc1d-4554-ac05-043fa6c84e00' }
+  let(:leg_id) { '30c42b27-dce6-4f72-b9c1-01f78ebc1008' }
+  let(:recording_id) { '3f7b2a0b-3f42-4b6c-a492-22cf35df98f6' }
 
   let(:http_client) { double(MessageBird::HttpClient) }
   let(:voice_client) { double(MessageBird::VoiceClient) }
   let(:client) { MessageBird::Client.new('', http_client, nil, voice_client) }
-  let(:webhook) { {url:'https://example.com',token:'token_to_sign_the_call_events_with'} }
+  let(:webhook) { { url: 'https://example.com', token: 'token_to_sign_the_call_events_with' } }
   let(:call_flow) do
     {
-      title: "Say message",
+      title: 'Say message',
       steps: [
         {
-          action: "say",
+          action: 'say',
           options: {
-            payload: "This is a journey into sound. Good bye!",
-            voice: "male",
-            language: "en-US"
+            payload: 'This is a journey into sound. Good bye!',
+            voice: 'male',
+            language: 'en-US'
           }
         }
       ]
@@ -29,8 +31,8 @@ describe 'Call' do
   it 'create a call' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', {source: source, destination: destination, callFlow: call_flow.to_json})
-      .and_return('{"data":[{"id":"'+call_id+'","status":"queued","source":"'+source+'","destination":"'+destination+'","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null}],"_links":{"self":"/calls/'+call_id+'"},"pagination":{"totalCount":0,"pageCount":0,"currentPage":0,"perPage":0}}')
+      .with(:post, 'calls', source: source, destination: destination, callFlow: call_flow.to_json)
+      .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow)
     expect(call.id).to eq call_id
   end
@@ -38,8 +40,8 @@ describe 'Call' do
   it 'create a call with webhook' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', {source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json})
-      .and_return('{"data":[{"id":"'+call_id+'","status":"queued","source":"'+source+'","destination":"'+destination+'","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null, "webhook":'+webhook.to_json+'}],"_links":{"self":"/calls/'+call_id+'"},"pagination":{"totalCount":0,"pageCount":0,"currentPage":0,"perPage":0}}')
+      .with(:post, 'calls', source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json)
+      .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null, "webhook":' + webhook.to_json + '}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow, webhook)
     expect(call.id).to eq call_id
     expect(call.webhook.url).to eq webhook[:url]
@@ -48,9 +50,9 @@ describe 'Call' do
   it 'list all calls' do
     expect(voice_client)
       .to receive(:request)
-      .with(:get, "calls?perPage=20&currentPage=1", {})
-      .and_return('{ "data": [ { "id": "f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", "status": "ended", "source": "'+source+'", "destination": "31612345678", "createdAt": "2017-02-16T10:52:00Z", "updatedAt": "2017-02-16T10:59:04Z", "endedAt": "2017-02-16T10:59:04Z", "_links": { "self": "/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58" } }, { "id": "ac07a602-dbc1-11e6-bf26-cec0c932ce01", "status": "ended", "source": "'+source+'", "destination": "31612345678", "createdAt": "2017-01-16T07:51:56Z", "updatedAt": "2017-01-16T07:55:56Z", "endedAt": "2017-01-16T07:55:56Z", "webhook": '+webhook.to_json+',"_links": { "self": "/calls/ac07a602-dbc1-11e6-bf26-cec0c932ce01" } } ], "_links": { "self": "/calls?page=1" }, "pagination": { "totalCount": 2, "pageCount": 1, "currentPage": 1, "perPage": 10 } }
-')
+      .with(:get, 'calls?perPage=20&currentPage=1', {})
+      .and_return('{ "data": [ { "id": "f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", "status": "ended", "source": "' + source + '", "destination": "31612345678", "createdAt": "2017-02-16T10:52:00Z", "updatedAt": "2017-02-16T10:59:04Z", "endedAt": "2017-02-16T10:59:04Z", "_links": { "self": "/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58" } }, { "id": "ac07a602-dbc1-11e6-bf26-cec0c932ce01", "status": "ended", "source": "' + source + '", "destination": "31612345678", "createdAt": "2017-01-16T07:51:56Z", "updatedAt": "2017-01-16T07:55:56Z", "endedAt": "2017-01-16T07:55:56Z", "webhook": ' + webhook.to_json + ',"_links": { "self": "/calls/ac07a602-dbc1-11e6-bf26-cec0c932ce01" } } ], "_links": { "self": "/calls?page=1" }, "pagination": { "total_count": 2, "pageCount": 1, "currentPage": 1, "perPage": 10 } }')
+
     list = client.call_list
     expect(list.items).not_to be_nil
     expect(list.items.first.source).to eq source
@@ -64,10 +66,10 @@ describe 'Call' do
       .and_return('{
   "data": [
     {
-      "id": "'+call_id+'",
+      "id": "' + call_id + '",
       "status": "ended",
-      "source": "'+source+'",
-      "destination": "'+destination+'",
+      "source": "' + source + '",
+      "destination": "' + destination + '",
       "createdAt": "2017-02-16T10:52:00Z",
       "updatedAt": "2017-02-16T10:59:04Z",
       "endedAt": "2017-02-16T10:59:04Z"
@@ -84,7 +86,7 @@ describe 'Call' do
   it 'delete a call' do
     expect(voice_client)
       .to receive(:request)
-      .with(:delete, "calls/call-id", {})
+      .with(:delete, 'calls/call-id', {})
       .and_return('')
     client.call_delete('call-id')
   end
@@ -97,10 +99,10 @@ describe 'Call' do
         {
           "data": [
               {
-                  "id": "'+leg_id+'",
-                  "callId": "'+call_id+'",
-                  "source": "'+source+'",
-                  "destination": "'+destination+'",
+                  "id": "' + leg_id + '",
+                  "callId": "' + call_id + '",
+                  "source": "' + source + '",
+                  "destination": "' + destination + '",
                   "service": 1,
                   "status": "hangup",
                   "direction": "outgoing",
@@ -112,12 +114,12 @@ describe 'Call' do
                   "answeredAt": "2019-12-03T14:50:50Z",
                   "endedAt": "2019-12-03T14:51:00Z",
                   "_links": {
-                      "self": "/calls/'+call_id+'/legs/'+leg_id+'"
+                      "self": "/calls/' + call_id + '/legs/' + leg_id + '"
                   }
               }
           ],
           "_links": {
-              "self": "/calls/'+call_id+'/legs?page=1"
+              "self": "/calls/' + call_id + '/legs?page=1"
           },
           "pagination": {
               "totalCount": 1,
@@ -125,7 +127,7 @@ describe 'Call' do
               "currentPage": 1,
               "perPage": 10
           }
-      }');
+      }')
 
     legs = client.call_leg_list(call_id)
     expect(legs[0].id).to eq leg_id
@@ -165,7 +167,7 @@ describe 'Call' do
           }
       }')
 
-    records = client.call_leg_recording_list(call_id, leg_id);
+    records = client.call_leg_recording_list(call_id, leg_id)
     expect(records[0].uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
   end
 
@@ -198,8 +200,7 @@ describe 'Call' do
               "currentPage": 0,
               "perPage": 0
           }
-      }
-      ');
+      }')
 
     recording = client.call_leg_recording_view(call_id, leg_id, recording_id)
     expect(recording.uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
@@ -217,7 +218,7 @@ describe 'Call' do
     expect(mock_response)
       .to receive(:read_body)
       .once
-      .and_return('bytes go here');
+      .and_return('bytes go here')
 
     client.call_leg_recording_download(recording_uri) do |response|
       expect(response.read_body)

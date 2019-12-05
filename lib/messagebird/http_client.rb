@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'net/https'
 require 'uri'
 
 module MessageBird
-
   class InvalidPhoneNumberException < TypeError; end
   class InvalidResponseException < StandardError; end
   class MethodNotAllowedException < ArgumentError; end
@@ -16,18 +17,15 @@ module MessageBird
       @access_key = access_key
     end
 
-    def endpoint()
+    def endpoint
       ENDPOINT
     end
 
     def build_http_client(uri)
-
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
-      unless ENV['DEBUG_MB_HTTP_CLIENT'].nil?
-        http.set_debug_output($stdout)
-      end
+      http.set_debug_output($stdout) unless ENV['DEBUG_MB_HTTP_CLIENT'].nil?
 
       http
     end
@@ -54,12 +52,14 @@ module MessageBird
       http.request(request, &Proc.new)
     end
 
-    def prepare_request(request, params={})
+    def prepare_request(request, params = {})
       request.set_form_data(params)
       request
     end
 
-    def build_request(method, uri, params={})
+    SUBMIT_METHODS = [:patch, :post, :put].freeze
+
+    def build_request(method, uri, params = {})
       # Construct the HTTP request.
       case method
       when :delete
@@ -70,17 +70,20 @@ module MessageBird
         request = Net::HTTP::Patch.new(uri.request_uri)
       when :post
         request = Net::HTTP::Post.new(uri.request_uri)
+      when :put
+        request = Net::HTTP::Put.new(uri.request_uri)
       else
         raise MethodNotAllowedException
       end
 
       request['Accept']        = 'application/json'
       request['Authorization'] = "AccessKey #{@access_key}"
-      request['User-Agent']    = "MessageBird/ApiClient/#{CLIENT_VERSION} Ruby/#{RUBY_VERSION}"
+      request['User-Agent']    = "MessageBird/ApiClient/#{Version::STRING} Ruby/#{RUBY_VERSION}"
 
-      if [:patch, :post].include?(method) && !params.empty?
+      if SUBMIT_METHODS.include?(method) && !params.empty?
         prepare_request(request, params)
       end
+
       request
     end
 
@@ -101,7 +104,5 @@ module MessageBird
       # for equality: some API's may append the charset to this header.
       raise InvalidResponseException, 'Response is not JSON' unless content_type.start_with? 'application/json'
     end
-
   end
-
 end

@@ -270,15 +270,15 @@ module MessageBird
     end
 
     def call_leg_list(call_id, per_page = Voice::List::PER_PAGE, current_page = Voice::List::CURRENT_PAGE)
-      Voice::List.new(Voice::CallLeg, voice_request(:get, "calls/#{call_id.to_s}/legs?perPage=#{per_page}&currentPage=#{current_page}"))
+      Voice::List.new(Voice::CallLeg, voice_request(:get, "calls/#{call_id}/legs?perPage=#{per_page}&currentPage=#{current_page}"))
     end
 
     def call_leg_recording_view(call_id, leg_id, recording_id)
-      Voice::CallLegRecording.new(voice_request(:get, "calls/#{call_id.to_s}/legs/#{leg_id.to_s}/recordings/#{recording_id.to_s}"))
+      Voice::CallLegRecording.new(voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}"))
     end
 
     def call_leg_recording_list(call_id, leg_id)
-      Voice::List.new(Voice::CallLegRecording, voice_request(:get, "calls/#{call_id.to_s}/legs/#{leg_id.to_s}/recordings"))
+      Voice::List.new(Voice::CallLegRecording, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings"))
     end
 
     def call_leg_recording_download(recording_uri)

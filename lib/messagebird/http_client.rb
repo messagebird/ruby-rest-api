@@ -20,7 +20,7 @@ module MessageBird
       ENDPOINT
     end
 
-    def build_http_client(uri) 
+    def build_http_client(uri)
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -31,8 +31,8 @@ module MessageBird
 
       http
     end
-          
-    def request(method, path, params={}, check_json=true)
+
+    def request(method, path, params = {}, check_json = true)
       uri     = URI.join(endpoint, path)
       http    = build_http_client(uri)
       request = build_request(method, uri, params)
@@ -46,7 +46,7 @@ module MessageBird
       response.body
     end
 
-    def request_block(method, path, params={})
+    def request_block(method, path, params = {})
       uri     = URI.join(endpoint, path)
       http    = build_http_client(uri)
       request = build_request(method, uri, params)
@@ -55,7 +55,7 @@ module MessageBird
     end
 
     def prepare_request(request, params={})
-      request.set_form_data(params) 
+      request.set_form_data(params)
       request
     end
 

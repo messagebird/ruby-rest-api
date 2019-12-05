@@ -3,8 +3,8 @@
 $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = 'YOUR KEY HERE'
-CALL_ID    = 'YOUR CALL ID HERE'
+ACCESS_KEY = 'YOUR KEY HERE'.freeze
+CALL_ID    = 'YOUR CALL ID HERE'.freeze
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
@@ -18,20 +18,19 @@ begin
   # Request the legs (overview of inbound/outbound portions of this call)
   puts "Retrieving legs for call #{CALL_ID}"
   legs = client.call_leg_list(CALL_ID)
-   
+
   legs.items.each do |leg|
     puts "  Retrieving recordings for leg #{leg.id}"
     recordings = client.call_leg_recording_list(CALL_ID, leg.id)
-  
-    recordings.items.each do |recording| 
 
+    recordings.items.each do |recording|
       client.call_leg_recording_view(CALL_ID, leg.id, recording.id);
 
-      puts  "    ----------------------------------------------r----"
+      puts  '    --------------------------------------------------'
       puts  "    recording ID   : #{recording.id}"
       puts  "    recording URI  : #{recording.URI}"
-      print "    downloading    : ";
-      localFile = client.call_leg_recording_download(recording.URI) do |response|    
+      print '    downloading    : '
+      client.call_leg_recording_download(recording.uri) do |response|
         open("#{recording.id}.wav", 'w') do |io|
           response.read_body do |chunk|
             putc '.'
@@ -39,16 +38,16 @@ begin
           end
         end
       end
-      puts " DONE!"
+      puts ' DONE!'
       puts
     end
   end
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while listing the calls:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

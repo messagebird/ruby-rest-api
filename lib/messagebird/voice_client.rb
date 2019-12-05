@@ -7,18 +7,14 @@ module MessageBird
   class VoiceClient < HttpClient
     attr_reader :endpoint
 
-    BASE_ENDPOINT = 'https://voice.messagebird.com/'
+    BASE_ENDPOINT = 'https://voice.messagebird.com/'.freeze
 
     def initialize(access_key)
       super(access_key)
-      @endpoint  = BASE_ENDPOINT
-    end
-    
-    def endpoint() 
-      @endpoint
+      @endpoint = BASE_ENDPOINT
     end
 
-    def prepare_request(request, params={})
+    def prepare_request(request, params = {})
       request['Content-Type'] = 'application/json'
       request.body = params.to_json
       request

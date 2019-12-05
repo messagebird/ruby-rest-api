@@ -10,19 +10,19 @@ describe 'Call' do
   let(:voice_client) { double(MessageBird::VoiceClient) }
   let(:client) { MessageBird::Client.new('', http_client, nil, voice_client) }
   let(:webhook) { {url:'https://example.com',token:'token_to_sign_the_call_events_with'} }
-  let(:call_flow) do 
-    { 
-      title: "Say message", 
-      steps: [ 
-        { 
-          action: "say", 
-          options: { 
-            payload: "This is a journey into sound. Good bye!", 
-            voice: "male", 
-            language: "en-US" 
-          } 
-        } 
-      ] 
+  let(:call_flow) do
+    {
+      title: "Say message",
+      steps: [
+        {
+          action: "say",
+          options: {
+            payload: "This is a journey into sound. Good bye!",
+            voice: "male",
+            language: "en-US"
+          }
+        }
+      ]
     }
   end
 
@@ -32,7 +32,7 @@ describe 'Call' do
       .with(:post, 'calls', {source: source, destination: destination, callFlow: call_flow.to_json})
       .and_return('{"data":[{"id":"'+call_id+'","status":"queued","source":"'+source+'","destination":"'+destination+'","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null}],"_links":{"self":"/calls/'+call_id+'"},"pagination":{"totalCount":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow)
-    expect(call.id).to eq call_id 
+    expect(call.id).to eq call_id
   end
 
   it 'create a call with webhook' do
@@ -41,7 +41,7 @@ describe 'Call' do
       .with(:post, 'calls', {source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json})
       .and_return('{"data":[{"id":"'+call_id+'","status":"queued","source":"'+source+'","destination":"'+destination+'","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null, "webhook":'+webhook.to_json+'}],"_links":{"self":"/calls/'+call_id+'"},"pagination":{"totalCount":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow, webhook)
-    expect(call.id).to eq call_id 
+    expect(call.id).to eq call_id
     expect(call.webhook.url).to eq webhook[:url]
   end
 
@@ -54,7 +54,7 @@ describe 'Call' do
     list = client.call_list
     expect(list.items).not_to be_nil
     expect(list.items.first.source).to eq source
-    expect(list.items.last.webhook.url).to eq webhook[:url] 
+    expect(list.items.last.webhook.url).to eq webhook[:url]
   end
 
   it 'view a call' do
@@ -139,9 +139,9 @@ describe 'Call' do
         {
           "data": [
               {
-                  "id": "'+recording_id+'",
+                  "id": "' + recording_id + '",
                   "format": "wav",
-                  "legId": "'+leg_id+'",
+                  "legId": "' + leg_id + '",
                   "status": "done",
                   "duration": 5,
                   "type": "ivr",
@@ -149,13 +149,13 @@ describe 'Call' do
                   "updatedAt": "2019-12-03T14:51:00Z",
                   "deletedAt": null,
                   "_links": {
-                      "file": "/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'.wav",
-                      "self": "/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'"
+                      "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav",
+                      "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '"
                   }
               }
           ],
           "_links": {
-              "self": "/calls/'+call_id+'/legs/'+leg_id+'/recordings?page=1"
+              "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings?page=1"
           },
           "pagination": {
               "totalCount": 1,
@@ -166,10 +166,10 @@ describe 'Call' do
       }')
 
     records = client.call_leg_recording_list(call_id, leg_id);
-    expect(records[0].URI).to eq '/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'.wav'
+    expect(records[0].uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
   end
 
-  it 'view a call recording' do 
+  it 'view a call recording' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}", {})
@@ -177,9 +177,9 @@ describe 'Call' do
         {
           "data": [
               {
-                  "id": "'+recording_id+'",
+                  "id": "' + recording_id + '",
                   "format": "wav",
-                  "legId": "'+leg_id+'",
+                  "legId": "' + leg_id + '",
                   "status": "done",
                   "duration": 12,
                   "type": "call",
@@ -189,8 +189,8 @@ describe 'Call' do
               }
           ],
           "_links": {
-              "file": "/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'.wav",
-              "self": "/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'"
+              "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav",
+              "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '"
           },
           "pagination": {
               "totalCount": 0,
@@ -200,19 +200,17 @@ describe 'Call' do
           }
       }
       ');
-  
+
     recording = client.call_leg_recording_view(call_id, leg_id, recording_id)
-    expect(recording.URI).to eq '/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'.wav'
+    expect(recording.uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
   end
 
   it 'download a call recording' do
-    result = '';
-
     mock_response  = double(Net::HTTPResponse)
-    recording_uri  = '/calls/'+call_id+'/legs/'+leg_id+'/recordings/'+recording_id+'.wav';
+    recording_uri  = '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
 
     expect(voice_client)
-      .to receive(:request_block) 
+      .to receive(:request_block)
       .with(:get, recording_uri, {})
       .and_yield(mock_response)
 
@@ -221,8 +219,7 @@ describe 'Call' do
       .once
       .and_return('bytes go here');
 
-    
-    client.call_leg_recording_download(recording_uri) do |response| 
+    client.call_leg_recording_download(recording_uri) do |response|
       expect(response.read_body)
         .to eq 'bytes go here'
     end

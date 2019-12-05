@@ -7,4 +7,3 @@ module MessageBird
     end
   end
 end
-  

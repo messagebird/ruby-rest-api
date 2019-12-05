@@ -24,14 +24,14 @@ begin
     recordings = client.call_leg_recording_list(CALL_ID, leg.id)
 
     recordings.items.each do |recording|
-      client.call_leg_recording_view(CALL_ID, leg.id, recording.id);
+      client.call_leg_recording_view(CALL_ID, leg.id, recording.id)
 
       puts  '    --------------------------------------------------'
       puts  "    recording ID   : #{recording.id}"
-      puts  "    recording URI  : #{recording.URI}"
+      puts  "    recording URI  : #{recording.uri}"
       print '    downloading    : '
       client.call_leg_recording_download(recording.uri) do |response|
-        open("#{recording.id}.wav", 'w') do |io|
+        File.open("#{recording.id}.wav", 'w') do |io|
           response.read_body do |chunk|
             putc '.'
             io.write(chunk)

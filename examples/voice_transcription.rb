@@ -26,9 +26,9 @@ begin
       transcriptions.items.each do |transcription|
         puts  '    --------------------------------------------------'
         puts  "    transcription ID   : #{transcription.id}"
-        puts  "    recording ID       : #{transcription.recordingId}"
-        puts  "    createdAt          : #{transcription.createdAt}"
-        puts  "    updatedAt          : #{transcription.updatedAt}"
+        puts  "    recording ID       : #{transcription.recording_id}"
+        puts  "    createdAt          : #{transcription.created_at}"
+        puts  "    updatedAt          : #{transcription.updated_at}"
         puts  "    links              : #{transcription._links}"
         client.voice_transcription_download(call_id, leg.id, recording.id, transcription.id) do |response|
           puts "    transcription       : #{response.body}"

@@ -26,6 +26,7 @@ require 'messagebird/voice_client'
 require 'messagebird/voice/call'
 require 'messagebird/voice/call_leg'
 require 'messagebird/voice/call_leg_recording'
+require 'messagebird/voice/transcription'
 require 'messagebird/voice/list'
 
 module MessageBird
@@ -306,6 +307,22 @@ module MessageBird
 
     def call_leg_recording_download(recording_uri)
       @voice_client.request_block(:get, recording_uri, {}, &Proc.new)
+    end
+
+    def voice_transcription_create(call_id, leg_id, recording_id, params = {})
+      Voice::Transcription.new(voice_request(:post, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions", params))
+    end
+
+    def voice_transcriptions_list(call_id, leg_id, recording_id)
+      Voice::List.new(Voice::Transcription, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions"))
+    end
+
+    def voice_transcription_download(call_id, leg_id, recording_id, transcription_id)
+      @voice_client.request_block(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt", {}, &Proc.new)
+    end
+
+    def voice_transcription_view(call_id, leg_id, recording_id, transcription_id)
+      Voice::Transcription.new(voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}"))
     end
 
     def lookup(phone_number, params = {})

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -21,35 +22,34 @@ begin
 
   # Print the object information.
   #
-  puts "The following information was returned as a messages list:"
+  puts 'The following information was returned as a messages list:'
   puts
   puts "  count           : #{list.count}"
   puts "  limit           : #{list.limit}"
   puts "  offset          : #{list.offset}"
-  puts "  totalCount      : #{list.totalCount}"
+  puts "  total_count      : #{list.total_count}"
   puts "  links           : #{list.links}"
-  puts 
+  puts
 
   list.items.each do |msg|
-     puts "Message:"
-     puts "  id                        : #{msg.id}"
-     puts "  conversationId            : #{msg.conversationId}"
-     puts "  channelId                 : #{msg.channelId}"
-     puts "  direction                 : #{msg.direction}"
-     puts "  type                      : #{msg.type}"
-     puts "  status                    : #{msg.status}"
-     puts "  content                   : #{msg.content}"
-     puts "  createdDatetime           : #{msg.createdDatetime}"
-     puts "  updatedDatetime           : #{msg.updatedDatetime}"
+    puts 'Message:'
+    puts "  id                        : #{msg.id}"
+    puts "  conversation_id            : #{msg.conversation_id}"
+    puts "  channel_id                 : #{msg.channel_id}"
+    puts "  direction                 : #{msg.direction}"
+    puts "  type                      : #{msg.type}"
+    puts "  status                    : #{msg.status}"
+    puts "  content                   : #{msg.content}"
+    puts "  created_datetime           : #{msg.created_datetime}"
+    puts "  updated_datetime           : #{msg.updated_datetime}"
     puts
-  end 
-
-rescue MessageBird::ErrorException => ex
+  end
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while creating a conversation:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
@@ -24,37 +25,36 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as an HLR object:"
+  puts 'The following information was returned as an HLR object:'
   puts
   puts "  href            : #{lookup.href}"
-  puts "  countryCode     : #{lookup.countryCode}"
+  puts "  country_code     : #{lookup.country_code}"
   puts "  countryPrefix   : #{lookup.countryPrefix}"
   puts "  phoneNumber     : #{lookup.phoneNumber}"
   puts "  type            : #{lookup.type}"
 
-  puts "  formats         :"
+  puts '  formats         :'
   puts "    e164          : #{lookup.formats.e164}"
   puts "    international : #{lookup.formats.international}"
   puts "    national      : #{lookup.formats.national}"
   puts "    rfc3966       : #{lookup.formats.rfc3966}"
 
   unless lookup.hlr.nil?
-    puts "  hlr             :"
+    puts '  hlr             :'
     puts "    id              : #{lookup.hlr.id}"
     puts "    href            : #{lookup.hlr.href}"
     puts "    msisdn          : #{lookup.hlr.msisdn}"
     puts "    reference       : #{lookup.hlr.reference}"
     puts "    status          : #{lookup.hlr.status}"
-    puts "    createdDatetime : #{lookup.hlr.createdDatetime}"
+    puts "    created_datetime : #{lookup.hlr.created_datetime}"
     puts "    statusDatetime  : #{lookup.hlr.statusDatetime}"
   end
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting the lookup:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

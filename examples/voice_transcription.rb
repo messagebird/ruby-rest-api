@@ -4,7 +4,7 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = '5GN0YnOqM9QZyaTgB1Q2qUNsK'
+ACCESS_KEY = 'test_gshuPaZoeEG6ovbc8M79w0QyM'
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'

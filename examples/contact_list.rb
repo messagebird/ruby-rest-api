@@ -37,8 +37,8 @@ begin
     puts "    id              : #{contact.id}"
     puts "    href            : #{contact.href}"
     puts "    msisdn          : #{contact.msisdn}"
-    puts "    firstName       : #{contact.firstName}"
-    puts "    lastName        : #{contact.lastName}"
+    puts "    firstName       : #{contact.first_name}"
+    puts "    lastName        : #{contact.last_name}"
     puts "    groups          : #{contact.groups.href}" # contact.groups.total_count is also available.
     puts "    messages        : #{contact.messages.href}" # contact.messages.total_count is also available.
     puts "    custom1         : #{contact.custom_details.custom1}"

@@ -35,7 +35,7 @@ begin
   puts "  language          : #{vmsg.language}"
   puts "  voice             : #{vmsg.voice}"
   puts "  repeat            : #{vmsg.repeat}"
-  puts "  ifMachine         : #{vmsg.ifMachine}"
+  puts "  ifMachine         : #{vmsg.if_machine}"
   puts "  scheduled_date_time : #{vmsg.scheduled_date_time}"
   puts "  created_datetime   : #{vmsg.created_datetime}"
   puts "  recipients        : #{vmsg.recipients}"

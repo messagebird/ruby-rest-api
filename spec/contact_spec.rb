@@ -7,10 +7,10 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'contacts', msisdn: '31612345678', firstName: 'Foo', lastName: 'Bar', custom1: 'First', custom4: 'Fourth')
+      .with(:post, 'contacts', msisdn: '31612345678', first_name: 'Foo', last_name: 'Bar', custom1: 'First', custom4: 'Fourth')
       .and_return('{}')
 
-    client.contact_create(31_612_345_678, firstName: 'Foo', lastName: 'Bar', custom1: 'First', custom4: 'Fourth')
+    client.contact_create(31_612_345_678, first_name: 'Foo', last_name: 'Bar', custom1: 'First', custom4: 'Fourth')
   end
 
   it 'deletes' do

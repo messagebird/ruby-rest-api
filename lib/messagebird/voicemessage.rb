@@ -5,7 +5,7 @@ require 'messagebird/recipient'
 
 module MessageBird
   class VoiceMessage < MessageBird::Base
-    attr_accessor :id, :href, :originator, :body, :reference, :language, :voice, :repeat, :ifMachine
+    attr_accessor :id, :href, :originator, :body, :reference, :language, :voice, :repeat, :if_machine
     attr_reader :scheduled_date_time, :created_datetime, :recipients
 
     def scheduled_date_time=(value)

@@ -29,8 +29,8 @@ begin
   puts
   puts "  href            : #{lookup.href}"
   puts "  country_code     : #{lookup.country_code}"
-  puts "  countryPrefix   : #{lookup.countryPrefix}"
-  puts "  phoneNumber     : #{lookup.phoneNumber}"
+  puts "  countryPrefix   : #{lookup.country_prefix}"
+  puts "  phoneNumber     : #{lookup.phone_number}"
   puts "  type            : #{lookup.type}"
 
   puts '  formats         :'

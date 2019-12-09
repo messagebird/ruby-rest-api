@@ -42,8 +42,8 @@ begin
     puts "    id                      : #{conversation.contact.id}"
     puts "    href                    : #{conversation.contact.href}"
     puts "    msisdn                  : #{conversation.contact.msisdn}"
-    puts "    firstName               : #{conversation.contact.firstName}"
-    puts "    lastName                : #{conversation.contact.lastName}"
+    puts "    firstName               : #{conversation.contact.first_name}"
+    puts "    lastName                : #{conversation.contact.last_name}"
     puts "    custom1                 : #{conversation.contact.custom_details.custom1}"
     puts "    custom2                 : #{conversation.contact.custom_details.custom2}"
     puts "    custom3                 : #{conversation.contact.custom_details.custom3}"
@@ -55,7 +55,7 @@ begin
     conversation.channels.each do |channel|
       puts "    id                      : #{channel.id}"
       puts "    name                    : #{channel.name}"
-      puts "    platformId              : #{channel.platformId}"
+      puts "    platformId              : #{channel.platform_id}"
       puts "    created_datetime         : #{channel.created_datetime}"
       puts "    updated_datetime         : #{channel.updated_datetime}"
       puts

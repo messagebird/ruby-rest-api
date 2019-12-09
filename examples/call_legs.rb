@@ -30,10 +30,10 @@ begin
     puts "  cost          : #{leg_obj.cost}"
     puts "  currency      : #{leg_obj.currency}"
     puts "  duration      : #{leg_obj.duration}"
-    puts "  createdAt     : #{leg_obj.createdAt}"
-    puts "  updatedAt     : #{leg_obj.updatedAt}"
-    puts "  answeredAt    : #{leg_obj.answeredAt}"
-    puts "  endedAt       : #{leg_obj.endedAt}"
+    puts "  createdAt     : #{leg_obj.created_at}"
+    puts "  updatedAt     : #{leg_obj.updated_at}"
+    puts "  answeredAt    : #{leg_obj.answered_at}"
+    puts "  endedAt       : #{leg_obj.ended_at}"
   end
 rescue MessageBird::ErrorException => e
   puts

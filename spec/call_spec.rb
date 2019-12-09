@@ -7,6 +7,8 @@ describe 'Call' do
   let(:call_id) { '21025ed1-cc1d-4554-ac05-043fa6c84e00' }
   let(:leg_id) { '30c42b27-dce6-4f72-b9c1-01f78ebc1008' }
   let(:recording_id) { '3f7b2a0b-3f42-4b6c-a492-22cf35df98f6' }
+  let(:transcription_id) { '87c377ce-1629-48b6-ad01-4b4fd069c53c' }
+  let(:transcription_language) { 'en-UK' }
 
   let(:http_client) { double(MessageBird::HttpClient) }
   let(:voice_client) { double(MessageBird::VoiceClient) }
@@ -25,6 +27,11 @@ describe 'Call' do
           }
         }
       ]
+    }
+  end
+  let(:language) do
+    {
+      language: 'en-UK'
     }
   end
 
@@ -223,6 +230,117 @@ describe 'Call' do
     client.call_leg_recording_download(recording_uri) do |response|
       expect(response.read_body)
         .to eq 'bytes go here'
+    end
+  end
+
+  it 'create a transcription' do
+    expect(voice_client)
+      .to receive(:request)
+      .with(:post, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions", language.to_json)
+      .and_return('
+        {
+          "data": [
+            {
+              "id":"' + transcription_id + '",
+              "recordingId":"' + recording_id + '",
+              "error": null,"destination":"' + destination + '",
+              "createdAt":"2017-06-20T10:03:14Z",
+              "updatedAt": "2017-06-20T10:03:14Z"
+            }
+          ],
+          "_links": {
+            "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
+            "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+          },
+          "pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}
+        }')
+    transcription = client.voice_transcription_create(call_id, leg_id, recording_id, language.to_json)
+    expect(transcription.id).to eq transcription_id
+  end
+
+  it 'view a transcription' do
+    expect(voice_client)
+      .to receive(:request)
+      .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}", {})
+      .and_return('
+      {
+        "data": [
+          {
+            "id": "' + transcription_id + '",
+            "recordingId": "' + recording_id + '",
+            "error": null,
+            "createdAt": "2017-06-20T10:03:14Z",
+            "updatedAt": "2017-06-20T10:03:14Z"
+          }
+        ],
+        "_links": {
+          "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
+          "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+        },
+        "pagination": {
+          "totalCount": 1,
+          "pageCount": 1,
+          "currentPage": 1,
+          "perPage": 10
+        }
+      }')
+
+    transcription = client.voice_transcription_view(call_id, leg_id, recording_id, transcription_id)
+    expect(transcription.uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+  end
+
+  it 'list transcriptions' do
+    expect(voice_client)
+      .to receive(:request)
+      .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions", {})
+      .and_return('
+      {
+        "data": [
+          {
+            "id":"' + transcription_id + '",
+            "recordingId": "' + recording_id + '",
+            "status":"done",
+            "createdAt":"2019-12-04T16:52:51Z",
+            "updatedAt":"2019-12-04T16:53:02Z",
+            "legId":"00000000-0000-0000-0000-000000000000",
+            "_links": {
+              "file":"/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
+              "self":"/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+            }
+          }
+        ],
+        "_links": {
+          "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+        },
+        "pagination": {
+          "totalCount": 1,
+          "pageCount": 1,
+          "currentPage": 1,
+          "perPage": 10
+        }
+      }')
+
+    records = client.voice_transcriptions_list(call_id, leg_id, recording_id)
+    expect(records[0].uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+  end
+
+  it 'download a transcription' do
+    mock_response = double(Net::HTTPResponse)
+    transcription_uri = 'calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+
+    expect(voice_client)
+      .to receive(:request_block)
+      .with(:get, transcription_uri, {})
+      .and_yield(mock_response)
+
+    expect(mock_response)
+      .to receive(:read_body)
+      .once
+      .and_return('Hello Test! This a call transcript! Bye, bye!')
+
+    client.voice_transcription_download(call_id, leg_id, recording_id, transcription_id) do |response|
+      expect(response.read_body)
+        .to eq 'Hello Test! This a call transcript! Bye, bye!'
     end
   end
 end

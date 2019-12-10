@@ -11,7 +11,9 @@ module MessageBird
   class HttpClient
     attr_reader :access_key
 
-    ENDPOINT = 'https://rest.messagebird.com/'.freeze
+    ENDPOINT = 'https://rest.messagebird.com/'
+    SUBMIT_METHODS = [:patch, :post, :put].freeze
+    ALLOWED_METHODS = SUBMIT_METHODS.dup + [:get, :delete].freeze
 
     def initialize(access_key)
       @access_key = access_key
@@ -58,11 +60,9 @@ module MessageBird
       request
     end
 
-    SUBMIT_METHODS = [:patch, :post, :put].freeze
-
     def build_request(method, uri, params = {})
       # Construct the HTTP request.
-      raise MethodNotAllowedException unless [:delete, :get, :patch, :post].include?(method)
+      raise MethodNotAllowedException unless ALLOWED_METHODS.include?(method)
 
       request = "Net::HTTP::#{method.to_s.capitalize}".constantize.new(uri.request_uri)
 

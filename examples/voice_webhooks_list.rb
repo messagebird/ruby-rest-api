@@ -24,18 +24,18 @@ begin
   # Print the object information.
   puts 'The following information was returned as a Webhooks list:'
   puts
-  puts "  pageCount       : #{webhooks.pageCount}"
-  puts "  currentPage     : #{webhooks.currentPage}"
-  puts "  perPage         : #{webhooks.perPage}"
-  puts "  totalCount      : #{webhooks.totalCount}"
+  puts "  pageCount       : #{webhooks.page_count}"
+  puts "  currentPage     : #{webhooks.current_page}"
+  puts "  perPage         : #{webhooks.per_page}"
+  puts "  totalCount      : #{webhooks.total_count}"
   puts
   webhooks.items.each do |webhook|
     puts 'Webhook:'
     puts "  id                        : #{webhook.id}"
     puts "  url                       : #{webhook.url}"
     puts "  status                    : #{webhook.token}"
-    puts "  createdAt                 : #{webhook.createdAt}"
-    puts "  updatedAt                 : #{webhook.updatedAt}"
+    puts "  createdAt                 : #{webhook.created_at}"
+    puts "  updatedAt                 : #{webhook.updated_at}"
   end
 rescue MessageBird::ErrorException => e
   puts

@@ -4,7 +4,7 @@ require 'messagebird/base'
 
 module MessageBird
   class ConversationChannel < MessageBird::Base
-    attr_accessor :id, :name, :platformId, :status
+    attr_accessor :id, :name, :platform_id, :status
     attr_reader :created_datetime, :updated_datetime
 
     def created_datetime=(value)

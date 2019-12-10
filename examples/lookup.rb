@@ -28,9 +28,9 @@ begin
   puts 'The following information was returned as an HLR object:'
   puts
   puts "  href            : #{lookup.href}"
-  puts "  country_code     : #{lookup.country_code}"
-  puts "  countryPrefix   : #{lookup.countryPrefix}"
-  puts "  phoneNumber     : #{lookup.phoneNumber}"
+  puts "  countryCode     : #{lookup.country_code}"
+  puts "  countryPrefix   : #{lookup.country_prefix}"
+  puts "  phoneNumber     : #{lookup.phone_number}"
   puts "  type            : #{lookup.type}"
 
   puts '  formats         :'
@@ -40,14 +40,14 @@ begin
   puts "    rfc3966       : #{lookup.formats.rfc3966}"
 
   unless lookup.hlr.nil?
-    puts '  hlr             :'
-    puts "    id              : #{lookup.hlr.id}"
-    puts "    href            : #{lookup.hlr.href}"
-    puts "    msisdn          : #{lookup.hlr.msisdn}"
-    puts "    reference       : #{lookup.hlr.reference}"
-    puts "    status          : #{lookup.hlr.status}"
-    puts "    created_datetime : #{lookup.hlr.created_datetime}"
-    puts "    statusDatetime  : #{lookup.hlr.statusDatetime}"
+    puts '  hlr                :'
+    puts "    id               : #{lookup.hlr.id}"
+    puts "    href             : #{lookup.hlr.href}"
+    puts "    msisdn           : #{lookup.hlr.msisdn}"
+    puts "    reference        : #{lookup.hlr.reference}"
+    puts "    status           : #{lookup.hlr.status}"
+    puts "    createdDatetime  : #{lookup.hlr.created_datetime}"
+    puts "    statusDatetime   : #{lookup.hlr.status_datetime}"
   end
 rescue MessageBird::ErrorException => e
   puts

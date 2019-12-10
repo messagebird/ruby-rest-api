@@ -25,13 +25,13 @@ begin
       transcriptions = client.voice_transcriptions_list(call_id, leg.id, recording.id)
       transcriptions.items.each do |transcription|
         puts  '    --------------------------------------------------'
-        puts  "    transcription ID   : #{transcription.id}"
-        puts  "    recording ID       : #{transcription.recording_id}"
+        puts  "    transcriptionId    : #{transcription.id}"
+        puts  "    recordingId        : #{transcription.recording_id}"
         puts  "    createdAt          : #{transcription.created_at}"
         puts  "    updatedAt          : #{transcription.updated_at}"
         puts  "    links              : #{transcription._links}"
         client.voice_transcription_download(call_id, leg.id, recording.id, transcription.id) do |response|
-          puts "    transcription       : #{response.body}"
+          puts "      transcription      : #{response.body}"
         end
       end
     end

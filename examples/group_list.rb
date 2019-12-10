@@ -27,7 +27,7 @@ begin
   puts "  count           : #{groups.count}"
   puts "  limit           : #{groups.limit}"
   puts "  offset          : #{groups.offset}"
-  puts "  total_count      : #{groups.total_count}"
+  puts "  totalCount      : #{groups.total_count}"
   puts "  links           : #{groups.links}"
 
   unless groups.items.empty?

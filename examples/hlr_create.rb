@@ -17,13 +17,13 @@ begin
   puts
   puts 'The following information was returned as an HLR object:'
   puts
-  puts "  id              : #{hlr.id}"
-  puts "  href            : #{hlr.href}"
-  puts "  msisdn          : #{hlr.msisdn}"
-  puts "  reference       : #{hlr.reference}"
-  puts "  status          : #{hlr.status}"
-  puts "  created_datetime : #{hlr.created_datetime}"
-  puts "  statusDatetime  : #{hlr.statusDatetime}"
+  puts "  id               : #{hlr.id}"
+  puts "  href             : #{hlr.href}"
+  puts "  msisdn           : #{hlr.msisdn}"
+  puts "  reference        : #{hlr.reference}"
+  puts "  status           : #{hlr.status}"
+  puts "  createdDatetime  : #{hlr.created_datetime}"
+  puts "  statusDatetime   : #{hlr.status_datetime}"
   puts
 rescue MessageBird::ErrorException => e
   puts

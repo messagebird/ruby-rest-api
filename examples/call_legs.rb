@@ -22,7 +22,7 @@ begin
 
   legs.items.each do |leg_obj|
     puts "leg ID: #{leg_obj.id}"
-    puts "  call ID       : #{leg_obj.callId}"
+    puts "  callId        : #{leg_obj.call_id}"
     puts "  source        : #{leg_obj.source}"
     puts "  destination   : #{leg_obj.destination}"
     puts "  status        : #{leg_obj.status}"

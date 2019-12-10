@@ -21,9 +21,8 @@ begin
   # Print the object information.
   puts
   puts 'The following information was returned as a response:'
-  puts "  id  : #{message.id}"
-  puts "  status  : #{message.status}"
-
+  puts "  id        : #{message.id}"
+  puts "  status    : #{message.status}"
   puts "  fallback  : #{message.fallback}" unless message.fallback.nil?
 
   puts

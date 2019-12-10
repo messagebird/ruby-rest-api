@@ -23,14 +23,14 @@ begin
     The following information was returned as an updated conversation object:
       id                        : #{conversation.id}
       status                    : #{conversation.status}
-      contact_id                : #{conversation.contact_id}
-      created_datetime          : #{conversation.created_datetime}
-      updated_datetime          : #{conversation.updated_datetime}
-      lastReceivedDateklme      : #{conversation.lastReceivedDatetime}
-      last_used_channel_id         : #{conversation.last_used_channel_id}
+      contactId                 : #{conversation.contact_id}
+      createdDatetime           : #{conversation.created_datetime}
+      updatedDatetime           : #{conversation.updated_datetime}
+      lastReceivedDateklme      : #{conversation.last_received_datetime}
+      lastUsedChannelId         : #{conversation.last_used_channel_id}
       Messages                  :
         href                    : #{conversation.messages.href}
-        total_count             : #{conversation.messages.total_count}
+        totalCount              : #{conversation.messages.total_count}
   INFO
 rescue MessageBird::ErrorException => e
   puts

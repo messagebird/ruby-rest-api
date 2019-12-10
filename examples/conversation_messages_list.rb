@@ -27,21 +27,21 @@ begin
   puts "  count           : #{list.count}"
   puts "  limit           : #{list.limit}"
   puts "  offset          : #{list.offset}"
-  puts "  total_count      : #{list.total_count}"
+  puts "  totalCount      : #{list.total_count}"
   puts "  links           : #{list.links}"
   puts
 
   list.items.each do |msg|
     puts 'Message:'
     puts "  id                        : #{msg.id}"
-    puts "  conversation_id            : #{msg.conversation_id}"
-    puts "  channel_id                 : #{msg.channel_id}"
+    puts "  conversationId            : #{msg.conversation_id}"
+    puts "  channelId                 : #{msg.channel_id}"
     puts "  direction                 : #{msg.direction}"
     puts "  type                      : #{msg.type}"
     puts "  status                    : #{msg.status}"
     puts "  content                   : #{msg.content}"
-    puts "  created_datetime           : #{msg.created_datetime}"
-    puts "  updated_datetime           : #{msg.updated_datetime}"
+    puts "  createdDatetime           : #{msg.created_datetime}"
+    puts "  updatedDatetime           : #{msg.updated_datetime}"
     puts
   end
 rescue MessageBird::ErrorException => e

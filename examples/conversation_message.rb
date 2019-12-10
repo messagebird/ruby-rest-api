@@ -22,14 +22,14 @@ begin
   puts <<~INFO
     The following information was returned as a Message object:
         id                        : #{msg.id}
-        conversation_id            : #{msg.conversation_id}
-        channel_id                 : #{msg.channel_id}
+        conversationId            : #{msg.conversation_id}
+        channelId                 : #{msg.channel_id}
         direction                 : #{msg.direction}
         type                      : #{msg.type}
         status                    : #{msg.status}
         content                   : #{msg.content}
-        created_datetime           : #{msg.created_datetime}
-        updated_datetime           : #{msg.updated_datetime}
+        createdDatetime           : #{msg.created_datetime}
+        updatedDatetime           : #{msg.updated_datetime}
   INFO
 rescue MessageBird::ErrorException => e
   puts

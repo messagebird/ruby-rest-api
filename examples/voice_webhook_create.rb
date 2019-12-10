@@ -23,8 +23,8 @@ begin
   puts "  id                        : #{webhook.id}"
   puts "  url                       : #{webhook.url}"
   puts "  status                    : #{webhook.token}"
-  puts "  createdAt                 : #{webhook.createdAt}"
-  puts "  updatedAt                 : #{webhook.updatedAt}"
+  puts "  createdAt                 : #{webhook.created_at}"
+  puts "  updatedAt                 : #{webhook.updated_at}"
 rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while creating a voice webhook:'

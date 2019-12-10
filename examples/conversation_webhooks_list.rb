@@ -26,17 +26,17 @@ begin
   puts "  count           : #{webhooks.count}"
   puts "  limit           : #{webhooks.limit}"
   puts "  offset          : #{webhooks.offset}"
-  puts "  total_count      : #{webhooks.total_count}"
+  puts "  totalCount      : #{webhooks.total_count}"
   puts
   webhooks.items.each do |webhook|
     puts 'Webhook:'
     puts "  id                        : #{webhook.id}"
     puts "  events                    : #{webhook.events}"
-    puts "  channel_id                 : #{webhook.channel_id}"
+    puts "  channelId                 : #{webhook.channel_id}"
     puts "  url                       : #{webhook.url}"
     puts "  status                    : #{webhook.status}"
-    puts "  created_datetime           : #{webhook.created_datetime}"
-    puts "  updated_datetime           : #{webhook.updated_datetime}"
+    puts "  createdDatetime           : #{webhook.created_datetime}"
+    puts "  updatedDatetime           : #{webhook.updated_datetime}"
   end
 rescue MessageBird::ErrorException => e
   puts

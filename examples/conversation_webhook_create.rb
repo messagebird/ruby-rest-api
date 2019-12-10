@@ -22,11 +22,11 @@ begin
   puts 'The following information was returned as a Webhook object'
   puts "  id                        : #{webhook.id}"
   puts "  events                    : #{webhook.events}"
-  puts "  channel_id                 : #{webhook.channel_id}"
+  puts "  channelId                 : #{webhook.channel_id}"
   puts "  url                       : #{webhook.url}"
   puts "  status                    : #{webhook.status}"
-  puts "  created_datetime           : #{webhook.created_datetime}"
-  puts "  updated_datetime           : #{webhook.updated_datetime}"
+  puts "  createdDatetime           : #{webhook.created_datetime}"
+  puts "  updatedDatetime           : #{webhook.updated_datetime}"
 rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while creating a conversation:'

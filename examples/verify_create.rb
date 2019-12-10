@@ -27,8 +27,8 @@ begin
   puts "  reference           : #{otp.reference}"
   puts "  status              : #{otp.status}"
   puts "  href                : #{otp.href}"
-  puts "  created_datetime     : #{otp.created_datetime}"
-  puts "  validUntilDatetime  : #{otp.validUntilDatetime}"
+  puts "  createdDatetime     : #{otp.created_datetime}"
+  puts "  validUntilDatetime  : #{otp.valid_until_date_time}"
   puts
 rescue MessageBird::ErrorException => e
   puts

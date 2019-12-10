@@ -27,18 +27,18 @@ begin
   puts
   puts 'The following information was returned as a VoiceMessage object:'
   puts
-  puts "  id                : #{vmsg.id}"
-  puts "  href              : #{vmsg.href}"
-  puts "  originator        : #{vmsg.originator}"
-  puts "  body              : #{vmsg.body}"
-  puts "  reference         : #{vmsg.reference}"
-  puts "  language          : #{vmsg.language}"
-  puts "  voice             : #{vmsg.voice}"
-  puts "  repeat            : #{vmsg.repeat}"
-  puts "  ifMachine         : #{vmsg.if_machine}"
-  puts "  scheduled_date_time : #{vmsg.scheduled_date_time}"
-  puts "  created_datetime   : #{vmsg.created_datetime}"
-  puts "  recipients        : #{vmsg.recipients}"
+  puts "  id                  : #{vmsg.id}"
+  puts "  href                : #{vmsg.href}"
+  puts "  originator          : #{vmsg.originator}"
+  puts "  body                : #{vmsg.body}"
+  puts "  reference           : #{vmsg.reference}"
+  puts "  language            : #{vmsg.language}"
+  puts "  voice               : #{vmsg.voice}"
+  puts "  repeat              : #{vmsg.repeat}"
+  puts "  ifMachine           : #{vmsg.if_machine}"
+  puts "  scheduledDateTime   : #{vmsg.scheduled_date_time}"
+  puts "  createdDatetime     : #{vmsg.created_datetime}"
+  puts "  recipients          : #{vmsg.recipients}"
   puts
 rescue MessageBird::ErrorException => e
   puts

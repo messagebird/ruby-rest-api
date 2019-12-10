@@ -17,7 +17,7 @@ begin
 
   # Fetch the Contact list with pagination options (skip the first 5 objects and take 10).
   limit = 10
-  offset = 5
+  offset = 0
   contacts = client.contact_list(limit, offset)
 
   # Print the object information.
@@ -27,7 +27,7 @@ begin
   puts "  count           : #{contacts.count}"
   puts "  limit           : #{contacts.limit}"
   puts "  offset          : #{contacts.offset}"
-  puts "  total_count      : #{contacts.total_count}"
+  puts "  totalCount      : #{contacts.total_count}"
   puts "  links           : #{contacts.links}"
 
   unless contacts.items.empty?

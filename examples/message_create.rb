@@ -17,21 +17,21 @@ begin
   puts
   puts 'The following information was returned as a Message object:'
   puts
-  puts "  id                : #{msg.id}"
-  puts "  href              : #{msg.href}"
-  puts "  direction         : #{msg.direction}"
-  puts "  type              : #{msg.type}"
-  puts "  originator        : #{msg.originator}"
-  puts "  body              : #{msg.body}"
-  puts "  reference         : #{msg.reference}"
-  puts "  validity          : #{msg.validity}"
-  puts "  gateway           : #{msg.gateway}"
-  puts "  typeDetails       : #{msg.typeDetails}"
-  puts "  datacoding        : #{msg.datacoding}"
-  puts "  mclass            : #{msg.mclass}"
-  puts "  scheduled_date_time : #{msg.scheduled_date_time}"
-  puts "  created_datetime   : #{msg.created_datetime}"
-  puts "  recipients        : #{msg.recipients}"
+  puts "  id                  : #{msg.id}"
+  puts "  href                : #{msg.href}"
+  puts "  direction           : #{msg.direction}"
+  puts "  type                : #{msg.type}"
+  puts "  originator          : #{msg.originator}"
+  puts "  body                : #{msg.body}"
+  puts "  reference           : #{msg.reference}"
+  puts "  validity            : #{msg.validity}"
+  puts "  gateway             : #{msg.gateway}"
+  puts "  typeDetails         : #{msg.typeDetails}"
+  puts "  datacoding          : #{msg.datacoding}"
+  puts "  mclass              : #{msg.mclass}"
+  puts "  scheduledDateTime   : #{msg.scheduled_date_time}"
+  puts "  createdDatetime     : #{msg.created_datetime}"
+  puts "  recipients          : #{msg.recipients}"
   puts
 rescue MessageBird::ErrorException => e
   puts

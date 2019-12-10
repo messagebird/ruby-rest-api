@@ -22,7 +22,7 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a new Contact object.
-  contact = client.contact_create(PHONE_NUMBER, first_name: 'Foo', last_name: 'Bar')
+  contact = client.contact_create(PHONE_NUMBER, firstName: 'Foo', lastName: 'Bar')
 
   # Print the object information.
   puts

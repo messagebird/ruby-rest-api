@@ -26,7 +26,7 @@ begin
   puts "  created_datetime          : #{conversation.created_datetime}"
   puts "  updated_datetime          : #{conversation.updated_datetime}"
   puts "  lastReceivedDateklme      : #{conversation.last_received_datetime}"
-  puts "  lastUsedChannelId      : #{conversation.last_used_channel_id}"
+  puts "  lastUsedChannelId         : #{conversation.last_used_channel_id}"
 
   puts '  Contact                   :'
   puts "    id                      : #{conversation.contact.id}"

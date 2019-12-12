@@ -64,7 +64,7 @@ module MessageBird
       # Construct the HTTP request.
       raise MethodNotAllowedException unless ALLOWED_METHODS.include?(method)
 
-      request = "Net::HTTP::#{method.to_s.capitalize}".constantize.new(uri.request_uri)
+      request = Class.const_get("Net::HTTP::#{method.to_s.capitalize}").new(uri.request_uri)
 
       request['Accept']        = 'application/json'
       request['Authorization'] = "AccessKey #{@access_key}"

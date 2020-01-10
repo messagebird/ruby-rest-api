@@ -394,7 +394,29 @@ module MessageBird
       request(:delete, "groups/#{group_id}/contacts/#{contact_id}")
     end
 
-    private
+    def call_flow_create(title, steps, default, record, params = {})
+      params = params.merge(
+        title: title,
+        steps: steps,
+        default: default,
+        record: record
+      )
+      CallFlow.new(voice_request(:post, 'call-flows', params))
+    end
+
+    def call_flow_view(id)
+      CallFlow.new(voice_request(:get, "call-flows/#{id}"))
+    end
+
+    def call_flow_list(per_page = CallFlowList::PER_PAGE, page = CallFlowList::CURRENT_PAGE)
+      CallFlowList.new(CallFlow, voice_request(:get, "call-flows?perPage=#{per_page}&page=#{page}"))
+    end
+
+    def call_flow_delete(id)
+      voice_request(:delete, "call-flows/#{id}")
+    end
+
+    private # Applies to every method below this line
 
     # Applies to every method below this line
     def add_contacts_query(contact_ids)

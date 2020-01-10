@@ -23,8 +23,6 @@ require 'messagebird/voice/list'
 require 'messagebird/voice/webhook'
 require 'messagebird/voicemessage'
 require 'messagebird/voice_client'
-require 'messagebird/call'
-require 'messagebird/call/list'
 require 'messagebird/voice/call'
 require 'messagebird/voice/call_leg'
 require 'messagebird/voice/call_leg_recording'
@@ -399,21 +397,22 @@ module MessageBird
     def voice_request(method, path, params={})
       response_body = @voice_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
+
       parse_body(response_body)
     end
 
-    def call_flow_create(title, steps, default, record, params={})
-      params = params.merge({
-        :title => title, 
-        :steps => steps, 
-        :default => default, 
-        :record => record
-        })
+    def call_flow_create(title, steps, default, record, params = {})
+      params = params.merge(
+                             title: title,
+                             steps: steps,
+                             default: default,
+                             record: record
+                           )
       CallFlow.new(voice_request(:post, 'call-flows', params))
     end
 
     def call_flow_view(id)
-      CallFlow.new(voice_request(:get, "call-flows/#{id.to_s}"))
+      CallFlow.new(voice_request(:get, "call-flows/#{id}"))
     end
 
     def call_flow_list(per_page = CallFlowList::PER_PAGE, page = CallFlowList::CURRENT_PAGE)

@@ -1,4 +1,6 @@
-require "messagebird/base"
+# frozen_string_literal: true
+
+require 'messagebird/base'
 
 module MessageBird
   class CallFlow < MessageBird::Base
@@ -6,7 +8,7 @@ module MessageBird
     attr_reader :steps, :createdAt, :updatedAt
 
     def initialize(json)
-      params = json.include?("data") ? json["data"].first : json
+      params = json.include?('data') ? json['data'].first : json
       super(params)
     end
 

@@ -1,33 +1,33 @@
 # frozen_string_literal: true
 
-require "json"
-require "net/https"
-require "uri"
+require 'json'
+require 'net/https'
+require 'uri'
 
-require "messagebird/balance"
-require "messagebird/contact"
-require "messagebird/conversation"
-require "messagebird/conversation_client"
-require "messagebird/conversation_message"
-require "messagebird/conversation_webhook"
-require "messagebird/error"
-require "messagebird/group"
-require "messagebird/hlr"
-require "messagebird/http_client"
-require "messagebird/list"
-require "messagebird/lookup"
-require "messagebird/message"
-require "messagebird/verify"
-require "messagebird/voice/client"
-require "messagebird/voice/list"
-require "messagebird/voice/webhook"
-require "messagebird/voicemessage"
-require "messagebird/voice_client"
-require "messagebird/voice/call"
-require "messagebird/voice/call_leg"
-require "messagebird/voice/call_leg_recording"
-require "messagebird/voice/transcription"
-require "messagebird/voice/list"
+require 'messagebird/balance'
+require 'messagebird/contact'
+require 'messagebird/conversation'
+require 'messagebird/conversation_client'
+require 'messagebird/conversation_message'
+require 'messagebird/conversation_webhook'
+require 'messagebird/error'
+require 'messagebird/group'
+require 'messagebird/hlr'
+require 'messagebird/http_client'
+require 'messagebird/list'
+require 'messagebird/lookup'
+require 'messagebird/message'
+require 'messagebird/verify'
+require 'messagebird/voice/client'
+require 'messagebird/voice/list'
+require 'messagebird/voice/webhook'
+require 'messagebird/voicemessage'
+require 'messagebird/voice_client'
+require 'messagebird/voice/call'
+require 'messagebird/voice/call_leg'
+require 'messagebird/voice/call_leg_recording'
+require 'messagebird/voice/transcription'
+require 'messagebird/voice/list'
 
 module MessageBird
   class ErrorException < StandardError
@@ -44,11 +44,11 @@ module MessageBird
   class Client
     attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
-    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = "CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE" # Enables the whatsapp sandbox
+    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = 'CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE' # Enables the whatsapp sandbox
     VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE].freeze # List of valid features for validation
 
     def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
-      @access_key = access_key || ENV["MESSAGEBIRD_ACCESS_KEY"]
+      @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
 
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
@@ -96,8 +96,8 @@ module MessageBird
       json = JSON.parse(body)
 
       # If the request returned errors, create Error objects and raise.
-      if json.key?("errors")
-        raise(ErrorException, json["errors"].map { |e| Error.new(e) })
+      if json.key?('errors')
+        raise(ErrorException, json['errors'].map { |e| Error.new(e) })
       end
 
       json
@@ -107,20 +107,20 @@ module MessageBird
     # Send a conversation message
     def send_conversation_message(from, to, params = {})
       ConversationMessage.new(conversation_request(
-        :post,
-        "send",
-        params.merge(from: from,
-                     to: to)
+                                :post,
+                                'send',
+                                params.merge(from: from,
+                                             to: to)
       ))
     end
 
     # Start a conversation
     def start_conversation(to, channel_id, params = {})
       Conversation.new(conversation_request(
-        :post,
-        "conversations/start",
-        params.merge(to: to,
-                     channel_id: channel_id)
+                         :post,
+                         'conversations/start',
+                         params.merge(to: to,
+                                      channel_id: channel_id)
       ))
     end
 
@@ -150,11 +150,11 @@ module MessageBird
 
     def conversation_webhook_create(channel_id, url, events = [])
       ConversationWebhook.new(conversation_request(
-        :post,
-        "webhooks",
-        channel_id: channel_id,
-        url: url,
-        events: events,
+                                :post,
+                                'webhooks',
+                                channel_id: channel_id,
+                                url: url,
+                                events: events
       ))
     end
 
@@ -176,7 +176,7 @@ module MessageBird
 
     # Retrieve your balance.
     def balance
-      Balance.new(request(:get, "balance"))
+      Balance.new(request(:get, 'balance'))
     end
 
     # Retrieve the information of specific HLR.
@@ -187,10 +187,10 @@ module MessageBird
     # Create a new HLR.
     def hlr_create(msisdn, reference)
       HLR.new(request(
-        :post,
-        "hlr",
-        msisdn: msisdn,
-        reference: reference,
+                :post,
+                'hlr',
+                msisdn: msisdn,
+                reference: reference
       ))
     end
 
@@ -202,9 +202,9 @@ module MessageBird
     # Generate a new One-Time-Password message.
     def verify_create(recipient, params = {})
       Verify.new(request(
-        :post,
-        "verify",
-        params.merge(recipient: recipient)
+                   :post,
+                   'verify',
+                   params.merge(recipient: recipient)
       ))
     end
 
@@ -226,14 +226,14 @@ module MessageBird
     # Create a new message.
     def message_create(originator, recipients, body, params = {})
       # Convert an array of recipients to a comma-separated string.
-      recipients = recipients.join(",") if recipients.is_a?(Array)
+      recipients = recipients.join(',') if recipients.is_a?(Array)
 
       Message.new(request(
-        :post,
-        "messages",
-        params.merge(originator: originator.to_s,
-                     body: body.to_s,
-                     recipients: recipients)
+                    :post,
+                    'messages',
+                    params.merge(originator: originator.to_s,
+                                 body: body.to_s,
+                                 recipients: recipients)
       ))
     end
 
@@ -245,17 +245,17 @@ module MessageBird
     # Create a new voice message.
     def voice_message_create(recipients, body, params = {})
       # Convert an array of recipients to a comma-separated string.
-      recipients = recipients.join(",") if recipients.is_a?(Array)
+      recipients = recipients.join(',') if recipients.is_a?(Array)
 
       VoiceMessage.new(request(
-        :post,
-        "voicemessages",
-        params.merge(recipients: recipients, body: body.to_s)
+                         :post,
+                         'voicemessages',
+                         params.merge(recipients: recipients, body: body.to_s)
       ))
     end
 
     def voice_webhook_create(url, params = {})
-      Voice::Webhook.new(voice_request(:post, "webhooks", params.merge(url: url)))
+      Voice::Webhook.new(voice_request(:post, 'webhooks', params.merge(url: url)))
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
@@ -278,7 +278,7 @@ module MessageBird
       params = params.merge(callFlow: call_flow.to_json) unless call_flow.empty?
       params = params.merge(webhook: webhook.to_json) unless webhook.empty?
 
-      Voice::Call.new(voice_request(:post, "calls", params.merge(source: source, destination: destination)))
+      Voice::Call.new(voice_request(:post, 'calls', params.merge(source: source, destination: destination)))
     end
 
     def call_list(per_page = Voice::List::PER_PAGE, page = Voice::List::CURRENT_PAGE)
@@ -339,9 +339,9 @@ module MessageBird
 
     def contact_create(phone_number, params = {})
       Contact.new(request(
-        :post,
-        "contacts",
-        params.merge(msisdn: phone_number.to_s)
+                    :post,
+                    'contacts',
+                    params.merge(msisdn: phone_number.to_s)
       ))
     end
 
@@ -366,7 +366,7 @@ module MessageBird
     end
 
     def group_create(name)
-      Group.new(request(:post, "groups", name: name))
+      Group.new(request(:post, 'groups', name: name))
     end
 
     def group_delete(id)
@@ -399,9 +399,9 @@ module MessageBird
         title: title,
         steps: steps,
         default: default,
-        record: record,
+        record: record
       )
-      CallFlow.new(voice_request(:post, "call-flows", params))
+      CallFlow.new(voice_request(:post, 'call-flows', params))
     end
 
     def call_flow_view(id)
@@ -427,7 +427,7 @@ module MessageBird
       # JSON by default. See also:
       # https://developers.messagebird.com/docs/alternatives.
 
-      "_method=PUT&" + contact_ids.map { |id| "ids[]=#{id}" }.join("&")
+      '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&')
     end
   end
 end

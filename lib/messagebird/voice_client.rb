@@ -16,10 +16,6 @@ module MessageBird
       @endpoint = BASE_ENDPOINT
     end
 
-    def endpoint()
-      @endpoint
-    end
-
     def prepare_request(request, params = {})
       request['Content-Type'] = 'application/json'
       request.body = params.to_json

@@ -5,7 +5,7 @@ require 'messagebird/base'
 module MessageBird
   class CallFlow < MessageBird::Base
     attr_accessor :id, :title, :record, :default
-    attr_reader :steps, :createdAt, :updatedAt
+    attr_reader :steps, :created_at, :updated_at
 
     def initialize(json)
       params = json.include?('data') ? json['data'].first : json
@@ -16,12 +16,12 @@ module MessageBird
       @steps = json.map { |c| MessageBird::CallFlowStep.new(c) }
     end
 
-    def createdAt=(value)
-      @createdAt = value_to_time(value)
+    def created_at=(value)
+      @created_at = value_to_time(value)
     end
 
-    def updatedAt=(value)
-      @updatedAt = value_to_time(value)
+    def updated_at=(value)
+      @updated_at = value_to_time(value)
     end
   end
 
@@ -39,13 +39,14 @@ module MessageBird
         begin
           send("#{k}=", v)
         rescue NoMethodError
+          puts 'An error occurred while listing callflows'
         end
       end
     end
   end
 
   class CallFlowStep < MessageBird::Base
-    attr_accessor :id, :action, :options
+    attr_accessor :id, :action
 
     def options=(json)
       @options = CallFlowStepOption.new(json)

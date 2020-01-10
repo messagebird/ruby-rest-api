@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe 'CallFlow' do
-
   let(:voice_client) { double(MessageBird::VoiceClient) }
   let(:client) { MessageBird::Client.new('', nil, nil, voice_client) }
   let(:call_flow_id) { '7355a691-381d-42b0-a037-9df5dab19e8e' }
@@ -16,7 +15,7 @@ describe 'CallFlow' do
         action: 'transfer',
         options: {
           destination: '31612345678'
-        },
+        }
       }
     ]
 
@@ -43,7 +42,7 @@ describe 'CallFlow' do
     }
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'call-flows', title: title, steps: steps, default: default, record: record )
+      .with(:post, 'call-flows', title: title, steps: steps, default: default, record: record)
       .and_return(mock_data.to_json)
 
     call_flow = client.call_flow_create(title, steps, default, record)

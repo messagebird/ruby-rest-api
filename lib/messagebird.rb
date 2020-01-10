@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
 libdir = File.dirname(__FILE__)
-$:.unshift(libdir) unless $:.include?(libdir)
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
-module MessageBird
-  CLIENT_VERSION          = '1.4.2'
-end
-
+require 'messagebird/version'
 require 'messagebird/balance'
 require 'messagebird/client'
 require 'messagebird/contact'
@@ -19,3 +18,8 @@ require 'messagebird/message'
 require 'messagebird/voicemessage'
 require 'messagebird/callflow'
 require 'messagebird/call'
+require 'messagebird/voice/call'
+require 'messagebird/voice/call_leg'
+require 'messagebird/voice/call_leg_recording'
+require 'messagebird/voice/transcription'
+require 'messagebird/voice/webhook'

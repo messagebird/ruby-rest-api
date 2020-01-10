@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'messagebird/base'
 require 'messagebird/recipient'
 
@@ -5,14 +7,14 @@ module MessageBird
   class Message < MessageBird::Base
     attr_accessor :id, :href, :direction, :type, :originator, :body, :reference,
                   :validity, :gateway, :typeDetails, :datacoding, :mclass
-    attr_reader :scheduledDatetime, :createdDatetime, :recipients
+    attr_reader :scheduled_date_time, :created_datetime, :recipients
 
-    def scheduledDatetime=(value)
-      @scheduledDatetime = value_to_time(value)
+    def scheduled_date_time=(value)
+      @scheduled_date_time = value_to_time(value)
     end
 
-    def createdDatetime=(value)
-      @createdDatetime = value_to_time(value)
+    def created_datetime=(value)
+      @created_datetime = value_to_time(value)
     end
 
     def recipients=(json)

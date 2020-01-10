@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
@@ -21,31 +22,30 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Create a new Contact object.
-  contact = client.contact_create(PHONE_NUMBER, { :firstName => 'Foo', :lastName => 'Bar'})
+  contact = client.contact_create(PHONE_NUMBER, firstName: 'Foo', lastName: 'Bar')
 
   # Print the object information.
   puts
-  puts "  Contact           :"
+  puts '  Contact           :'
   puts
   puts "    id              : #{contact.id}"
   puts "    href            : #{contact.href}"
   puts "    msisdn          : #{contact.msisdn}"
-  puts "    firstName       : #{contact.firstName}"
-  puts "    lastName        : #{contact.lastName}"
-  puts "    groups          : #{contact.groups.href}" # contact.groups.totalCount is also available.
-  puts "    messages        : #{contact.messages.href}" # contact.messages.totalCount is also available.
-  puts "    custom1         : #{contact.customDetails.custom1}"
-  puts "    custom2         : #{contact.customDetails.custom2}"
-  puts "    custom3         : #{contact.customDetails.custom3}"
-  puts "    custom4         : #{contact.customDetails.custom4}"
+  puts "    firstName       : #{contact.first_name}"
+  puts "    lastName        : #{contact.last_name}"
+  puts "    groups          : #{contact.groups.href}" # contact.groups.total_count is also available.
+  puts "    messages        : #{contact.messages.href}" # contact.messages.total_count is also available.
+  puts "    custom1         : #{contact.custom_details.custom1}"
+  puts "    custom2         : #{contact.custom_details.custom2}"
+  puts "    custom3         : #{contact.custom_details.custom3}"
+  puts "    custom4         : #{contact.custom_details.custom4}"
   puts
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occurred while creating a contact:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

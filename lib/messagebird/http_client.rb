@@ -4,7 +4,6 @@ require 'net/https'
 require 'uri'
 
 module MessageBird
-
   class ServerException < StandardError; end
   class InvalidResponseException < StandardError; end
   class MethodNotAllowedException < ArgumentError; end

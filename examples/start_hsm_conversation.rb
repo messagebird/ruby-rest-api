@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -15,62 +16,60 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Start a conversation
-  conversation = client.start_conversation('+31617000000', 'channelId', :type => 'hsm', :content => {:hsm => {
-      :namespace => "namespace",
-      :templateName => "templateName",
-      :language => {
-          :policy => "deterministic",
-          :code => "en"
-      },
-      :params => [
-          :default => "Lorem Ipsum"
-      ]
-  }
-  })
+  conversation = client.start_conversation('+31617000000', 'channel_id', type: 'hsm', content: { hsm: {
+                                             namespace: 'namespace',
+                                             templateName: 'templateName',
+                                             language: {
+                                               policy: 'deterministic',
+                                               code: 'en'
+                                             },
+                                             params: [
+                                               default: 'Lorem Ipsum'
+                                             ]
+                                           } })
 
   # Print the object information.
   puts
-  puts "The following information was returned as a conversation object:"
+  puts 'The following information was returned as a conversation object:'
   puts "  id                        : #{conversation.id}"
   puts "  status                    : #{conversation.status}"
-  puts "  createdDatetime           : #{conversation.createdDatetime}"
-  puts "  updatedDatetime           : #{conversation.updatedDatetime}"
-  puts "  lastReceivedDateklme      : #{conversation.lastReceivedDatetime}"
-  puts "  lastUsedChannelId         : #{conversation.lastUsedChannelId}"
+  puts "  createdDatetime           : #{conversation.created_datetime}"
+  puts "  updatedDatetime           : #{conversation.updated_datetime}"
+  puts "  lastReceivedDatetime      : #{conversation.last_received_datetime}"
+  puts "  lastUsedChannelId         : #{conversation.last_used_channel_id}"
 
-  puts "  Contact                   :"
+  puts '  Contact                   :'
   puts "    id                      : #{conversation.contact.id}"
   puts "    href                    : #{conversation.contact.href}"
   puts "    msisdn                  : #{conversation.contact.msisdn}"
-  puts "    firstName               : #{conversation.contact.firstName}"
-  puts "    lastName                : #{conversation.contact.lastName}"
-  puts "    custom1                 : #{conversation.contact.customDetails.custom1}"
-  puts "    custom2                 : #{conversation.contact.customDetails.custom2}"
-  puts "    custom3                 : #{conversation.contact.customDetails.custom3}"
-  puts "    custom4                 : #{conversation.contact.customDetails.custom4}"
-  puts "    createdDatetime         : #{conversation.contact.createdDatetime}"
-  puts "    updatedDatetime         : #{conversation.contact.updatedDatetime}"
+  puts "    firstName               : #{conversation.contact.first_name}"
+  puts "    lastName                : #{conversation.contact.last_name}"
+  puts "    custom1                 : #{conversation.contact.custom_details.custom1}"
+  puts "    custom2                 : #{conversation.contact.custom_details.custom2}"
+  puts "    custom3                 : #{conversation.contact.custom_details.custom3}"
+  puts "    custom4                 : #{conversation.contact.custom_details.custom4}"
+  puts "    createdDatetime         : #{conversation.contact.created_datetime}"
+  puts "    updatedDatetime         : #{conversation.contact.updated_datetime}"
 
-  puts "  Channels                  :"
+  puts '  Channels                  :'
   conversation.channels.each do |channel|
     puts "    id                      : #{channel.id}"
     puts "    name                    : #{channel.name}"
-    puts "    platformId              : #{channel.platformId}"
-    puts "    createdDatetime         : #{channel.createdDatetime}"
-    puts "    updatedDatetime         : #{channel.updatedDatetime}"
+    puts "    platformId              : #{channel.platform_id}"
+    puts "    createdDatetime         : #{channel.created_datetime}"
+    puts "    updatedDatetime         : #{channel.updated_datetime}"
     puts
   end
 
-  puts "  Messages                  :"
+  puts '  Messages                  :'
   puts "    href                    : #{conversation.messages.href}"
-  puts "    totalCount              : #{conversation.messages.totalCount}"
-
-rescue MessageBird::ErrorException => ex
+  puts "    totalCount              : #{conversation.messages.total_count}"
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while creating a conversation:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

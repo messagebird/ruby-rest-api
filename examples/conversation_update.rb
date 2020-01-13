@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
@@ -16,28 +17,27 @@ begin
 
   # Update a conversation
   conversation = client.conversation_update('57b96dbe0fda40f0a814f5e3268c30a9', MessageBird::Conversation::CONVERSATION_STATUS_ACTIVE)
-  
-  # Print the object information.
-  puts <<EOF
-The following information was returned as an updated conversation object:
-  id                        : #{conversation.id}
-  status                    : #{conversation.status}
-  contactId                 : #{conversation.contactId}
-  createdDatetime           : #{conversation.createdDatetime}
-  updatedDatetime           : #{conversation.updatedDatetime}
-  lastReceivedDateklme      : #{conversation.lastReceivedDatetime}
-  lastUsedChannelId         : #{conversation.lastUsedChannelId}
-  Messages                  :
-    href                    : #{conversation.messages.href}
-    totalCount              : #{conversation.messages.totalCount}
-EOF
 
-rescue MessageBird::ErrorException => ex
+  # Print the object information.
+  puts <<~INFO
+    The following information was returned as an updated conversation object:
+      id                        : #{conversation.id}
+      status                    : #{conversation.status}
+      contactId                 : #{conversation.contact_id}
+      createdDatetime           : #{conversation.created_datetime}
+      updatedDatetime           : #{conversation.updated_datetime}
+      lastReceivedDateklme      : #{conversation.last_received_datetime}
+      lastUsedChannelId         : #{conversation.last_used_channel_id}
+      Messages                  :
+        href                    : #{conversation.messages.href}
+        totalCount              : #{conversation.messages.total_count}
+  INFO
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while updating a conversation:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

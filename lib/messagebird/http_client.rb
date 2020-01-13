@@ -4,13 +4,14 @@ require 'net/https'
 require 'uri'
 
 module MessageBird
-  class InvalidPhoneNumberException < TypeError; end
+  class ServerException < StandardError; end
   class InvalidResponseException < StandardError; end
   class MethodNotAllowedException < ArgumentError; end
 
   class HttpClient
     attr_reader :access_key
 
+    VALID_RESPONSE_CODES = [200, 201, 202, 204, 401, 404, 405, 422].freeze
     ENDPOINT = 'https://rest.messagebird.com/'
     SUBMIT_METHODS = [:patch, :post, :put].freeze
     ALLOWED_METHODS = SUBMIT_METHODS.dup + [:get, :delete].freeze
@@ -80,12 +81,7 @@ module MessageBird
     # Throw an exception if the response code is not one we expect from the
     # MessageBird API.
     def assert_valid_response_code(code)
-      # InvalidPhoneNumberException does not make a lot of sense here, but it's
-      # needed to maintain backwards compatibility. See issue:
-      # https://github.com/messagebird/ruby-rest-api/issues/17
-      expected_codes = [200, 201, 202, 204, 401, 404, 405, 422]
-
-      raise InvalidPhoneNumberException, 'Unknown response from server' unless expected_codes.include? code
+      raise ServerException, 'Unknown response from server' unless VALID_RESPONSE_CODES.include? code
     end
 
     # Throw an exception if the response's content type is not JSON. This only

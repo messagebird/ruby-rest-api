@@ -477,7 +477,8 @@ module MessageBird
 
     def add_querystring(path, params)
       return path if params.empty?
-      path.concat("?").concat(params.collect { |k,v| v.kind_of?(Array) ? v.collect {|sv| "#{k}=#{sv.to_s}"}.join('&') : "#{k}=#{v.to_s}" }.join('&'))
+
+      "#{path}?" + params.collect { |k,v| v.kind_of?(Array) ? v.collect {|sv| "#{k}=#{sv.to_s}"}.join('&') : "#{k}=#{v.to_s}" }.join('&')
     end
   end
 end

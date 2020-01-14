@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 ACCESS_KEY = ''
@@ -31,23 +32,22 @@ begin
 
   # Print the object information.
   puts
-  puts "The following information was returned as an OTP object:"
+  puts 'The following information was returned as an OTP object:'
   puts
   puts "  id                  : #{otp.id}"
   puts "  recipient           : #{otp.recipient}"
   puts "  reference           : #{otp.reference}"
   puts "  status              : #{otp.status}"
   puts "  href                : #{otp.href}"
-  puts "  createdDatetime     : #{otp.createdDatetime}"
-  puts "  validUntilDatetime  : #{otp.validUntilDatetime}"
+  puts "  createdDatetime     : #{otp.created_datetime}"
+  puts "  validUntilDatetime  : #{otp.valid_until_date_time}"
   puts
-
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting an OTP object:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

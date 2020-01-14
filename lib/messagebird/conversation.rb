@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'messagebird/base'
 require 'messagebird/contact'
 require 'messagebird/conversation_channel'
 
-module MessageBird 
+module MessageBird
   class Conversation < MessageBird::Base
-    attr_accessor :id, :status, :lastUsedChannelId, :contactId
-    attr_reader :contact, :channels, :messages, :createdDatetime,
-                :updatedDatetime, :lastReceivedDatetime
+    attr_accessor :id, :status, :last_used_channel_id, :contact_id
+    attr_reader :contact, :channels, :messages, :created_datetime,
+                :updated_datetime, :last_received_datetime
 
     CONVERSATION_STATUS_ACTIVE = 'active'
     CONVERSATION_STATUS_ARCHIVED = 'archived'
@@ -24,19 +26,19 @@ module MessageBird
     end
 
     def messages=(value)
-      @messages = MessageBird::MessageReference.new(value) 
-    end
-   
-    def createdDatetime=(value)
-      @createdDatetime = value_to_time(value)
+      @messages = MessageBird::MessageReference.new(value)
     end
 
-    def updatedDatetime=(value)
-      @updatedDatetime = value_to_time(value)
+    def created_datetime=(value)
+      @created_datetime = value_to_time(value)
     end
 
-    def lastReceivedDatetime=(value)
-      @lastReceivedDatetime = value_to_time(value)
+    def updated_datetime=(value)
+      @updated_datetime = value_to_time(value)
     end
-  end 
-end 
+
+    def last_received_datetime=(value)
+      @last_received_datetime = value_to_time(value)
+    end
+  end
+end

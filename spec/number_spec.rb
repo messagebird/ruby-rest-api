@@ -38,8 +38,8 @@ describe 'Numbers API' do
       expect(number.tags).to eq []
       expect(number.type).to eq "landline_or_mobile"
       expect(number.status).to eq "active"
-      expect(number.createdAt).to eq Time.parse("2019-04-25T14:04:04Z")
-      expect(number.renewalAt).to eq Time.parse("2019-05-25T00:00:00Z")
+      expect(number.created_at).to eq Time.parse("2019-04-25T14:04:04Z")
+      expect(number.renewal_at).to eq Time.parse("2019-05-25T00:00:00Z")
     end
 
     it 'performs a fetch all numbers' do

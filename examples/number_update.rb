@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 $:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
@@ -14,16 +15,16 @@ end
 unless defined?(PHONE_NUMBER)
   puts 'You need to set an PHONE_NUMBER constant in this file'
 end
-  
+
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Fetch the HLR object for the specified HLR_ID.
-  number = client.number_update(PHONE_NUMBER, ["tag1","tag2"])
-  
+  number = client.number_update(PHONE_NUMBER, ['tag1', 'tag2'])
+
   # Print the object information.
-  puts "The folling number was returned as a Number object"
+  puts 'The folling number was returned as a Number object'
   puts
   puts "  number     : #{number.number}"
   puts "    country  : #{number.country}"
@@ -35,13 +36,12 @@ begin
   puts "    status     : #{number.status}"
   puts "    createdAt     : #{number.createdAt}"
   puts "    renewalAt     : #{number.renewalAt}"
-  
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting the lookup:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

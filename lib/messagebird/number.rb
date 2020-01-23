@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'messagebird/base'
 
-module MessageBird 
+module MessageBird
   class Number < MessageBird::Base
     attr_accessor :number, :country, :region, :locality, :features, :tags, :type, :status
     attr_reader :created_at, :renewal_at
-    
+
     def created_at=(value)
       @created_at = Time.parse(value)
     end
@@ -12,5 +14,5 @@ module MessageBird
     def renewal_at=(value)
       @renewal_at = Time.parse(value)
     end
-  end 
-end 
+  end
+end

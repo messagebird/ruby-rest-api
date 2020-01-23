@@ -22,7 +22,7 @@ begin
   puts 'The folling number was returned as a Number object'
   puts
 
-  if numbers.count > 0
+  if numbers.positive?
     numbers.items.each do |number|
       puts "  number     : #{number.number}"
       puts "    country  : #{number.country}"

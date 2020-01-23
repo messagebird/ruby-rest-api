@@ -405,16 +405,16 @@ module MessageBird
 
     ## Numbers API
     # Search for available numbers
-    def number_search(countryCode, params = {})
-      List.new(Number, number_request(:get, add_querystring("available-phone-numbers/#{countryCode}", params), params))
+    def number_search(country_code, params = {})
+      List.new(Number, number_request(:get, add_querystring("available-phone-numbers/#{country_code}", params), params))
     end
 
     # Purchase an avaiable number
-    def number_purchase(number, countryCode, billingIntervalMonths)
+    def number_purchase(number, country_code, billing_interval_months)
       params = {
         number: number,
-        countryCode: countryCode,
-        billingIntervalMonths: billingIntervalMonths
+        countryCode: country_code,
+        billingIntervalMonths: billing_interval_months
       }
       Number.new(number_request(:post, 'phone-numbers', params))
     end

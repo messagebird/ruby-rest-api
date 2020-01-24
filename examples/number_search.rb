@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
@@ -15,10 +16,10 @@ begin
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Fetch the HLR object for the specified HLR_ID.
-  numbers = client.number_search("NL", {:limit=>5})
-  
+  numbers = client.number_search('NL', limit: 5)
+
   # Print the object information.
-  puts "The folling numbers was returned as a list of Number objects"
+  puts 'The folling numbers was returned as a list of Number objects'
   puts
   numbers.items.each do |number|
     puts "  number     : #{number.number}"
@@ -28,13 +29,12 @@ begin
     puts "    features : #{number.features}"
     puts "    type     : #{number.type}"
   end
-  
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting the lookup:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-$:.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = 'YOUR KEY HERE'
@@ -14,24 +15,23 @@ end
 unless defined?(PHONE_NUMBER)
   puts 'You need to set an PHONE_NUMBER constant in this file'
 end
-  
+
 begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
   # Fetch the HLR object for the specified HLR_ID.
   response = client.number_cancel(PHONE_NUMBER)
-  
-  if not response.nil? then
-    puts "Number was cancelled"
+
+  unless response.nil?
+    puts 'Number was cancelled'
   end
-  
-rescue MessageBird::ErrorException => ex
+rescue MessageBird::ErrorException => e
   puts
   puts 'An error occured while requesting the lookup:'
   puts
 
-  ex.errors.each do |error|
+  e.errors.each do |error|
     puts "  code        : #{error.code}"
     puts "  description : #{error.description}"
     puts "  parameter   : #{error.parameter}"

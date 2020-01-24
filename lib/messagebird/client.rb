@@ -80,9 +80,10 @@ module MessageBird
       parse_body(response_body)
     end
 
-    def number_request(method, path, params={})
+    def number_request(method, path, params = {})
       response_body = @number_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
+
       parse_body(response_body)
     end
 
@@ -404,23 +405,23 @@ module MessageBird
 
     ## Numbers API
     # Search for available numbers
-    def number_search(countryCode, params={})
-      List.new(Number, number_request(:get,add_querystring("available-phone-numbers/#{countryCode}",params), params))
+    def number_search(country_code, params = {})
+      List.new(Number, number_request(:get, add_querystring("available-phone-numbers/#{country_code}", params), params))
     end
 
     # Purchase an avaiable number
-    def number_purchase(number, countryCode, billingIntervalMonths)
+    def number_purchase(number, country_code, billing_interval_months)
       params = {
-        :number => number,
-        :countryCode => countryCode,
-        :billingIntervalMonths => billingIntervalMonths
+        number: number,
+        countryCode: country_code,
+        billingIntervalMonths: billing_interval_months
       }
-      Number.new(number_request(:post, "phone-numbers", params))
+      Number.new(number_request(:post, 'phone-numbers', params))
     end
 
     # Fetch all purchaed numbers' details
-    def number_fetch_all(params={})
-      List.new(Number, number_request(:get, add_querystring("phone-numbers", params), params))
+    def number_fetch_all(params = {})
+      List.new(Number, number_request(:get, add_querystring('phone-numbers', params), params))
     end
 
     # Fetch specific purchased number's details
@@ -431,7 +432,7 @@ module MessageBird
     # Update a number
     def number_update(number, tags)
       tags = [tags] if tags.is_a? String
-      Number.new(number_request(:patch, "phone-numbers/#{number}", {:tags=>tags}))
+      Number.new(number_request(:patch, "phone-numbers/#{number}", tags: tags))
     end
 
     # Cancel a number
@@ -478,7 +479,7 @@ module MessageBird
     def add_querystring(path, params)
       return path if params.empty?
 
-      "#{path}?" + params.collect { |k,v| v.kind_of?(Array) ? v.collect {|sv| "#{k}=#{sv.to_s}"}.join('&') : "#{k}=#{v.to_s}" }.join('&')
+      "#{path}?" + params.collect { |k, v| v.is_a?(Array) ? v.collect { |sv| "#{k}=#{sv}" }.join('&') : "#{k}=#{v}" }.join('&')
     end
   end
 end

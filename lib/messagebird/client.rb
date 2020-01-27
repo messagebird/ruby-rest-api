@@ -17,6 +17,8 @@ require 'messagebird/http_client'
 require 'messagebird/list'
 require 'messagebird/lookup'
 require 'messagebird/message'
+require 'messagebird/number'
+require 'messagebird/number_client'
 require 'messagebird/verify'
 require 'messagebird/voice/client'
 require 'messagebird/voice/list'
@@ -50,8 +52,8 @@ module MessageBird
     def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
-
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
+      @number_client = http_client || NumberClient.new(@access_key)
       @voice_client = voice_client || VoiceClient.new(@access_key)
     end
 
@@ -73,6 +75,13 @@ module MessageBird
 
     def conversation_request(method, path, params = {})
       response_body = @conversation_client.request(method, path, params)
+      return if response_body.nil? || response_body.empty?
+
+      parse_body(response_body)
+    end
+
+    def number_request(method, path, params = {})
+      response_body = @number_client.request(method, path, params)
       return if response_body.nil? || response_body.empty?
 
       parse_body(response_body)
@@ -394,6 +403,43 @@ module MessageBird
       request(:delete, "groups/#{group_id}/contacts/#{contact_id}")
     end
 
+    ## Numbers API
+    # Search for available numbers
+    def number_search(country_code, params = {})
+      List.new(Number, number_request(:get, add_querystring("available-phone-numbers/#{country_code}", params), params))
+    end
+
+    # Purchase an avaiable number
+    def number_purchase(number, country_code, billing_interval_months)
+      params = {
+        number: number,
+        countryCode: country_code,
+        billingIntervalMonths: billing_interval_months
+      }
+      Number.new(number_request(:post, 'phone-numbers', params))
+    end
+
+    # Fetch all purchaed numbers' details
+    def number_fetch_all(params = {})
+      List.new(Number, number_request(:get, add_querystring('phone-numbers', params), params))
+    end
+
+    # Fetch specific purchased number's details
+    def number_fetch(number)
+      Number.new(number_request(:get, "phone-numbers/#{number}"))
+    end
+
+    # Update a number
+    def number_update(number, tags)
+      tags = [tags] if tags.is_a? String
+      Number.new(number_request(:patch, "phone-numbers/#{number}", tags: tags))
+    end
+
+    # Cancel a number
+    def number_cancel(number)
+      number_request(:delete, "phone-numbers/#{number}")
+    end
+
     def call_flow_create(title, steps, default, record, params = {})
       params = params.merge(
         title: title,
@@ -428,6 +474,12 @@ module MessageBird
       # https://developers.messagebird.com/docs/alternatives.
 
       '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&')
+    end
+
+    def add_querystring(path, params)
+      return path if params.empty?
+
+      "#{path}?" + params.collect { |k, v| v.is_a?(Array) ? v.collect { |sv| "#{k}=#{sv}" }.join('&') : "#{k}=#{v}" }.join('&')
     end
   end
 end

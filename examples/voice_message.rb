@@ -35,9 +35,9 @@ begin
   puts "  language            : #{vmsg.language}"
   puts "  voice               : #{vmsg.voice}"
   puts "  repeat              : #{vmsg.repeat}"
-  puts "  ifMachine           : #{vmsg.if_machine}"
-  puts "  scheduledDateTime   : #{vmsg.scheduled_date_time}"
-  puts "  createdDatetime     : #{vmsg.created_datetime}"
+  puts "  ifMachine           : #{vmsg.ifMachine}"
+  puts "  scheduledDateTime   : #{vmsg.scheduledDatetime}"
+  puts "  createdDatetime     : #{vmsg.createdDatetime}"
   puts "  recipients          : #{vmsg.recipients}"
   puts
 rescue MessageBird::ErrorException => e

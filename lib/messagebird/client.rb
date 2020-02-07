@@ -232,6 +232,13 @@ module MessageBird
       Message.new(request(:get, "messages/#{id}"))
     end
 
+    # Retrieve messages with optional paging and status filter.
+    def message_list(limit: 10, offset: 0, status: '')
+      query = "messages?limit=#{limit}&offset=#{offset}"
+      query = query + '&status=' + status if status != ''
+      List.new(Message, request(:get, query))
+    end
+
     # Create a new message.
     def message_create(originator, recipients, body, params = {})
       # Convert an array of recipients to a comma-separated string.

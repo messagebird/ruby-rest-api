@@ -40,6 +40,21 @@ describe 'Conversation' do
     expect(list[0].id).to eq '00000000000000000000000000000000'
   end
 
+  it 'list without args'  do
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
+
+    expect(conversation_client)
+      .to receive(:request)
+      .with(:get, 'conversations?', {})
+      .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
+
+    list = client.conversation_list
+
+    expect(list.count).to eq 2
+    expect(list[0].id).to eq '00000000000000000000000000000000'
+  end
+
   it 'reads an existing' do
     conversation_client = double(MessageBird::ConversationClient)
     client = MessageBird::Client.new('', nil, conversation_client)

@@ -133,8 +133,17 @@ module MessageBird
       ))
     end
 
-    def conversation_list(limit = 0, offset = 0)
-      List.new(Conversation, conversation_request(:get, "conversations?limit=#{limit}&offset=#{offset}"))
+    def conversation_list(limit = -1, offset = -1)
+      query = '?'
+      if limit != -1
+        query += "limit=#{limit}&"
+      end
+
+      if offset != -1
+        query += "offset=#{offset}"
+      end
+
+      List.new(Conversation, conversation_request(:get, "conversations#{query}"))
     end
 
     def conversation(id)

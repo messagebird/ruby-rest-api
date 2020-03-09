@@ -158,8 +158,17 @@ module MessageBird
       ConversationMessage.new(conversation_request(:post, "conversations/#{id}/messages", params))
     end
 
-    def conversation_messages_list(id, limit = 0, offset = 0)
-      List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages?limit=#{limit}&offset=#{offset}"))
+    def conversation_messages_list(id, limit = -1, offset = -1)
+      query = '?'
+      if limit != -1
+        query += "limit=#{limit}&"
+      end
+
+      if offset != -1
+        query += "offset=#{offset}"
+      end
+
+      List.new(ConversationMessage, conversation_request(:get, "conversations/#{id}/messages#{query}"))
     end
 
     def conversation_message(id)

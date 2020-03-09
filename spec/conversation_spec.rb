@@ -55,6 +55,40 @@ describe 'Conversation' do
     expect(list[0].id).to eq '00000000000000000000000000000000'
   end
 
+  it 'list messages' do
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
+
+    conversation_id = '5f3437fdb8444583aea093a047ac014b'
+
+    expect(conversation_client)
+      .to receive(:request)
+      .with(:get, "conversations/#{conversation_id}/messages?limit=2&offset=0", {})
+      .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
+
+    list = client.conversation_messages_list(conversation_id, 2, 0)
+
+    expect(list.count).to eq 2
+    expect(list[0].id).to eq '00000000000000000000000000000000'
+  end
+
+  it 'list messages without args' do
+    conversation_client = double(MessageBird::ConversationClient)
+    client = MessageBird::Client.new('', nil, conversation_client)
+
+    conversation_id = '5f3437fdb8444583aea093a047ac014b'
+
+    expect(conversation_client)
+      .to receive(:request)
+      .with(:get, "conversations/#{conversation_id}/messages?", {})
+      .and_return('{"offset":0,"limit":10,"count":2,"totalCount":2,"items":[{"id":"00000000000000000000000000000000"},{"id":"11111111111111111111111111111111"}]}')
+
+    list = client.conversation_messages_list(conversation_id)
+
+    expect(list.count).to eq 2
+    expect(list[0].id).to eq '00000000000000000000000000000000'
+  end
+
   it 'reads an existing' do
     conversation_client = double(MessageBird::ConversationClient)
     client = MessageBird::Client.new('', nil, conversation_client)

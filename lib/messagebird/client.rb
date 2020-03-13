@@ -328,6 +328,10 @@ module MessageBird
       Voice::List.new(Voice::CallLegRecording, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings"))
     end
 
+    def call_leg_recording_delete(call_id, leg_id, recording_id)
+      voice_request(:delete, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}")
+    end
+
     def call_leg_recording_download(recording_uri)
       @voice_client.request_block(:get, recording_uri, {}, &Proc.new)
     end

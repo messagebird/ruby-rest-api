@@ -233,6 +233,14 @@ describe 'Call' do
     end
   end
 
+  it 'delete a recording' do
+    expect(voice_client)
+      .to receive(:request)
+      .with(:delete, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}", {})
+      .and_return('')
+    client.call_leg_recording_delete(call_id, leg_id, recording_id)
+  end
+
   it 'create a transcription' do
     expect(voice_client)
       .to receive(:request)

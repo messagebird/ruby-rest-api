@@ -241,7 +241,6 @@ describe 'Call' do
     client.call_leg_recording_delete(call_id, leg_id, recording_id)
   end
 
-
   it 'create a transcription' do
     expect(voice_client)
       .to receive(:request)

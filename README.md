@@ -223,17 +223,6 @@ pp client.number_search("NL", {:limit=>5})
  @type=MessageBird::Number>
 ````
 
-##### Conversations WhatsApp Sandbox
-
-To use the whatsapp sandbox you need to add `MessageBird::Client::ENABLE_CONVERSATIONS_WHATSAPP_SANDBOX` to the list of features you want enabled. Don't forget to replace `YOUR_ACCESS_KEY` with your actual access key.
-
-```ruby
-require 'messagebird'
-
-client = MessageBird::Client.new(YOUR_ACCESS_KEY)
-client.enable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
-```
-
 Documentation
 -------------
 Complete documentation, instructions, and examples are available at:

@@ -46,31 +46,12 @@ module MessageBird
   class Client
     attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
-    CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE = 'CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE' # Enables the whatsapp sandbox
-    VALID_FEATURES = [CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE].freeze # List of valid features for validation
-
     def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
       @number_client = http_client || NumberClient.new(@access_key)
       @voice_client = voice_client || VoiceClient.new(@access_key)
-    end
-
-    def enable_feature(feature)
-      if VALID_FEATURES.include? feature
-        @conversation_client.enable_feature(feature)
-      else
-        raise InvalidFeatureException
-      end
-    end
-
-    def disable_feature(feature)
-      if VALID_FEATURES.include? feature
-        @conversation_client.disable_feature(feature)
-      else
-        raise InvalidFeatureException
-      end
     end
 
     def conversation_request(method, path, params = {})

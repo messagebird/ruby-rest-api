@@ -233,27 +233,4 @@ describe 'Conversation' do
     client.conversation_webhook_delete('webhook-id')
   end
 
-  it 'enable whatsapp sandbox' do
-    conversation_client = MessageBird::ConversationClient.new('')
-    client = MessageBird::Client.new('', nil, conversation_client)
-
-    expect(conversation_client.endpoint).to eq 'https://conversations.messagebird.com/v1/'
-
-    client.enable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
-
-    expect(conversation_client.endpoint).to eq 'https://whatsapp-sandbox.messagebird.com/v1/'
-
-    client.disable_feature(MessageBird::Client::CONVERSATIONS_WHATSAPP_SANDBOX_FEATURE)
-
-    expect(conversation_client.endpoint).to eq 'https://conversations.messagebird.com/v1/'
-  end
-
-  it 'invalid feature' do
-    conversation_client = MessageBird::ConversationClient.new('')
-    client = MessageBird::Client.new('', nil, conversation_client)
-
-    expect do
-      client.enable_feature('INVALID')
-    end.to raise_error(MessageBird::InvalidFeatureException)
-  end
 end

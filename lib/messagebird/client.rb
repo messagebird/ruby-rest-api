@@ -350,8 +350,8 @@ module MessageBird
       voice_request(:delete, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}")
     end
 
-    def call_leg_recording_download(recording_uri)
-      @voice_client.request_block(:get, recording_uri, {}, &Proc.new)
+    def call_leg_recording_download(recording_uri, &block)
+      @voice_client.request_block(:get, recording_uri, {}, &block)
     end
 
     def voice_transcription_create(call_id, leg_id, recording_id, params = {})
@@ -362,8 +362,8 @@ module MessageBird
       Voice::List.new(Voice::Transcription, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions"))
     end
 
-    def voice_transcription_download(call_id, leg_id, recording_id, transcription_id)
-      @voice_client.request_block(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt", {}, &Proc.new)
+    def voice_transcription_download(call_id, leg_id, recording_id, transcription_id, &block)
+      @voice_client.request_block(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt", {}, &block)
     end
 
     def voice_transcription_view(call_id, leg_id, recording_id, transcription_id)

@@ -47,12 +47,12 @@ module MessageBird
       response.body
     end
 
-    def request_block(method, path, params = {})
+    def request_block(method, path, params = {}, &block)
       uri     = URI.join(endpoint, path)
       http    = build_http_client(uri)
       request = build_request(method, uri, params)
 
-      http.request(request, &Proc.new)
+      http.request(request, block)
     end
 
     def prepare_request(request, params = {})

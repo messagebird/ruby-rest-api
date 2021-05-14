@@ -338,7 +338,7 @@ describe 'Call' do
 
     expect(voice_client)
       .to receive(:request_block)
-      .with(:get, transcription_uri, {})
+      .with(:get, transcription_uri, {}) 
       .and_yield(mock_response)
 
     expect(mock_response)

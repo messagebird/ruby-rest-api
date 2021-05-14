@@ -23,12 +23,7 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob('lib/**/*') + %w(LICENSE README.md)
   s.require_path = 'lib'
 
-  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.3.0")
-    s.add_development_dependency "rspec", "~> 3.9.0"
-    s.add_development_dependency "rubocop", "~> 0.40.0"
-  else
-    s.add_development_dependency "rspec"
-    s.add_development_dependency "rubocop", "~> 0.77.0"
-  end
+  s.add_development_dependency "rspec", "~> 3.10.0"
+  s.add_development_dependency "rubocop", "~> 0.77.0"
   s.add_development_dependency 'webmock', '~> 3.7.5'
 end

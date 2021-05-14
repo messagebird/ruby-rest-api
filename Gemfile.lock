@@ -52,7 +52,7 @@ PLATFORMS
 
 DEPENDENCIES
   messagebird-rest!
-  rspec
+  rspec (~> 3.10.0)
   rubocop (~> 0.77.0)
   webmock (~> 3.7.5)
 

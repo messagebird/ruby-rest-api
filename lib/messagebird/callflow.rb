@@ -36,11 +36,9 @@ module MessageBird
 
     def pagination=(value)
       value.each do |k, v|
-        begin
-          send("#{k}=", v)
-        rescue NoMethodError
-          puts 'An error occurred while listing callflows'
-        end
+        send("#{k}=", v)
+      rescue NoMethodError
+        puts 'An error occurred while listing callflows'
       end
     end
   end

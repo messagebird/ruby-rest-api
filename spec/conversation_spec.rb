@@ -232,5 +232,4 @@ describe 'Conversation' do
 
     client.conversation_webhook_delete('webhook-id')
   end
-
 end

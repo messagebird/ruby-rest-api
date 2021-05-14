@@ -8,21 +8,8 @@ before_install:
   - gem install bundler -v '< 2'
 
 rvm:
-- 2.6.5
-- 2.5.1
-- 2.0.0
-- 2.2
-- 2.3.0
-- 1.9.3
-- jruby
-env:
-  # this doesn't do anything for MRI or RBX, but it doesn't hurt them either
-  # for JRuby, it enables us to get more accurate coverage data
-  - JRUBY_OPTS="--debug"
-matrix:
-  allow_failures:
-  - rvm: jruby
-  - rvm: 1.9.3
+- 3.0.1 
+- 2.7.3
 
 install:
   - bundle install

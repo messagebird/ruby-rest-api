@@ -37,6 +37,8 @@ module MessageBird
 
     def initialize(errors)
       @errors = errors
+      message = errors.map { |error| error.message }.join(", ")
+      super(message)
     end
   end
 

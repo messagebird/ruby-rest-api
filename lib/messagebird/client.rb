@@ -232,16 +232,10 @@ module MessageBird
     end
 
     # Retrieve messages with optional paging and status filter.
-    def message_list(filter = {})
-      limit = filter[:limit] || 10
-      offset = filter[:offset] || 0
-      status = filter[:status] || ''
+    def message_list(filters = {})
+      params = { limit: 10, offset: 0 }.merge(filters).compact
+      query = "messages?#{URI.encode_www_form(params)}"
 
-      params = { limit: limit, offset: offset }
-      if status != ''
-        params['status'] = status
-      end
-      query = 'messages?' + URI.encode_www_form(params)
       List.new(Message, request(:get, query))
     end
 

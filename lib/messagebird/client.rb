@@ -77,7 +77,7 @@ module MessageBird
 
     def request(method, path, params = {})
       response_body = @http_client.request(method, path, params)
-      return if response_body.empty?
+      return if response_body.nil? || response_body.empty?
 
       parse_body(response_body)
     end
@@ -221,9 +221,9 @@ module MessageBird
       Verify.new(request(:get, "verify/#{id}?token=#{token}"))
     end
 
-    # Delete a Verify
+    # Delete a Verify, response is empty
     def verify_delete(id)
-      Verify.new(request(:delete, "verify/#{id}"))
+      request(:delete, "verify/#{id}")
     end
 
     # Retrieve the information of specific message.

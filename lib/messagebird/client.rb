@@ -20,6 +20,7 @@ require 'messagebird/message'
 require 'messagebird/number'
 require 'messagebird/number_client'
 require 'messagebird/verify'
+require 'messagebird/verify_email_message'
 require 'messagebird/voice/client'
 require 'messagebird/voice/list'
 require 'messagebird/voice/webhook'
@@ -205,6 +206,11 @@ module MessageBird
     # Retrieve the information of specific Verify.
     def verify(id)
       Verify.new(request(:get, "verify/#{id}"))
+    end
+
+    # Retrieve the information of specific Verify email message
+    def verify_email_message(id)
+      VerifyEmailMessage.new(request(:get, "verify/messages/email/#{id}"))
     end
 
     # Generate a new One-Time-Password message.

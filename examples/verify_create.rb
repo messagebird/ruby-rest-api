@@ -4,7 +4,7 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
-ACCESS_KEY = ''
+# ACCESS_KEY = ''
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
@@ -23,12 +23,13 @@ begin
   puts 'The following information was returned as an OTP object:'
   puts
   puts "  id                  : #{otp.id}"
+  puts "  href                : #{otp.href}"
   puts "  recipient           : #{otp.recipient}"
   puts "  reference           : #{otp.reference}"
+  puts "  messages            : #{otp.messages}"
   puts "  status              : #{otp.status}"
-  puts "  href                : #{otp.href}"
   puts "  createdDatetime     : #{otp.created_datetime}"
-  puts "  validUntilDatetime  : #{otp.valid_until_date_time}"
+  puts "  validUntilDatetime  : #{otp.valid_until_datetime}"
   puts
 rescue MessageBird::ErrorException => e
   puts

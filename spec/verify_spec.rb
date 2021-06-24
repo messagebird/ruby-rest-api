@@ -39,4 +39,16 @@ describe 'Verify' do
 
     client.verify_create(31_612_345_678, originator: 'MessageBird')
   end
+
+  it 'creates a verify and sends token via email' do
+    http_client = double(MessageBird::HttpClient)
+    client = MessageBird::Client.new('', http_client)
+
+    expect(http_client)
+      .to receive(:request)
+      .with(:post, 'verify', type: 'email', recipient: 'verify@example.com', subject: 'Your verification code', originator: 'MessageBird')
+      .and_return('{}')
+
+    client.verify_create('verify@example.com', originator: 'MessageBird', type: 'email', subject: 'Your verification code')
+  end
 end

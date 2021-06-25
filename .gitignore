@@ -1,5 +1,5 @@
 .DS_Store
 *.gem
-Gemfile.lock
+/Gemfile.lock
 .rbenv-gemsets
 .ruby-version

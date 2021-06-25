@@ -20,6 +20,7 @@ require 'messagebird/message'
 require 'messagebird/number'
 require 'messagebird/number_client'
 require 'messagebird/verify'
+require 'messagebird/verify_email_message'
 require 'messagebird/voice/client'
 require 'messagebird/voice/list'
 require 'messagebird/voice/webhook'
@@ -77,7 +78,7 @@ module MessageBird
 
     def request(method, path, params = {})
       response_body = @http_client.request(method, path, params)
-      return if response_body.empty?
+      return if response_body.nil? || response_body.empty?
 
       parse_body(response_body)
     end
@@ -207,6 +208,11 @@ module MessageBird
       Verify.new(request(:get, "verify/#{id}"))
     end
 
+    # Retrieve the information of specific Verify email message
+    def verify_email_message(id)
+      VerifyEmailMessage.new(request(:get, "verify/messages/email/#{id}"))
+    end
+
     # Generate a new One-Time-Password message.
     def verify_create(recipient, params = {})
       Verify.new(request(
@@ -221,9 +227,9 @@ module MessageBird
       Verify.new(request(:get, "verify/#{id}?token=#{token}"))
     end
 
-    # Delete a Verify
+    # Delete a Verify, response is empty
     def verify_delete(id)
-      Verify.new(request(:delete, "verify/#{id}"))
+      request(:delete, "verify/#{id}")
     end
 
     # Retrieve the information of specific message.

@@ -5,9 +5,15 @@ $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
+# MESSAGE_ID = ''
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
+  exit 1
+end
+
+unless defined?(MESSAGE_ID)
+  puts 'You need to set a MESSAGE_ID constant in this file'
   exit 1
 end
 
@@ -15,21 +21,15 @@ begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Generate a new OTP message
-  otp = client.verify_create(31_612_345_678, reference: 'MessageBirdReference')
+  # Generate a new OTP message using an email as recipient
+  verify_message = client.verify_email_message(MESSAGE_ID)
 
   # Print the object information.
   puts
-  puts 'The following information was returned as an OTP object:'
+  puts 'The following information was returned as Verify Email Message object:'
   puts
-  puts "  id                  : #{otp.id}"
-  puts "  href                : #{otp.href}"
-  puts "  recipient           : #{otp.recipient}"
-  puts "  reference           : #{otp.reference}"
-  puts "  messages            : #{otp.messages}"
-  puts "  status              : #{otp.status}"
-  puts "  createdDatetime     : #{otp.created_datetime}"
-  puts "  validUntilDatetime  : #{otp.valid_until_datetime}"
+  puts "  id                  : #{verify_message.id}"
+  puts "  status              : #{verify_message.status}"
   puts
 rescue MessageBird::ErrorException => e
   puts

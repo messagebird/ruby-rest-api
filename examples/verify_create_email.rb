@@ -5,21 +5,9 @@ $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
 require 'messagebird'
 
 # ACCESS_KEY = ''
-# VERIFY_ID  = ''
-# TOKEN      = ''
 
 unless defined?(ACCESS_KEY)
   puts 'You need to set an ACCESS_KEY constant in this file'
-  exit 1
-end
-
-unless defined?(VERIFY_ID)
-  puts 'You need to set an VERIFY_ID constant in this file'
-  exit 1
-end
-
-unless defined?(TOKEN)
-  puts 'You need to set an TOKEN constant in this file'
   exit 1
 end
 
@@ -27,8 +15,13 @@ begin
   # Create a MessageBird client with the specified ACCESS_KEY.
   client = MessageBird::Client.new(ACCESS_KEY)
 
-  # Verify an OTP message with a token
-  otp = client.verify_token(VERIFY_ID, TOKEN)
+  # Generate a new OTP message using an email as recipient
+  otp = client.verify_create('Recipient Name <recipient.email@example.com>', # RECIPIENT EMAIL HERE
+                             originator: 'sender@example.com', # SENDER EMAIL HERE
+                             type: 'email',
+                             subject: 'Your Verify test token',
+                             template: '%token - Use this code to validate your Verify token.',
+                             reference: 'MessageBirdReference')
 
   # Print the object information.
   puts

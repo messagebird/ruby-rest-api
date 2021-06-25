@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.name        = 'messagebird-rest'
   s.version     = MessageBird::Version::STRING
   s.platform    = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 2.0'
   s.date        = Time.now
   s.summary     = "MessageBird's REST API"
   s.description = 'A simple REST API for MessageBird in Ruby'

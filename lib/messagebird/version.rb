@@ -2,6 +2,6 @@
 
 module MessageBird
   module Version
-    STRING = '3.0.0-rc.1'
+    STRING = '3.0.0'
   end
 end

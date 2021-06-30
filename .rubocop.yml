@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - Gemfile
     - "*.gemspec"
+    - "vendor/**/*"
 Metrics/ClassLength:
   Enabled: false
 Metrics/MethodLength:

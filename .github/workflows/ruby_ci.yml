@@ -1,0 +1,26 @@
+name: Ruby CI
+
+on: [ push, pull_request ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [ "2.7.3", "3.0.1" ]
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Lint ${{ matrix.ruby-version }}
+      run: bundle exec rubocop
+
+    - name: Test ${{ matrix.ruby-version }}
+      run: bundle exec rspec

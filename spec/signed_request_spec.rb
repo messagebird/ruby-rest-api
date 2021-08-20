@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 SIGNING_KEY = 'PlLrKaqvZNRR5zAjm42ZT6q1SQxgbbGd'
 
 describe 'SignedRequest' do

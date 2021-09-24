@@ -45,6 +45,16 @@ module MessageBird
       raise ValidationError, 'Signature can not be empty' if signature.to_s.empty?
       raise ValidationError, 'URL can not be empty' if !@skip_url_validation && url.to_s.empty?
 
+      claims = decode_signature signature
+      validate_url(url, claims['url_hash']) unless @skip_url_validation
+      validate_payload(request_body, claims['payload_hash'])
+
+      claims
+    end
+
+    private # Applies to every method below this line
+
+    def decode_signature(signature)
       begin
         claims, * = JWT.decode signature, @signature_key, true,
                                algorithm: ALLOWED_ALGOS,
@@ -56,22 +66,26 @@ module MessageBird
         raise ValidationError, e
       end
 
-      unless @skip_url_validation
-        expected_url_hash = Digest::SHA256.hexdigest url
-        unless JWT::SecurityUtils.secure_compare(expected_url_hash, claims['url_hash'])
-          raise ValidationError, 'invalid jwt: claim url_hash is invalid'
-        end
-      end
-
-      if request_body.to_s.empty? && !claims['payload_hash'].to_s.empty?
-        raise ValidationError, 'invalid jwt: claim payload_hash is set but actual payload is missing'
-      elsif !request_body.to_s.empty? && claims['payload_hash'].to_s.empty?
-        raise ValidationError, 'invalid jwt: claim payload_hash is not set but payload is present'
-      elsif !request_body.to_s.empty? && !JWT::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(request_body), claims['payload_hash'])
-        raise ValidationError, 'invalid jwt: claim payload_hash is invalid'
-      end
-
       claims
+    end
+
+    def validate_url(url, url_hash)
+      expected_url_hash = Digest::SHA256.hexdigest url
+      unless JWT::SecurityUtils.secure_compare(expected_url_hash, url_hash)
+        raise ValidationError, 'invalid jwt: claim url_hash is invalid'
+      end
+    end
+
+    def validate_payload(body, payload_hash)
+      if !body.to_s.empty? && !payload_hash.to_s.empty?
+        unless JWT::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(body), payload_hash)
+          raise ValidationError, 'invalid jwt: claim payload_hash is invalid'
+        end
+      elsif !body.to_s.empty?
+        raise ValidationError, 'invalid jwt: claim payload_hash is not set but payload is present'
+      elsif !payload_hash.to_s.empty?
+        raise ValidationError, 'invalid jwt: claim payload_hash is set but actual payload is missing'
+      end
     end
   end
 end

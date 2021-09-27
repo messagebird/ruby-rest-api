@@ -5,10 +5,16 @@ require 'digest'
 require 'time'
 
 module MessageBird
+  ##
+  # @deprecated Use {MessageBird::RequestValidator::ValidationError} instead.
   class ValidationException < TypeError
   end
 
+  ##
+  # @deprecated Use {MessageBird::RequestValidator} instead.
   class SignedRequest
+    ##
+    # @deprecated Use {MessageBird::RequestValidator} instead.
     def initialize(query_parameters, signature, request_timestamp, body)
       unless query_parameters.is_a? Hash
         raise ValidationException, 'The "query_parameters" value is invalid.'
@@ -29,12 +35,16 @@ module MessageBird
       @body = body
     end
 
+    ##
+    # @deprecated Use {MessageBird::RequestValidator::validateSignature} instead.
     def verify(signing_key)
       calculated_signature = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), signing_key, build_payload)
       expected_signature = Base64.decode64(@signature)
       calculated_signature.bytes == expected_signature.bytes
     end
 
+    ##
+    # @deprecated Use {MessageBird::RequestValidator} instead.
     def build_payload
       parts = []
       parts.push(@request_timestamp)
@@ -43,6 +53,8 @@ module MessageBird
       parts.join("\n")
     end
 
+    ##
+    # @deprecated Use {MessageBird::RequestValidator} instead.
     def recent?(offset = 10)
       (Time.now.getutc.to_i - @request_timestamp) < offset
     end

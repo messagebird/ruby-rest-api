@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob('lib/**/*') + %w(LICENSE README.md)
   s.require_path = 'lib'
 
+  s.add_dependency "jwt",  "~> 2.2.3"
+
   s.add_development_dependency "rspec", "~> 3.10.0"
   s.add_development_dependency "rubocop", "~> 0.77.0"
   s.add_development_dependency 'webmock', '~> 3.7.5'

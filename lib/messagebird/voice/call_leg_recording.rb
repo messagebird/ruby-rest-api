@@ -11,6 +11,7 @@ module MessageBird
 
       # further processed attributes for convenience
       attr_accessor :_links, :uri
+
       # Grab the URI to the downloadable file and provide it as a direct attribute
       def handle_links(links_object)
         @uri = links_object['file']

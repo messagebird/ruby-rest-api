@@ -38,8 +38,8 @@ describe 'Call' do
   it 'create a call' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', { source: source, destination: destination, callFlow: call_flow.to_json })
-      .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
+      .with(:post, 'calls', { source:, destination:, callFlow: call_flow.to_json })
+      .and_return("{\"data\":[{\"id\":\"#{call_id}\",\"status\":\"queued\",\"source\":\"#{source}\",\"destination\":\"#{destination}\",\"createdAt\":\"2019-10-11T13:02:19Z\",\"updatedAt\":\"2019-10-11T13:02:19Z\",\"endedAt\":null}],\"_links\":{\"self\":\"/calls/#{call_id}\"},\"pagination\":{\"total_count\":0,\"pageCount\":0,\"currentPage\":0,\"perPage\":0}}")
     call = client.call_create(source, destination, call_flow)
     expect(call.id).to eq call_id
   end
@@ -47,8 +47,8 @@ describe 'Call' do
   it 'create a call with webhook' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', { source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json })
-      .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null, "webhook":' + webhook.to_json + '}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
+      .with(:post, 'calls', { source:, destination:, callFlow: call_flow.to_json, webhook: webhook.to_json })
+      .and_return("{\"data\":[{\"id\":\"#{call_id}\",\"status\":\"queued\",\"source\":\"#{source}\",\"destination\":\"#{destination}\",\"createdAt\":\"2019-10-11T13:02:19Z\",\"updatedAt\":\"2019-10-11T13:02:19Z\",\"endedAt\":null, \"webhook\":#{webhook.to_json}}],\"_links\":{\"self\":\"/calls/#{call_id}\"},\"pagination\":{\"total_count\":0,\"pageCount\":0,\"currentPage\":0,\"perPage\":0}}")
     call = client.call_create(source, destination, call_flow, webhook)
     expect(call.id).to eq call_id
     expect(call.webhook.url).to eq webhook[:url]
@@ -58,7 +58,7 @@ describe 'Call' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, 'calls?perPage=20&currentPage=1', {})
-      .and_return('{ "data": [ { "id": "f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58", "status": "ended", "source": "' + source + '", "destination": "31612345678", "createdAt": "2017-02-16T10:52:00Z", "updatedAt": "2017-02-16T10:59:04Z", "endedAt": "2017-02-16T10:59:04Z", "_links": { "self": "/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58" } }, { "id": "ac07a602-dbc1-11e6-bf26-cec0c932ce01", "status": "ended", "source": "' + source + '", "destination": "31612345678", "createdAt": "2017-01-16T07:51:56Z", "updatedAt": "2017-01-16T07:55:56Z", "endedAt": "2017-01-16T07:55:56Z", "webhook": ' + webhook.to_json + ',"_links": { "self": "/calls/ac07a602-dbc1-11e6-bf26-cec0c932ce01" } } ], "_links": { "self": "/calls?page=1" }, "pagination": { "total_count": 2, "pageCount": 1, "currentPage": 1, "perPage": 10 } }')
+      .and_return("{ \"data\": [ { \"id\": \"f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58\", \"status\": \"ended\", \"source\": \"#{source}\", \"destination\": \"31612345678\", \"createdAt\": \"2017-02-16T10:52:00Z\", \"updatedAt\": \"2017-02-16T10:59:04Z\", \"endedAt\": \"2017-02-16T10:59:04Z\", \"_links\": { \"self\": \"/calls/f1aa71c0-8f2a-4fe8-b5ef-9a330454ef58\" } }, { \"id\": \"ac07a602-dbc1-11e6-bf26-cec0c932ce01\", \"status\": \"ended\", \"source\": \"#{source}\", \"destination\": \"31612345678\", \"createdAt\": \"2017-01-16T07:51:56Z\", \"updatedAt\": \"2017-01-16T07:55:56Z\", \"endedAt\": \"2017-01-16T07:55:56Z\", \"webhook\": #{webhook.to_json},\"_links\": { \"self\": \"/calls/ac07a602-dbc1-11e6-bf26-cec0c932ce01\" } } ], \"_links\": { \"self\": \"/calls?page=1\" }, \"pagination\": { \"total_count\": 2, \"pageCount\": 1, \"currentPage\": 1, \"perPage\": 10 } }")
 
     list = client.call_list
     expect(list.items).not_to be_nil
@@ -102,14 +102,14 @@ describe 'Call' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs?perPage=#{MessageBird::Voice::List::PER_PAGE}&currentPage=#{MessageBird::Voice::List::CURRENT_PAGE}", {})
-      .and_return('
+      .and_return(%(
         {
           "data": [
               {
-                  "id": "' + leg_id + '",
-                  "callId": "' + call_id + '",
-                  "source": "' + source + '",
-                  "destination": "' + destination + '",
+                  "id": "#{leg_id}",
+                  "callId": "#{call_id}",
+                  "source": "#{source}",
+                  "destination": "#{destination}",
                   "service": 1,
                   "status": "hangup",
                   "direction": "outgoing",
@@ -121,12 +121,12 @@ describe 'Call' do
                   "answeredAt": "2019-12-03T14:50:50Z",
                   "endedAt": "2019-12-03T14:51:00Z",
                   "_links": {
-                      "self": "/calls/' + call_id + '/legs/' + leg_id + '"
+                      "self": "/calls/#{call_id}/legs/#{leg_id}"
                   }
               }
           ],
           "_links": {
-              "self": "/calls/' + call_id + '/legs?page=1"
+              "self": "/calls/#{call_id}/legs?page=1"
           },
           "pagination": {
               "totalCount": 1,
@@ -134,7 +134,7 @@ describe 'Call' do
               "currentPage": 1,
               "perPage": 10
           }
-      }')
+      }))
 
     legs = client.call_leg_list(call_id)
     expect(legs[0].id).to eq leg_id
@@ -144,13 +144,13 @@ describe 'Call' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings", {})
-      .and_return('
+      .and_return(%(
         {
           "data": [
               {
-                  "id": "' + recording_id + '",
+                  "id": "#{recording_id}",
                   "format": "wav",
-                  "legId": "' + leg_id + '",
+                  "legId": "#{leg_id}",
                   "status": "done",
                   "duration": 5,
                   "type": "ivr",
@@ -158,13 +158,13 @@ describe 'Call' do
                   "updatedAt": "2019-12-03T14:51:00Z",
                   "deletedAt": null,
                   "_links": {
-                      "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav",
-                      "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '"
+                      "file": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}.wav",
+                      "self": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}"
                   }
               }
           ],
           "_links": {
-              "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings?page=1"
+              "self": "/calls/#{call_id}'/legs/#{leg_id}/recordings?page=1"
           },
           "pagination": {
               "totalCount": 1,
@@ -172,23 +172,23 @@ describe 'Call' do
               "currentPage": 1,
               "perPage": 10
           }
-      }')
+      }))
 
     records = client.call_leg_recording_list(call_id, leg_id)
-    expect(records[0].uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
+    expect(records[0].uri).to eq "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}.wav"
   end
 
   it 'view a call recording' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}", {})
-      .and_return('
+      .and_return(%(
         {
           "data": [
               {
-                  "id": "' + recording_id + '",
+                  "id": "#{recording_id}",
                   "format": "wav",
-                  "legId": "' + leg_id + '",
+                  "legId": "#{leg_id}",
                   "status": "done",
                   "duration": 12,
                   "type": "call",
@@ -198,8 +198,8 @@ describe 'Call' do
               }
           ],
           "_links": {
-              "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav",
-              "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '"
+              "file": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}.wav",
+              "self": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}"
           },
           "pagination": {
               "totalCount": 0,
@@ -207,15 +207,15 @@ describe 'Call' do
               "currentPage": 0,
               "perPage": 0
           }
-      }')
+      }))
 
     recording = client.call_leg_recording_view(call_id, leg_id, recording_id)
-    expect(recording.uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
+    expect(recording.uri).to eq "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}.wav"
   end
 
   it 'download a call recording' do
     mock_response  = double(Net::HTTPResponse)
-    recording_uri  = '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '.wav'
+    recording_uri  = "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}.wav"
 
     expect(voice_client)
       .to receive(:request_block)
@@ -245,23 +245,23 @@ describe 'Call' do
     expect(voice_client)
       .to receive(:request)
       .with(:post, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions", language.to_json)
-      .and_return('
+      .and_return(%(
         {
           "data": [
             {
-              "id":"' + transcription_id + '",
-              "recordingId":"' + recording_id + '",
-              "error": null,"destination":"' + destination + '",
+              "id":"#{transcription_id}",
+              "recordingId":"#{recording_id}",
+              "error": null,"destination":"#{destination}",
               "createdAt":"2017-06-20T10:03:14Z",
               "updatedAt": "2017-06-20T10:03:14Z"
             }
           ],
           "_links": {
-            "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
-            "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+            "file": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt",
+            "self": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}"
           },
           "pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}
-        }')
+        }))
     transcription = client.voice_transcription_create(call_id, leg_id, recording_id, language.to_json)
     expect(transcription.id).to eq transcription_id
   end
@@ -270,20 +270,20 @@ describe 'Call' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}", {})
-      .and_return('
+      .and_return(%(
       {
         "data": [
           {
-            "id": "' + transcription_id + '",
-            "recordingId": "' + recording_id + '",
+            "id": "#{transcription_id}",
+            "recordingId": "#{recording_id}",
             "error": null,
             "createdAt": "2017-06-20T10:03:14Z",
             "updatedAt": "2017-06-20T10:03:14Z"
           }
         ],
         "_links": {
-          "file": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
-          "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+          "file": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt",
+          "self": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}"
         },
         "pagination": {
           "totalCount": 1,
@@ -291,34 +291,34 @@ describe 'Call' do
           "currentPage": 1,
           "perPage": 10
         }
-      }')
+      }))
 
     transcription = client.voice_transcription_view(call_id, leg_id, recording_id, transcription_id)
-    expect(transcription.uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+    expect(transcription.uri).to eq "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt"
   end
 
   it 'list transcriptions' do
     expect(voice_client)
       .to receive(:request)
       .with(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions", {})
-      .and_return('
+      .and_return(%(
       {
         "data": [
           {
-            "id":"' + transcription_id + '",
-            "recordingId": "' + recording_id + '",
+            "id":"#{transcription_id}",
+            "recordingId": "#{recording_id}",
             "status":"done",
             "createdAt":"2019-12-04T16:52:51Z",
             "updatedAt":"2019-12-04T16:53:02Z",
             "legId":"00000000-0000-0000-0000-000000000000",
             "_links": {
-              "file":"/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt",
-              "self":"/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+              "file":"/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt",
+              "self":"/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}"
             }
           }
         ],
         "_links": {
-          "self": "/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '"
+          "self": "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}"
         },
         "pagination": {
           "totalCount": 1,
@@ -326,15 +326,15 @@ describe 'Call' do
           "currentPage": 1,
           "perPage": 10
         }
-      }')
+      }))
 
     records = client.voice_transcriptions_list(call_id, leg_id, recording_id)
-    expect(records[0].uri).to eq '/calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+    expect(records[0].uri).to eq "/calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt"
   end
 
   it 'download a transcription' do
     mock_response = double(Net::HTTPResponse)
-    transcription_uri = 'calls/' + call_id + '/legs/' + leg_id + '/recordings/' + recording_id + '/transcriptions/' + transcription_id + '.txt'
+    transcription_uri = "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt"
 
     expect(voice_client)
       .to receive(:request_block)

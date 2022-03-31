@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH.unshift File.expand_path("#{File.dirname(__FILE__)}/../lib/")
 require 'messagebird'
 
 ACCESS_KEY = 'YOUR KEY HERE'

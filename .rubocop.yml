@@ -18,13 +18,13 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/BlockLength:
-  Enabled: false    
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/GuardClause:
   Enabled: false
 Style/ConditionalAssignment:
-  Enabled: false 
+  Enabled: false
 Style/IfUnlessModifier:
   Enabled: false
 Style/WordArray:
@@ -34,4 +34,6 @@ Layout/ClosingParenthesisIndentation:
 Style/PercentLiteralDelimiters:
   Enabled: false
 Style/SymbolArray:
-  Enabled: false    
+  Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false

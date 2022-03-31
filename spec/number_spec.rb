@@ -7,7 +7,7 @@ describe 'Numbers API' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'available-phone-numbers/NL?limit=5', limit: 5)
+      .with(:get, 'available-phone-numbers/NL?limit=5', { limit: 5 })
       .and_return('{"items": [{"number": "3197010260188","country": "NL","region": "","locality": "","features": ["sms","voice"],"type": "mobile"},{"number": "3197010260188","country": "NL","region": "","locality": "","features": ["sms","voice"],"type": "mobile"}],"limit": 5,"count": 2}')
 
     numbers = client.number_search('NL', limit: 5)
@@ -24,7 +24,7 @@ describe 'Numbers API' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'phone-numbers', number: '31971234567', countryCode: 'NL', billingIntervalMonths: 1)
+      .with(:post, 'phone-numbers', { number: '31971234567', countryCode: 'NL', billingIntervalMonths: 1 })
       .and_return('{"number": "31971234567","country": "NL","region": "Haarlem","locality": "Haarlem","features": ["sms","voice"],"tags": [],"type": "landline_or_mobile","status": "active","createdAt": "2019-04-25T14:04:04Z","renewalAt": "2019-05-25T00:00:00Z"}')
 
     number = client.number_purchase('31971234567', 'NL', 1)
@@ -47,7 +47,7 @@ describe 'Numbers API' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'phone-numbers?type=mobile&features=sms&features=voice', type: 'mobile', features: ['sms', 'voice'])
+      .with(:get, 'phone-numbers?type=mobile&features=sms&features=voice', { type: 'mobile', features: ['sms', 'voice'] })
       .and_return('{"offset": 0,"limit": 20,"count": 1,"totalCount": 1,"items": [{"number": "31612345670","country": "NL","region": "Texel","locality": "Texel","features": ["sms","voice"],"tags": [],"type": "mobile","status": "active"}]}')
 
     numbers = client.number_fetch_all(type: 'mobile', features: ['sms', 'voice'])
@@ -90,7 +90,7 @@ describe 'Numbers API' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:patch, 'phone-numbers/31612345670', tags: ['tag1'])
+      .with(:patch, 'phone-numbers/31612345670', { tags: ['tag1'] })
       .and_return('{"number": "31612345670","country": "NL","region": "Texel","locality": "Texel","features": ["sms","voice"],"tags": ["tag1"],"type": "mobile","status": "active"}')
 
     number = client.number_update('31612345670', ['tag1'])

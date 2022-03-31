@@ -22,7 +22,7 @@ describe 'Lookup' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:get, 'lookup/0612345678', country_code: 'NL')
+      .with(:get, 'lookup/0612345678', { country_code: 'NL' })
       .and_return('{"href": "https://rest.messagebird.com/lookup/31612345678","countryCode": "NL","countryPrefix": 31,"phoneNumber": 31612345678,"type": "mobile","formats": {"e164": "+31612345678","international": "+31 6 12345678","national": "06 12345678","rfc3966": "tel:+31-6-12345678"},"hlr": {"id": "hlr-id","network": 20416,"reference": "reference2000","status": "active","createdDatetime": "2015-12-15T08:19:24+00:00","statusDatetime": "2015-12-15T08:19:25+00:00"}}')
 
     lookup = client.lookup('0612345678', country_code: 'NL')
@@ -53,7 +53,7 @@ describe 'Lookup HLR' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'lookup/31612345678/hlr', reference: 'MyReference')
+      .with(:post, 'lookup/31612345678/hlr', { reference: 'MyReference' })
       .and_return('{}')
 
     client.lookup_hlr_create(31_612_345_678, reference: 'MyReference')

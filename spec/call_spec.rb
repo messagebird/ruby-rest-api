@@ -38,7 +38,7 @@ describe 'Call' do
   it 'create a call' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', source: source, destination: destination, callFlow: call_flow.to_json)
+      .with(:post, 'calls', { source: source, destination: destination, callFlow: call_flow.to_json })
       .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow)
     expect(call.id).to eq call_id
@@ -47,7 +47,7 @@ describe 'Call' do
   it 'create a call with webhook' do
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'calls', source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json)
+      .with(:post, 'calls', { source: source, destination: destination, callFlow: call_flow.to_json, webhook: webhook.to_json })
       .and_return('{"data":[{"id":"' + call_id + '","status":"queued","source":"' + source + '","destination":"' + destination + '","createdAt":"2019-10-11T13:02:19Z","updatedAt":"2019-10-11T13:02:19Z","endedAt":null, "webhook":' + webhook.to_json + '}],"_links":{"self":"/calls/' + call_id + '"},"pagination":{"total_count":0,"pageCount":0,"currentPage":0,"perPage":0}}')
     call = client.call_create(source, destination, call_flow, webhook)
     expect(call.id).to eq call_id

@@ -7,7 +7,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'send', from: 'MBTest', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' })
+      .with(:post, 'send', { from: 'MBTest', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' } })
       .and_return('{}')
 
     client.send_conversation_message('MBTest', 31_612_345_678, type: 'text', content: { text: 'Hi there!' })
@@ -19,7 +19,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'conversations/start', channel_id: 'c0dae31e440145e094c4708b7d000000', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' })
+      .with(:post, 'conversations/start', { channel_id: 'c0dae31e440145e094c4708b7d000000', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' } })
       .and_return('{}')
 
     client.start_conversation(31_612_345_678, 'c0dae31e440145e094c4708b7d000000', type: 'text', content: { text: 'Hi there!' })
@@ -109,7 +109,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:patch, 'conversations/conversation-id', status: MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED)
+      .with(:patch, 'conversations/conversation-id', { status: MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED })
       .and_return('{"id":"conversation-id", "contactId": "contact-id"}')
     conversation = client.conversation_update('conversation-id', MessageBird::Conversation::CONVERSATION_STATUS_ARCHIVED)
 
@@ -123,7 +123,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'conversations/conversation-id/messages', type: 'text', content: { text: 'Hi there' })
+      .with(:post, 'conversations/conversation-id/messages', { type: 'text', content: { text: 'Hi there' } })
       .and_return({ id: 'message-id', channel_id: 'channel-id', conversationId: 'conversation-id' }.to_json)
 
     msg = client.conversation_reply('conversation-id', type: 'text', content: { text: 'Hi there' })
@@ -168,7 +168,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'webhooks', channel_id: 'channel-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: 'url')
+      .with(:post, 'webhooks', { channel_id: 'channel-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: 'url' })
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created", "message.updated"]}')
 
     webhook = client.conversation_webhook_create('channel-id', 'url', [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])
@@ -212,7 +212,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:patch, 'webhooks/webhook-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], url: 'url')
+      .with(:patch, 'webhooks/webhook-id', { events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], url: 'url' })
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created"]}')
 
     webhook = client.conversation_webhook_update('webhook-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED], url: 'url')

@@ -7,7 +7,7 @@ describe 'Voice' do
 
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'webhooks', url: 'https://test.com', token: 'sometoken')
+      .with(:post, 'webhooks', { url: 'https://test.com', token: 'sometoken' })
       .and_return('{"data":[{"id":"00000000000000000000000000000000", "url": "https://test.com", "token": "sometoken"}]}')
 
     webhook = client.voice_webhook_create('https://test.com', token: 'sometoken')
@@ -53,7 +53,7 @@ describe 'Voice' do
 
     expect(voice_client)
       .to receive(:request)
-      .with(:put, 'webhooks/webhook-id', url: 'https://test.com', token: 'sometoken')
+      .with(:put, 'webhooks/webhook-id', { url: 'https://test.com', token: 'sometoken' })
       .and_return('{"data":[{"id":"00000000000000000000000000000000", "url": "https://test.com", "token": "sometoken"}]}')
 
     webhook = client.voice_webhook_update('webhook-id', url: 'https://test.com', token: 'sometoken')

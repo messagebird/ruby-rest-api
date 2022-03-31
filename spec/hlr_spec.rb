@@ -21,7 +21,7 @@ describe 'HLR' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'hlr', msisdn: 31_612_345_678, reference: 'MyReference')
+      .with(:post, 'hlr', { msisdn: 31_612_345_678, reference: 'MyReference' })
       .and_return('{}')
 
     client.hlr_create(31_612_345_678, 'MyReference')

@@ -42,7 +42,7 @@ describe 'CallFlow' do
     }
     expect(voice_client)
       .to receive(:request)
-      .with(:post, 'call-flows', title: title, steps: steps, default: default, record: record)
+      .with(:post, 'call-flows', { title: title, steps: steps, default: default, record: record })
       .and_return(mock_data.to_json)
 
     call_flow = client.call_flow_create(title, steps, default, record)

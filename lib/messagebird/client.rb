@@ -101,8 +101,8 @@ module MessageBird
       ConversationMessage.new(conversation_request(
                                 :post,
                                 'send',
-                                params.merge(from:,
-                                             to:)
+                                params.merge(from: from,
+                                             to: to)
       ))
     end
 
@@ -111,8 +111,8 @@ module MessageBird
       Conversation.new(conversation_request(
                          :post,
                          'conversations/start',
-                         params.merge(to:,
-                                      channel_id:)
+                         params.merge(to: to,
+                                      channel_id: channel_id)
       ))
     end
 
@@ -134,7 +134,7 @@ module MessageBird
     end
 
     def conversation_update(id, status)
-      Conversation.new(conversation_request(:patch, "conversations/#{id}", status:))
+      Conversation.new(conversation_request(:patch, "conversations/#{id}", status: status))
     end
 
     def conversation_reply(id, params = {})
@@ -162,9 +162,9 @@ module MessageBird
       ConversationWebhook.new(conversation_request(
                                 :post,
                                 'webhooks',
-                                channel_id:,
-                                url:,
-                                events:
+                                channel_id: channel_id,
+                                url: url,
+                                events: events
       ))
     end
 
@@ -199,8 +199,8 @@ module MessageBird
       HLR.new(request(
                 :post,
                 'hlr',
-                msisdn:,
-                reference:
+                msisdn: msisdn,
+                reference: reference
       ))
     end
 
@@ -219,7 +219,7 @@ module MessageBird
       Verify.new(request(
                    :post,
                    'verify',
-                   params.merge(recipient:)
+                   params.merge(recipient: recipient)
       ))
     end
 
@@ -256,7 +256,7 @@ module MessageBird
                     'messages',
                     params.merge(originator: originator.to_s,
                                  body: body.to_s,
-                                 recipients:)
+                                 recipients: recipients)
       ))
     end
 
@@ -273,12 +273,12 @@ module MessageBird
       VoiceMessage.new(request(
                          :post,
                          'voicemessages',
-                         params.merge(recipients:, body: body.to_s)
+                         params.merge(recipients: recipients, body: body.to_s)
       ))
     end
 
     def voice_webhook_create(url, params = {})
-      Voice::Webhook.new(voice_request(:post, 'webhooks', params.merge(url:)))
+      Voice::Webhook.new(voice_request(:post, 'webhooks', params.merge(url: url)))
     end
 
     def voice_webhooks_list(per_page = VoiceList::PER_PAGE, page = VoiceList::CURRENT_PAGE)
@@ -301,7 +301,7 @@ module MessageBird
       params = params.merge(callFlow: call_flow.to_json) unless call_flow.empty?
       params = params.merge(webhook: webhook.to_json) unless webhook.empty?
 
-      Voice::Call.new(voice_request(:post, 'calls', params.merge(source:, destination:)))
+      Voice::Call.new(voice_request(:post, 'calls', params.merge(source: source, destination: destination)))
     end
 
     def call_list(per_page = Voice::List::PER_PAGE, page = Voice::List::CURRENT_PAGE)
@@ -332,8 +332,8 @@ module MessageBird
       voice_request(:delete, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}")
     end
 
-    def call_leg_recording_download(recording_uri, &)
-      @voice_client.request_block(:get, recording_uri, {}, &)
+    def call_leg_recording_download(recording_uri, &block)
+      @voice_client.request_block(:get, recording_uri, {}, &block)
     end
 
     def voice_transcription_create(call_id, leg_id, recording_id, params = {})
@@ -344,8 +344,8 @@ module MessageBird
       Voice::List.new(Voice::Transcription, voice_request(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions"))
     end
 
-    def voice_transcription_download(call_id, leg_id, recording_id, transcription_id, &)
-      @voice_client.request_block(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt", {}, &)
+    def voice_transcription_download(call_id, leg_id, recording_id, transcription_id, &block)
+      @voice_client.request_block(:get, "calls/#{call_id}/legs/#{leg_id}/recordings/#{recording_id}/transcriptions/#{transcription_id}.txt", {}, &block)
     end
 
     def voice_transcription_view(call_id, leg_id, recording_id, transcription_id)
@@ -393,7 +393,7 @@ module MessageBird
     end
 
     def group_create(name)
-      Group.new(request(:post, 'groups', name:))
+      Group.new(request(:post, 'groups', name: name))
     end
 
     def group_delete(id)
@@ -405,7 +405,7 @@ module MessageBird
     end
 
     def group_update(id, name)
-      request(:patch, "groups/#{id}", name:)
+      request(:patch, "groups/#{id}", name: name)
     end
 
     def group_add_contacts(group_id, contact_ids)
@@ -430,7 +430,7 @@ module MessageBird
     # Purchase an avaiable number
     def number_purchase(number, country_code, billing_interval_months)
       params = {
-        number:,
+        number: number,
         countryCode: country_code,
         billingIntervalMonths: billing_interval_months
       }
@@ -450,7 +450,7 @@ module MessageBird
     # Update a number
     def number_update(number, tags)
       tags = [tags] if tags.is_a? String
-      Number.new(number_request(:patch, "phone-numbers/#{number}", tags:))
+      Number.new(number_request(:patch, "phone-numbers/#{number}", tags: tags))
     end
 
     # Cancel a number
@@ -460,10 +460,10 @@ module MessageBird
 
     def call_flow_create(title, steps, default, record, params = {})
       params = params.merge(
-        title:,
-        steps:,
-        default:,
-        record:
+        title: title,
+        steps: steps,
+        default: default,
+        record: record
       )
       CallFlow.new(voice_request(:post, 'call-flows', params))
     end

@@ -30,7 +30,7 @@ describe 'Verify' do
   it 'creates a verify and sends token' do
     expect(@http_client)
       .to receive(:request)
-      .with(:post, 'verify', recipient: 31_612_345_678, originator: 'MessageBird')
+      .with(:post, 'verify', { recipient: 31_612_345_678, originator: 'MessageBird' })
       .and_return('{}')
 
     @client.verify_create(31_612_345_678, originator: 'MessageBird')
@@ -39,7 +39,7 @@ describe 'Verify' do
   it 'creates a verify and sends token via email' do
     expect(@http_client)
       .to receive(:request)
-      .with(:post, 'verify', type: 'email', recipient: 'verify@example.com', subject: 'Your verification code', originator: 'MessageBird')
+      .with(:post, 'verify', { type: 'email', recipient: 'verify@example.com', subject: 'Your verification code', originator: 'MessageBird' })
       .and_return('{}')
 
     @client.verify_create('verify@example.com', originator: 'MessageBird', type: 'email', subject: 'Your verification code')

@@ -7,7 +7,7 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'contacts', msisdn: '31612345678', first_name: 'Foo', last_name: 'Bar', custom1: 'First', custom4: 'Fourth')
+      .with(:post, 'contacts', { msisdn: '31612345678', first_name: 'Foo', last_name: 'Bar', custom1: 'First', custom4: 'Fourth' })
       .and_return('{}')
 
     client.contact_create(31_612_345_678, first_name: 'Foo', last_name: 'Bar', custom1: 'First', custom4: 'Fourth')
@@ -108,7 +108,7 @@ describe 'Contact' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:patch, 'contacts/contact-id', msisdn: 31_687_654_321, custom3: 'Third')
+      .with(:patch, 'contacts/contact-id', { msisdn: 31_687_654_321, custom3: 'Third' })
       .and_return('')
 
     client.contact_update('contact-id', msisdn: 31_687_654_321, custom3: 'Third')

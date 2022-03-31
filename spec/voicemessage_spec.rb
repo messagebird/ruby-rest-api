@@ -21,7 +21,7 @@ describe 'Voice message' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'voicemessages', recipients: 31_612_345_678, body: 'Body', repeat: 3)
+      .with(:post, 'voicemessages', { recipients: 31_612_345_678, body: 'Body', repeat: 3 })
       .and_return('{}')
 
     client.voice_message_create(31_612_345_678, 'Body', repeat: 3)
@@ -33,7 +33,7 @@ describe 'Voice message' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'voicemessages', recipients: '31612345678,31687654321', body: 'Body', repeat: 3)
+      .with(:post, 'voicemessages', { recipients: '31612345678,31687654321', body: 'Body', repeat: 3 })
       .and_return('{}')
 
     client.voice_message_create([31_612_345_678, 31_687_654_321], 'Body', repeat: 3)

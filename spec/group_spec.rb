@@ -7,7 +7,7 @@ describe 'Group' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'groups', name: 'friends')
+      .with(:post, 'groups', { name: 'friends' })
       .and_return('{}')
 
     client.group_create('friends')
@@ -76,7 +76,7 @@ describe 'Group' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:patch, 'groups/group-id', name: 'family')
+      .with(:patch, 'groups/group-id', { name: 'family' })
       .and_return('{}')
 
     client.group_update('group-id', 'family')

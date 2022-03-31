@@ -21,7 +21,7 @@ describe 'Message' do
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'messages', originator: 'MBTest', recipients: 31_612_345_678, body: 'Hello world', reference: 'Foo')
+      .with(:post, 'messages', { originator: 'MBTest', recipients: 31_612_345_678, body: 'Hello world', reference: 'Foo' })
       .and_return('{}')
 
     client.message_create('MBTest', 31_612_345_678, 'Hello world', reference: 'Foo')

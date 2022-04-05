@@ -9,7 +9,7 @@ describe 'Error' do
       .to receive(:request)
       .and_return('{"errors":[{"code": 2,"description": "Request not allowed (incorrect access_key)","parameter": "access_key"}]}')
 
-    expect { client.message('some-id') }.to raise_error(MessageBird::ErrorException)
+    expect { client.message('some-id') }.to raise_error(MessageBird::ErrorException, 'Request not allowed (incorrect access_key) (error code: 2, parameter: access_key)')
   end
 
   context 'server responds with an invalid HTTP status code' do
@@ -19,7 +19,7 @@ describe 'Error' do
 
       client = MessageBird::Client.new
 
-      expect { client.message('some-id') }.to raise_error(MessageBird::ServerException)
+      expect { client.message('some-id') }.to raise_error(MessageBird::ServerException, 'Unknown response from server')
     end
   end
 end

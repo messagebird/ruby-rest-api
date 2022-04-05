@@ -38,6 +38,8 @@ module MessageBird
 
     def initialize(errors)
       @errors = errors
+      message = errors.map(&:message).join(', ')
+      super(message)
     end
   end
 

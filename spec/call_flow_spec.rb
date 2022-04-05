@@ -105,7 +105,7 @@ describe 'CallFlow' do
     expect(list.items.count).to eq 2
     expect(list.items[0].id).to eq 'cfid-0000'
     expect(list.per_page).to eq 2
-    expect(list.current_page).to eq 1 
+    expect(list.current_page).to eq 1
     expect(list.total_count).to eq 111
   end
 

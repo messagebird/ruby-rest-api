@@ -7,6 +7,8 @@ module MessageBird
   class Base
     # takes each element from the given hash and apply it to ourselves through an assignment method
     def map_hash_elements_to_self(hash)
+      return if hash.nil?
+
       hash.each do |key, value|
         method_name = key.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase # convert came case to snake case
         method_name += '='

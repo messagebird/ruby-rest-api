@@ -14,9 +14,9 @@ module MessageBird
       request.body = params.to_json
       request
     end
-  end
 
-  def endpoint
-    ENDPOINT
+    def endpoint
+      ENDPOINT
+    end
   end
 end

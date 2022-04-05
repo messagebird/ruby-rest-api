@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 describe 'Balance' do
-
   it 'reads' do
-
     http_client = double(MessageBird::HttpClient)
     client = MessageBird::Client.new('', http_client)
 
@@ -13,7 +13,5 @@ describe 'Balance' do
     balance = client.balance
 
     expect(balance.payment).to eq 'prepaid'
-
   end
-
 end

@@ -1,1 +1,6 @@
+.DS_Store
 *.gem
+/Gemfile.lock
+.rbenv-gemsets
+.ruby-version
+.byebug_history

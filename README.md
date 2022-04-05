@@ -2,7 +2,7 @@ MessageBird's REST API for Ruby
 ===============================
 This repository contains the open source Ruby client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com/
 
-[![Build Status](https://travis-ci.org/messagebird/ruby-rest-api.svg?branch=master)](https://travis-ci.org/messagebird/ruby-rest-api)
+[![Build Status](https://github.com/messagebird/ruby-rest-api/actions/workflows/ruby_ci.yml/badge.svg)](https://github.com/messagebird/ruby-rest-api/actions)
 
 Requirements
 ------------
@@ -58,7 +58,7 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
 
 #<MessageBird::Message:0x007f8d5b883520
  @body="Hello World",
- @createdDatetime=2014-07-07 12:20:30 +0200,
+ @created_datetime=2014-07-07 12:20:30 +0200,
  @datacoding="plain",
  @direction="mt",
  @gateway=239,
@@ -68,7 +68,7 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
  @mclass=1,
  @originator="FromMe",
  @recipient=
-  {"totalCount"=>1,
+  {"total_count"=>1,
    "totalSentCount"=>1,
    "totalDeliveredCount"=>0,
    "totalDeliveryFailedCount"=>0,
@@ -78,9 +78,9 @@ pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => '
       @status="sent",
       @statusDatetime=2014-07-07 12:20:30 +0200>]},
  @reference="MyReference",
- @scheduledDatetime=nil,
+ @scheduled_datetime=nil,
  @type="sms",
- @typeDetails={},
+ @type_details={},
  @validity=nil>
 ```
 
@@ -97,7 +97,7 @@ To perform HLR lookups we have created the **hlr_create** method, which takes a 
 pp client.hlr_create('31612345678', 'MyReference')
 
 #<MessageBird::HLR:0x007f8d5b8dafc8
- @createdDatetime=2014-07-07 12:20:05 +0200,
+ @created_datetime=2014-07-07 12:20:05 +0200,
  @href="https://rest.messagebird.com/hlr/4933bed0453ba7455031712h16830892",
  @id="4933bed0453ba7455031712h16830892",
  @msisdn=31612345678,
@@ -126,7 +126,7 @@ client.verify_create(31612345678, {:reference => "YourReference"})
  @reference="YourReference",
  @status="sent",
  @href={"message"=>"https://rest.messagebird.com/messages/67d42f004555213679416f0b13254392"},
- @createdDatetime=2015-05-12 16:51:19 +0200,
+ @created_datetime=2015-05-12 16:51:19 +0200,
  @validUntilDatetime=2015-05-12 16:51:49 +0200>
 ```
 
@@ -147,14 +147,14 @@ pp client.voice_message_create('31612345678', 'Hello World', :reference => 'MyRe
 
 #<MessageBird::VoiceMessage:0x000001030101b8
  @body="Hello World",
- @createdDatetime=2014-07-09 12:17:50 +0200,
+ @created_datetime=2014-07-09 12:17:50 +0200,
  @href=
   "https://rest.messagebird.com/voicemessages/a08e51a0353bd16cea7f298a37405850",
  @id="a08e51a0353bd16cea7f298a37405850",
  @ifMachine="continue",
  @language="en-gb",
  @recipients=
-  {"totalCount"=>1,
+  {"total_count"=>1,
    "totalSentCount"=>1,
    "totalDeliveredCount"=>0,
    "totalDeliveryFailedCount"=>0,
@@ -174,6 +174,54 @@ Similar to regular messaging and HLR lookups, there is a method available to fet
 ```ruby
 client.voice_message('a08e51a0353bd16cea7f298a37405850')
 ```
+
+##### Numbers
+There is also a Numbers API that allow you to search for and purchase number subscriptions to use as originator in other services.
+
+```ruby
+pp client.number_search("NL", {:limit=>5})
+
+#<List:0x00007fa405130618
+ @count=5,
+ @items=
+  [#<MessageBird::Number:0x00007fa405130528
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005108",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa4051303c0
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005143",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa405130208
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005145",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa4051300c8
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005147",
+    @region="",
+    @type="unknown">,
+   #<MessageBird::Number:0x00007fa405131c48
+    @country="NL",
+    @features=["voice"],
+    @locality="Rotterdam",
+    @number="31102005148",
+    @region="",
+    @type="unknown">],
+ @limit=5,
+ @type=MessageBird::Number>
+````
 
 Documentation
 -------------

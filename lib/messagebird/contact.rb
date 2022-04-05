@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'messagebird/base'
 require 'messagebird/custom_details'
 require 'messagebird/group_reference'
@@ -5,11 +7,11 @@ require 'messagebird/message_reference'
 
 module MessageBird
   class Contact < MessageBird::Base
-    attr_accessor :id, :href, :msisdn, :firstName, :lastName, :customDetails,
-                  :groups, :messages, :createdDatetime, :updatedDatetime
+    attr_accessor :id, :href, :msisdn, :first_name, :last_name
+    attr_reader :custom_details, :groups, :messages, :created_datetime, :updated_datetime
 
-    def customDetails=(value)
-      @customDetails = MessageBird::CustomDetails.new(value)
+    def custom_details=(value)
+      @custom_details = MessageBird::CustomDetails.new(value)
     end
 
     def groups=(value)
@@ -20,12 +22,12 @@ module MessageBird
       @messages = MessageBird::MessageReference.new(value)
     end
 
-    def createdDatetime=(value)
-      @createdDatetime = value_to_time(value)
+    def created_datetime=(value)
+      @created_datetime = value_to_time(value)
     end
 
-    def updatedDatetime=(value)
-      @updatedDatetime = value_to_time(value)
+    def updated_datetime=(value)
+      @updated_datetime = value_to_time(value)
     end
   end
 end

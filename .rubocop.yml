@@ -1,0 +1,39 @@
+AllCops:
+  TargetRubyVersion: 2.6.7
+  # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
+  # to ignore them, so only the ones explicitly set in this file are enabled.
+  # DisabledByDefault: true
+  Exclude:
+    - Gemfile
+    - "*.gemspec"
+    - "vendor/**/*"
+Metrics/ClassLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/LineLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/ConditionalAssignment:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/WordArray:
+  Enabled: false
+Layout/ClosingParenthesisIndentation:
+  Enabled: false
+Style/PercentLiteralDelimiters:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false
+Style/BracesAroundHashParameters:
+  Enabled: false

@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 describe 'Voice message' do
-
   it 'reads an existing' do
-
     http_client = double(MessageBird::HttpClient)
     client = MessageBird::Client.new('', http_client)
 
@@ -13,35 +13,29 @@ describe 'Voice message' do
     voice_message = client.voice_message('voicemessage-id')
 
     expect(voice_message.id).to eq 'voicemessage-id'
-
   end
 
   it 'creates with a single recipient' do
-
     http_client = double(MessageBird::HttpClient)
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'voicemessages', { :recipients => 31612345678, :body => 'Body', :repeat => 3 })
+      .with(:post, 'voicemessages', { recipients: 31_612_345_678, body: 'Body', repeat: 3 })
       .and_return('{}')
 
-    client.voice_message_create(31612345678, 'Body', { :repeat => 3 })
-
+    client.voice_message_create(31_612_345_678, 'Body', repeat: 3)
   end
 
   it 'creates with multiple recipients' do
-
     http_client = double(MessageBird::HttpClient)
     client = MessageBird::Client.new('', http_client)
 
     expect(http_client)
       .to receive(:request)
-      .with(:post, 'voicemessages', { :recipients => '31612345678,31687654321', :body => 'Body', :repeat => 3 })
+      .with(:post, 'voicemessages', { recipients: '31612345678,31687654321', body: 'Body', repeat: 3 })
       .and_return('{}')
 
-    client.voice_message_create([31612345678,31687654321], 'Body', { :repeat => 3 })
-
+    client.voice_message_create([31_612_345_678, 31_687_654_321], 'Body', repeat: 3)
   end
-
 end

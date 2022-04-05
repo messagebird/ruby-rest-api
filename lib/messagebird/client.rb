@@ -491,7 +491,7 @@ module MessageBird
       # JSON by default. See also:
       # https://developers.messagebird.com/docs/alternatives.
 
-      '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&') # rubocop:disable Style/StringConcatenation
+      contact_ids.map { |id| "ids[]=#{id}" }.join('&').prepend('_method=PUT&')
     end
 
     def add_querystring(path, params)

@@ -30,13 +30,13 @@ require 'messagebird/voice/call'
 require 'messagebird/voice/call_leg'
 require 'messagebird/voice/call_leg_recording'
 require 'messagebird/voice/transcription'
-require 'messagebird/voice/list'
 
 module MessageBird
   class ErrorException < StandardError
     attr_reader :errors
 
     def initialize(errors)
+      super()
       @errors = errors
       message = errors.map(&:message).join(', ')
       super(message)
@@ -49,7 +49,8 @@ module MessageBird
   class Client
     attr_reader :access_key, :http_client, :conversation_client, :voice_client
 
-    def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil)
+    def initialize(access_key = nil, http_client = nil, conversation_client = nil, voice_client = nil) # rubocop:disable Metrics/ParameterLists
+      super()
       @access_key = access_key || ENV['MESSAGEBIRD_ACCESS_KEY']
       @http_client = http_client || HttpClient.new(@access_key)
       @conversation_client = conversation_client || ConversationClient.new(@access_key)
@@ -492,7 +493,7 @@ module MessageBird
       # JSON by default. See also:
       # https://developers.messagebird.com/docs/alternatives.
 
-      '_method=PUT&' + contact_ids.map { |id| "ids[]=#{id}" }.join('&')
+      contact_ids.map { |id| "ids[]=#{id}" }.join('&').prepend('_method=PUT&')
     end
 
     def add_querystring(path, params)

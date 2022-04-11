@@ -89,17 +89,24 @@ describe 'CallFlow' do
           createdAt: '2019-11-07T12:37:59Z',
           updatedAt: '2019-11-07T12:37:59Z'
         }
-      ]
+      ],
+      perPage: 2,
+      currentPage: 1,
+      totalCount: 111
     }
 
     expect(voice_client)
       .to receive(:request)
       .with(:get, 'call-flows?perPage=2&page=1', {})
       .and_return(mock_data.to_json)
+
     list = client.call_flow_list(2, 1)
 
     expect(list.items.count).to eq 2
     expect(list.items[0].id).to eq 'cfid-0000'
+    expect(list.per_page).to eq 2
+    expect(list.current_page).to eq 1
+    expect(list.total_count).to eq 111
   end
 
   it 'view a call flow' do

@@ -20,7 +20,7 @@ module MessageBird
     #
     # @param [string] signature_key customer signature key. Can be retrieved through <a href="https://dashboard.messagebird.com/developers/settings">Developer Settings</a>. This is NOT your API key.
     # @param [bool] skip_url_validation whether url_hash claim validation should be skipped. Note that when true, no query parameters should be trusted.
-    def initialize(signature_key, skip_url_validation = false)
+    def initialize(signature_key, skip_url_validation: false)
       @signature_key = signature_key
       @skip_url_validation = skip_url_validation
     end

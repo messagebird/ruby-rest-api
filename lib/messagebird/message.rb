@@ -6,7 +6,7 @@ require 'messagebird/recipient'
 module MessageBird
   class Message < MessageBird::Base
     attr_accessor :id, :href, :direction, :type, :originator, :body, :reference,
-                  :validity, :gateway, :typeDetails, :datacoding, :mclass
+                  :validity, :gateway, :type_details, :datacoding, :mclass
     attr_reader :scheduled_date_time, :created_datetime, :recipients
 
     def scheduled_date_time=(value)

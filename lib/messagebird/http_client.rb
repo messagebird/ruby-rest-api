@@ -33,7 +33,7 @@ module MessageBird
       http
     end
 
-    def request(method, path, params = {}, check_json = true)
+    def request(method, path, params = {}, check_json: true)
       uri     = URI.join(endpoint, path)
       http    = build_http_client(uri)
       request = build_request(method, uri, params)

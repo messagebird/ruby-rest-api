@@ -1,5 +1,6 @@
 AllCops:
-  TargetRubyVersion: 2.6.7
+  NewCops: enable
+  TargetRubyVersion: 3.0.3
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
   # to ignore them, so only the ones explicitly set in this file are enabled.
   # DisabledByDefault: true
@@ -11,7 +12,7 @@ Metrics/ClassLength:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
@@ -34,6 +35,4 @@ Layout/ClosingParenthesisIndentation:
 Style/PercentLiteralDelimiters:
   Enabled: false
 Style/SymbolArray:
-  Enabled: false
-Style/BracesAroundHashParameters:
   Enabled: false

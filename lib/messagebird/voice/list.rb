@@ -6,6 +6,7 @@ module MessageBird
   module Voice
     class List < List
       attr_accessor :per_page, :current_page, :page_count, :total_count
+
       PER_PAGE = 20
       CURRENT_PAGE = 1
       def data=(value)

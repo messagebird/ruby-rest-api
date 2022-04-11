@@ -26,7 +26,8 @@ module MessageBird
   end
 
   class CallFlowList < List
-    attr_accessor :perPage, :currentPage, :pageCount, :totalCount
+    attr_accessor :per_page, :current_page, :page_count, :total_count
+
     PER_PAGE = 20
     CURRENT_PAGE = 1
 
@@ -53,8 +54,8 @@ module MessageBird
 
   class CallFlowStepOption < MessageBird::Base
     attr_accessor :destination, :payload, :language, :voice, :repeat,
-                  :media, :length, :maxLength, :timeout, :finishOnKey, :transcribe,
-                  :transcribeLanguage, :record, :url, :ifMachine, :machineTimeout,
-                  :onFinish, :mask
+                  :media, :length, :max_length, :timeout, :finish_on_key, :transcribe,
+                  :transcribe_language, :record, :url, :if_machine, :machine_timeout,
+                  :on_finish, :mask
   end
 end

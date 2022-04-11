@@ -1,4 +1,11 @@
 # Changelog
+
+## 4.0.0
+
+* [CHANGED] Update dev dependencies
+* [CHANGED] Target new rubies (3.x.x) 
+* [CHANGED] remove camelCase attrs from api
+
 ## 3.1.1
 
 * [ADDED] Add release tagging workflow.

@@ -460,13 +460,13 @@ module MessageBird
       number_request(:delete, "phone-numbers/#{number}")
     end
 
-    def call_flow_create(title, steps, default, record, params = {})
+    def call_flow_create(steps, default, record, params = {})
       params = params.merge(
-        title: title,
         steps: steps,
         default: default,
         record: record
       )
+
       CallFlow.new(voice_request(:post, 'call-flows', params))
     end
 

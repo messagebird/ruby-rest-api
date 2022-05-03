@@ -16,7 +16,6 @@ describe 'Call' do
   let(:webhook) { { url: 'https://example.com', token: 'token_to_sign_the_call_events_with' } }
   let(:call_flow) do
     {
-      title: 'Say message',
       steps: [
         {
           action: 'say',

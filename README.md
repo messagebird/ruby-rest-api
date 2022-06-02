@@ -2,7 +2,7 @@ MessageBird's REST API for Ruby
 ===============================
 This repository contains the open source Ruby client for MessageBird's REST API. Documentation can be found at: https://developers.messagebird.com/
 
-[![Build Status](https://github.com/messagebird/ruby-rest-api/actions/workflows/ruby_ci.yml/badge.svg)](https://github.com/messagebird/ruby-rest-api/actions)
+[![Build Status](https://github.com/messagebird/ruby-rest-api/actions/workflows/test.yml/badge.svg)](https://github.com/messagebird/ruby-rest-api/actions)
 
 Requirements
 ------------

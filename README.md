@@ -15,10 +15,11 @@ Installation
 You can either include the following line in your Gemfile:
 
 ```ruby
-gem 'messagebird-rest', :require => 'messagebird'
+gem 'messagebird-rest', require: 'messagebird'
 ```
 
 Or you can just manually install it from the command line:
+
 ```sh
 $ gem install messagebird-rest
 ```
@@ -28,7 +29,7 @@ Examples
 We have put some self-explanatory examples in the *examples* directory, but here is a quick breakdown on how it works. First, you need to create an instance of **MessageBird::Client**. Be sure to replace **YOUR_ACCESS_KEY** with something real in the bottom example.
 
 ```ruby
-require 'pp'              # Only needed for this example
+require 'pp' # Only needed for this example
 require 'messagebird'
 
 client = MessageBird::Client.new(YOUR_ACCESS_KEY)
@@ -54,7 +55,7 @@ Chances are that the most common use you'll have for this API client is the abil
 Optional parameters can be specified as a hash.
 
 ```ruby
-pp client.message_create('FromMe', '31612345678', 'Hello World', :reference => 'MyReference')
+pp client.message_create('FromMe', '31612345678', 'Hello World', reference: 'MyReference')
 
 #<MessageBird::Message:0x007f8d5b883520
  @body="Hello World",
@@ -118,7 +119,7 @@ You can send and verify One-Time Passwords through the MessageBird API using the
 
 ```ruby
 # verify_create requires a recipient as a required parameter, and other optional paramaters
-client.verify_create(31612345678, {:reference => "YourReference"})
+client.verify_create(31612345678, reference: "YourReference")
 
 #<MessageBird::Verify:0x007fb3c18c8148
  @id="080b7f804555213678f14f6o24607735",
@@ -143,7 +144,7 @@ MessageBird also offers the ability to send out a text message as a voice messag
 Optional parameters can be specified as a hash.
 
 ```ruby
-pp client.voice_message_create('31612345678', 'Hello World', :reference => 'MyReference')
+pp client.voice_message_create('31612345678', 'Hello World', reference: 'MyReference')
 
 #<MessageBird::VoiceMessage:0x000001030101b8
  @body="Hello World",
@@ -179,7 +180,7 @@ client.voice_message('a08e51a0353bd16cea7f298a37405850')
 There is also a Numbers API that allow you to search for and purchase number subscriptions to use as originator in other services.
 
 ```ruby
-pp client.number_search("NL", {:limit=>5})
+pp client.number_search("NL", limit: 52)
 
 #<List:0x00007fa405130618
  @count=5,

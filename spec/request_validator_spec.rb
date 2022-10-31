@@ -5,7 +5,7 @@ describe 'RequestValidator' do
     'invalid jwt: claim nbf is in the future' => 'Signature nbf has not been reached',
     'invalid jwt: claim exp is in the past' => 'Signature has expired',
     'invalid jwt: signing method none is invalid' => 'Expected a different algorithm',
-    'invalid jwt: signature is invalid' => 'Signature verification raised'
+    'invalid jwt: signature is invalid' => 'Signature verification failed'
   }.freeze
 
   path = File.join(File.dirname(__FILE__), './data/webhook_signature_test_data.json')

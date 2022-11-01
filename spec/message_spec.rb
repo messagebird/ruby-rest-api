@@ -11,8 +11,10 @@ describe 'Message' do
       .and_return('{"body": "Hello World","createdDatetime": "2015-01-05T10:02:59+00:00","datacoding": "plain","direction": "mt","gateway": 239,"href": "https://rest.messagebird.com/messages/message-id","id": "message-id","mclass": 1,"originator": "TestName","recipients": {"items": [{"recipient": 31612345678,"status": "sent","statusDatetime": "2015-01-05T10:02:59+00:00"}],"totalCount": 1,"totalDeliveredCount": 0,"totalDeliveryFailedCount": 0,"totalSentCount": 1},"reference": null,"scheduled_date_time": null,"type": "sms","typeDetails": {},"validity": null}')
 
     message = client.message('message-id')
+    recipients = message.recipients['items']
 
     expect(message.id).to eq 'message-id'
+    expect(recipients.first.status_datetime.to_s).to eq '2015-01-05 10:02:59 +0000'
   end
 
   it 'creates' do

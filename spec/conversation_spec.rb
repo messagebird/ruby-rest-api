@@ -19,7 +19,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'conversations/start', { channel_id: 'c0dae31e440145e094c4708b7d000000', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' } })
+      .with(:post, 'conversations/start', { ChannelId: 'c0dae31e440145e094c4708b7d000000', to: 31_612_345_678, type: 'text', content: { text: 'Hi there!' } })
       .and_return('{}')
 
     client.start_conversation(31_612_345_678, 'c0dae31e440145e094c4708b7d000000', type: 'text', content: { text: 'Hi there!' })
@@ -168,7 +168,7 @@ describe 'Conversation' do
 
     expect(conversation_client)
       .to receive(:request)
-      .with(:post, 'webhooks', { channel_id: 'channel-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: 'url' })
+      .with(:post, 'webhooks', { ChannelId: 'channel-id', events: [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED], url: 'url' })
       .and_return('{"id":"00000000000000000000000000000000", "events": ["message.created", "message.updated"]}')
 
     webhook = client.conversation_webhook_create('channel-id', 'url', [MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_CREATED, MessageBird::Conversation::WEBHOOK_EVENT_MESSAGE_UPDATED])

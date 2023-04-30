@@ -114,7 +114,7 @@ module MessageBird
                          :post,
                          'conversations/start',
                          params.merge(to: to,
-                                      channel_id: channel_id)
+                                      ChannelId: channel_id)
       ))
     end
 
@@ -164,7 +164,7 @@ module MessageBird
       ConversationWebhook.new(conversation_request(
                                 :post,
                                 'webhooks',
-                                channel_id: channel_id,
+                                ChannelId: channel_id,
                                 url: url,
                                 events: events
       ))

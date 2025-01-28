@@ -71,14 +71,14 @@ module MessageBird
 
     def validate_url(url, url_hash)
       expected_url_hash = Digest::SHA256.hexdigest url
-      unless JWT::SecurityUtils.secure_compare(expected_url_hash, url_hash)
+      unless secure_compare(expected_url_hash, url_hash)
         raise ValidationError, 'invalid jwt: claim url_hash is invalid'
       end
     end
 
     def validate_payload(body, payload_hash)
       if !body.to_s.empty? && !payload_hash.to_s.empty?
-        unless JWT::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(body), payload_hash)
+        unless secure_compare(Digest::SHA256.hexdigest(body), payload_hash)
           raise ValidationError, 'invalid jwt: claim payload_hash is invalid'
         end
       elsif !body.to_s.empty?
@@ -86,6 +86,16 @@ module MessageBird
       elsif !payload_hash.to_s.empty?
         raise ValidationError, 'invalid jwt: claim payload_hash is set but actual payload is missing'
       end
+    end
+
+    # Adapted of https://github.com/rails/rails/blob/cf6ff17e9a3c6c1139040b519a341f55f0be16cf/activesupport/lib/active_support/security_utils.rb#L33
+    # so as to avoid adding a dependency on ActiveSupport to this gem
+    #
+    # Note that unlike `fixed_length_secure_compare` in the above url we don't fall back to a custom implementation
+    # of fixed_length_secure_compare, since OpenSSL.fixed_length_secure_compare is present in OpenSSL 2.2
+    # https://github.com/ruby/openssl/blob/master/History.md#version-220 which is included in Ruby 3.0 and above
+    def secure_compare(a, b)
+      a.bytesize == b.bytesize && OpenSSL.fixed_length_secure_compare(a, b)
     end
   end
 end

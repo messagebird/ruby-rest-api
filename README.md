@@ -229,6 +229,10 @@ Documentation
 Complete documentation, instructions, and examples are available at:
 [https://developers.messagebird.com/](https://developers.messagebird.com/).
 
+Releasing this gem 
+------------------
+[RELEASE.md](./RELEASE.md).
+
 License
 -------
 The MessageBird REST Client for Ruby is licensed under [The BSD 2-Clause License](http://opensource.org/licenses/BSD-2-Clause). Copyright (c) 2025, MessageBird

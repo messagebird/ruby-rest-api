@@ -53,8 +53,7 @@ jobs:
       - name: Prepare CHANGELOG
         run: |
           echo "${{ github.event.pull_request.body }}" | csplit -s - "/##/"
-          echo "# Changelog
-          ## ${{ env.VERSION }}
+          echo -e "\n\n## ${{ env.VERSION }}
           " >> CHANGELOG.tmp
           grep "^*" xx01 >> CHANGELOG.tmp
           grep -v "^# " CHANGELOG.md >> CHANGELOG.tmp

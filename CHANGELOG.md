@@ -1,9 +1,5 @@
 # Changelog
 
-## 5.0.0
-
-* [CHANGED] Update dev dependencies
-* [CHANGED] Target new rubies (3.x.x) 
 
 ## 4.0.0
 

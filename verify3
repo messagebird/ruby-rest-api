@@ -1,0 +1,1 @@
+verify = client.verify_token('f6c3b1858e68404ea576351e6fe7e7db', 'TOKEN')
